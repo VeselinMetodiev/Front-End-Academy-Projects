@@ -46,11 +46,6 @@
     color: black;
   }
 
-  section {
-    flex-flow: row wrap;
-    padding: 0 2px 0 0 ;
-  }
-
   article .blog-text {
     flex: 30%;
     padding: 0 30px 0 0;
@@ -62,12 +57,13 @@
 
   .row {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row wrap; 
     row-gap: 10px;
   }
 
   aside {
     flex: 10%;
+    background: rgb(130, 26, 26);
   }
 
   aside img {
@@ -77,9 +73,6 @@
   }
 
   article {
-    flex: 1;
-    flex-direction: row;
-    flex-wrap: wrap;
     padding: 10px;
     background-color: #999;
   }
