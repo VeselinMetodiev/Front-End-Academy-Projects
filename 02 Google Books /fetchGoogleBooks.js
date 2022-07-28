@@ -1,4 +1,4 @@
-async function init(searchWord) {
+async function fetchBooks(searchWord) {
   try {
     const booksInfo = [];
    // const searchWord = "React Native";
@@ -60,6 +60,6 @@ function displayBooks() {
     if(searchWord === ""){
         document.getElementsById("results").innerText = "Type Something, Buddy!"
     } else {
-        init(searchWord);
+        fetchBooks(searchWord);
     }
 }
