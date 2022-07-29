@@ -12,7 +12,7 @@ async function fetchBooks(searchWord) {
       let description = book.volumeInfo.description;
       if (!description) {
         description = "No description.";
-      } else if(description) {
+      } else if (description) {
         description = description.substring(0, 200);
         const lastSpace = description.lastIndexOf(" ");
         description = description.substring(0, lastSpace);
