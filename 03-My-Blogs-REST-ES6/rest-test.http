@@ -36,5 +36,14 @@ content-type: application/json
     }
 
 ###
+PATCH http://localhost:3000/posts/1 HTTP/1.1
+content-type: application/json
+
+{
+      "id": 2,
+      "title": "json-server patch example"
+}
+
+###
 
 DELETE http://localhost:3000/posts/4 HTTP/1.1

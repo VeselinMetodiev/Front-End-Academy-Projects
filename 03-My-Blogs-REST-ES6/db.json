@@ -2,7 +2,7 @@
   "posts": [
     {
       "id": 1,
-      "title": "json-server",
+      "title": "json-server patch example",
       "content": "JSON is easy...",
       "tags": [
         "json-server",
