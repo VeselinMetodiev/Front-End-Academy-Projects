@@ -1,0 +1,17 @@
+{
+  "name": "03-My-Blogs-REST-ES6",
+  "version": "1.0.0",
+  "description": "REST, HTTP",
+  "main": "index.js",
+  "repository": "https://github.com/VeselinMetodiev/Front-End-Academy-Projects",
+  "author": "Veselin Metodiev",
+  "license": "Apache-2.0",
+  "scripts":{
+    "api": "json-server db.json",
+    "start": "lite-server"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0",
+    "lite-server": "^2.6.1"
+  }
+}

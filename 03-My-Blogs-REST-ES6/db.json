@@ -1,0 +1,62 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "content": "JSON is easy...",
+      "tags": [
+        "json-server",
+        "rest",
+        "api"
+      ],
+      "imgURL": "https://www.codiga.io/blog/javascript-best-practices/",
+      "authorId": 1
+    },
+    {
+      "imgURL": "https://i.insider.com/61d1c0e2aa741500193b2d18?width=1136&format=jpeg",
+      "id": 2
+    },
+    {
+      "id": 3,
+      "title": "json-server",
+      "content": "JSON is easy...",
+      "tags": [
+        "json-server",
+        "rest",
+        "api"
+      ],
+      "imgURL": "https://i.insider.com/61d1c0e2aa741500193b2d18?width=1136&format=jpeg",
+      "authorId": 1
+    },
+    {
+      "title": "using rest client",
+      "content": "Rest Client is easy...",
+      "tags": [
+        "rest",
+        "client",
+        "http",
+        "crud"
+      ],
+      "imgURL": "https://www.betterup.com/hubfs/Blog%20Images/types-of-rest-blog-1.jpg",
+      "authorId": 1,
+      "id": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Doe",
+      "username": "johndoe",
+      "password": "john123",
+      "role": "ADMIN"
+    }
+  ]
+}
