@@ -94,16 +94,23 @@
     flex-flow: row wrap; 
     row-gap: 10px;
     column-gap: 10px;
+    background: #777;
   }
 
   article {
     flex: 30%;
+    display: flex;
+    flex-flow: column wrap;
     padding: 10px;
     background-color: #999;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
   }
 
   article .blog-text {
-    flex: 30%;
+    display: flex;
+    flex-flow: column wrap;
     padding: 0 30px 0 0;
   }
 
@@ -116,8 +123,8 @@
   }
 
   .article-image{
-    width: auto;
-    height: 400px;
+    width: 300px;
+    height: auto;
   }
 
   article summary {
@@ -147,7 +154,7 @@ article:first-child h1::first-letter {
 
   /* Style the footer */
 footer {
-    position:fixed;
+  position:unset;
     bottom: 0;
     width: 100%;
     background-color: #777;
