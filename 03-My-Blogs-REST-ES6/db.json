@@ -1,20 +1,8 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "Hey there",
-      "content": "JSON is easy...",
-      "tags": [
-        "json-server",
-        "rest",
-        "api"
-      ],
-      "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/IMG_%28business%29.svg/1200px-IMG_%28business%29.svg.png",
-      "authorId": 1
-    },
-    {
       "id": 2,
-      "title": "Please.",
+      "title": "Json is not always easy.",
       "content": "JSON is not easy...",
       "tags": [
         "json-server",
@@ -37,25 +25,15 @@
       "authorId": 1
     },
     {
-      "id": 4,
-      "title": "I fixed it.",
-      "content": "JSON is not easy...",
-      "tags": [
-        "json-server",
-        "rest",
-        "api"
-      ],
+      "title": "title",
+      "authorId": "1",
+      "content": "text",
       "imgUrl": "https://www.phoneworld.com.pk/wp-content/uploads/2022/07/carbon-programming-language.png",
-      "authorId": 1
+      "tags": [],
+      "id": 4
     }
   ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
+  "comments": [],
   "users": [
     {
       "id": 1,
