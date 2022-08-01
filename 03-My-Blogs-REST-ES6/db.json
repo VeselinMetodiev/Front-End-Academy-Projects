@@ -25,10 +25,10 @@
       "authorId": 1
     },
     {
-      "title": "title",
+      "title": "New Title",
       "authorId": "1",
-      "content": "text",
-      "imgUrl": "https://www.phoneworld.com.pk/wp-content/uploads/2022/07/carbon-programming-language.png",
+      "content": "New Text",
+      "imgUrl": "https://softwareengineeringdaily.com/wp-content/uploads/2020/01/Java-Debugging-Tips-881x441.jpg",
       "tags": [],
       "id": 4
     }

@@ -26,9 +26,7 @@ export function showError(err) {
 
 export async function deletePost(postId) {
     await deletePostId(postId);
-    const postElem = document.getElementById('posts');
-    postElem.innerHTML = '';
-    init();
+    refreshPosts();
   }
 
   export async function editPost(event, postId) {
@@ -42,16 +40,22 @@ export async function deletePost(postId) {
         }
         const tags = chipsInstances[0].chipsData.map(chips => chips.tag);
         newPost['tags'] = tags;
+        //With put request
         await editPostId(newPost, postId);
-        const postElem = document.getElementById('posts');
-        postElem.innerHTML = '';
-        init();
+        refreshPosts();
+        //Without Put request
         // await deletePost(postId);
         // const created = await addNewPost(newPost);
         // addPost(created);
         resetForm();
       } catch (err) {
         showError(err);
+      }
+
+      function refreshPosts() {
+          const postElem = document.getElementById('posts');
+          postElem.innerHTML = '';
+          init();
       }
   }
 
