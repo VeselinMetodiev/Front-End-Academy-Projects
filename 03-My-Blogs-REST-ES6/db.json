@@ -9,37 +9,20 @@
         "rest",
         "api"
       ],
-      "imgURL": "https://www.codiga.io/blog/javascript-best-practices/",
+      "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/IMG_%28business%29.svg/1200px-IMG_%28business%29.svg.png",
       "authorId": 1
     },
     {
-      "imgURL": "https://i.insider.com/61d1c0e2aa741500193b2d18?width=1136&format=jpeg",
-      "id": 2
-    },
-    {
-      "id": 3,
-      "title": "json-server",
-      "content": "JSON is easy...",
+      "id": 2,
+      "title": "Json is not always easy.",
+      "content": "JSON is not easy...",
       "tags": [
         "json-server",
         "rest",
         "api"
       ],
-      "imgURL": "https://i.insider.com/61d1c0e2aa741500193b2d18?width=1136&format=jpeg",
+      "imgUrl": "https://moralis.io/wp-content/uploads/2021/07/Moralis-Blogpost-JavaScript-Explained-07272021-V12.png",
       "authorId": 1
-    },
-    {
-      "title": "using rest client",
-      "content": "Rest Client is easy...",
-      "tags": [
-        "rest",
-        "client",
-        "http",
-        "crud"
-      ],
-      "imgURL": "https://www.betterup.com/hubfs/Blog%20Images/types-of-rest-blog-1.jpg",
-      "authorId": 1,
-      "id": 5
     }
   ],
   "comments": [
