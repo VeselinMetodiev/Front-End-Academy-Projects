@@ -27,7 +27,7 @@ export function showError(err){
 //create the html element to add posts to the index.html
 export function addPost(post){
     const postElem = document.createElement('article');
-    postElem.className = "col s12 m4";
+    postElem.className = "col s12 m6 l4";
     // postElem.innerHTML = `
     // <h3 class="post-title">${post.title}</h3>
     // <img class="post-img" src=${post.imgUrl}>
