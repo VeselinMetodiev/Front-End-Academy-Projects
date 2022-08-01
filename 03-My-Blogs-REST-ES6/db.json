@@ -2,7 +2,7 @@
   "posts": [
     {
       "id": 1,
-      "title": "json-server patch example",
+      "title": "Hey there",
       "content": "JSON is easy...",
       "tags": [
         "json-server",
@@ -14,7 +14,7 @@
     },
     {
       "id": 2,
-      "title": "Json is not always easy.",
+      "title": "Please.",
       "content": "JSON is not easy...",
       "tags": [
         "json-server",
@@ -25,7 +25,7 @@
       "authorId": 1
     },
     {
-      "id": 4,
+      "id": 3,
       "title": "Help....",
       "content": "JSON is not easy...",
       "tags": [
@@ -33,7 +33,7 @@
         "rest",
         "api"
       ],
-      "imgUrl": "https://moralis.io/wp-content/uploads/2021/07/Moralis-Blogpost-JavaScript-Explained-07272021-V12.png",
+      "imgUrl": "http://alfa-cyber.com/wp-content/uploads/2021/06/What-is-JavaScript.jpg",
       "authorId": 1
     },
     {
@@ -45,7 +45,7 @@
         "rest",
         "api"
       ],
-      "imgUrl": "https://moralis.io/wp-content/uploads/2021/07/Moralis-Blogpost-JavaScript-Explained-07272021-V12.png",
+      "imgUrl": "https://www.phoneworld.com.pk/wp-content/uploads/2022/07/carbon-programming-language.png",
       "authorId": 1
     }
   ],
