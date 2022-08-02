@@ -31,6 +31,7 @@ export async function deletePost(postId) {
 
   export async function editPost(event, postId) {
     console.log(postId);
+   // window.scroll(0,0);
     try {
         event.preventDefault();
         const formData = new FormData(addPostForm);
@@ -43,21 +44,21 @@ export async function deletePost(postId) {
         //With put request
         await editPostId(newPost, postId);
         refreshPosts();
-        //Without Put request
-        // await deletePost(postId);
-        // const created = await addNewPost(newPost);
-        // addPost(created);
+          //Without Put request
+          // await deletePost(postId);
+          // const created = await addNewPost(newPost);
+          // addPost(created);
         resetForm();
       } catch (err) {
         showError(err);
       }
-
-      function refreshPosts() {
-          const postElem = document.getElementById('posts');
-          postElem.innerHTML = '';
-          init();
-      }
   }
+
+  function refreshPosts() {
+    const postElem = document.getElementById('posts');
+    postElem.innerHTML = '';
+    init();
+}
 
 export function addPost(post) {
   const postElem = document.createElement('article');

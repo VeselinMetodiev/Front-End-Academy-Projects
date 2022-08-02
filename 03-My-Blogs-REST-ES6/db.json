@@ -13,24 +13,23 @@
       "authorId": 1
     },
     {
-      "id": 3,
-      "title": "Help....",
-      "content": "JSON is not easy...",
-      "tags": [
-        "json-server",
-        "rest",
-        "api"
-      ],
-      "imgUrl": "http://alfa-cyber.com/wp-content/uploads/2021/06/What-is-JavaScript.jpg",
-      "authorId": 1
-    },
-    {
       "title": "New Title",
       "authorId": "1",
       "content": "New Text",
       "imgUrl": "https://softwareengineeringdaily.com/wp-content/uploads/2020/01/Java-Debugging-Tips-881x441.jpg",
       "tags": [],
       "id": 4
+    },
+    {
+      "title": "Edit This Post",
+      "authorId": "1",
+      "content": "Edit this post",
+      "imgUrl": "https://i.pcmag.com/imagery/reviews/05q4OgEDdjBnzHuNkFg7MB3-15.fit_scale.size_1028x578.v1626206894.jpg",
+      "tags": [
+        "edit",
+        "post"
+      ],
+      "id": 5
     }
   ],
   "comments": [],
