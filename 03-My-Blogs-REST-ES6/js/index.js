@@ -14,6 +14,11 @@ async function getPostById(postId){
   return currentPost;
 }
 
+export function showError(err) {
+  erorrsDiv.innerHTML = `<div>${err}</div>`;
+}
+
+// Gets and display posts when we first load the page
 async function init() {
   try {
     const allPosts = await getPosts();
@@ -23,14 +28,6 @@ async function init() {
   }
 }
 
-function displayDataInForm(currentPost){
-  document.getElementById("title").value = currentPost.title;
-  document.getElementById("authorId").value = currentPost.authorId;
-  document.getElementById("content").value = currentPost.content;
-  document.getElementById("imgUrl").value = currentPost.imgUrl;
-  document.getElementById("tags").value = currentPost.tags;
-}
-
 export function showPosts(posts) {
   // posts.sort(function(a, b) { 
   //   return a.id - b.id;
@@ -38,88 +35,7 @@ export function showPosts(posts) {
   posts.forEach(post => addPost(post));
 }
 
-export function showError(err) {
-  erorrsDiv.innerHTML = `<div>${err}</div>`;
-}
-
-export async function deletePost(postId) {
-    await deletePostId(postId);
-    refreshPosts(postId);
-  }
-
-  export async function magicEdit(postId) {
-    console.log("Magic Edit")
-    try {
-      const post = getNewPostData();
-      const currentPost = document.getElementById('card' + postId);
-      currentPost.innerHTML = 
-      `<div id="card${post.id}" class="card">
-      <div class="card-image waves-effect waves-block waves-light">
-        <img class="activator" src="${post.imgUrl}">
-      </div>
-      <div class="card-content">
-        <span class="card-title activator grey-text text-darken-4">${post.title}<i class="material-icons right">more_vert</i></span>
-        <p>Author: ${post.authorId}, Tags: ${post.tags ? post.tags.join(', ') : 'no tags'}</p>
-      </div>
-      <div class="card-reveal">
-        <span class="card-title grey-text text-darken-4">${post.title}<i class="material-icons right">close</i></span>
-        <p>${post.content}</p>
-      </div>
-      <div class="card-action">
-        <button class="btn waves-effect waves-light" type="button" id="edit">Edit
-          <i class="material-icons right">send</i>
-        </button>
-        <button class="btn waves-effect waves-light red lighten-1" type="button" id="delete">Delete
-          <i class="material-icons right">clear</i>
-        </button>
-      </div>
-      </div>
-      `;
-      //With put request
-      await editPostId(post, postId);
-      //refreshPosts(postId);
-  //       //Without Put request
-  //       // await deletePost(postId);
-  //       // const created = await addNewPost(newPost);
-  //       // addPost(created);
-  //     resetForm();
-    } catch (err) {
-      showError(err);
-    } 
-    
-  }
-
-  export async function editPost(event, postId) {
-    event.preventDefault();
-    window.scroll(0,0);
-    const currentPost = await getPostById(postId);
-    displayDataInForm(currentPost);
-    buttons.innerHTML += ('beforeend', `
-    <button id="temporaryButton" class="btn waves-effect waves-light yellow lighten-1" type="button">Edit
-    <i class="material-icons right">send</i>
-</button>`);
-    document.getElementById("temporaryButton").addEventListener("click", () => magicEdit(postId));
-
-    //const temporaryButton = document.getElementById("temporaryButton");
-    //buttons.removeChild(temporaryButton);
-  }
-  
-
-function getNewPostData() {
-  const formData = new FormData(addPostForm);
-  const newPost = {};
-  for (const entry of formData.entries()) {
-    newPost[entry[0]] = entry[1];
-  }
-  const tags = chipsInstances[0].chipsData.map(chips => chips.tag);
-  newPost['tags'] = tags;
-  return newPost;
-}
-
-  function refreshPosts(postId) {
-    document.getElementById(postId).remove();
-}
-
+//Builds the html tags for an article
 export function addPost(post) {
   const postElem = document.createElement('article');
   postElem.setAttribute('id', post.id);
@@ -152,16 +68,89 @@ export function addPost(post) {
   postElem.querySelector('#edit').addEventListener('click', event => editPost(event, post.id));
 }
 
+
+export async function deletePost(postId) {
+    await deletePostId(postId);
+    refreshPosts(postId);
+  }
+// Remove the article that we have deleted from the web page
+  function refreshPosts(postId) {
+    document.getElementById(postId).remove();
+}
+
+  //After we click EDIT under an article => displays its content on the form
+function displayDataInForm(currentPost){
+  document.getElementById("title").value = currentPost.title;
+  document.getElementById("authorId").value = currentPost.authorId;
+  document.getElementById("content").value = currentPost.content;
+  document.getElementById("imgUrl").value = currentPost.imgUrl;
+  document.getElementById("tags").value = currentPost.tags;
+}
+
+  export async function editPost(event, postId) {
+    event.preventDefault();
+    window.scroll(0,0);
+    const currentPost = await getPostById(postId);
+    displayDataInForm(currentPost);
+    buttons.innerHTML += ('beforeend', `
+    <button id="temporaryButton" class="btn waves-effect waves-light yellow lighten-1" type="button">Edit
+    <i class="material-icons right">send</i>
+</button>`);
+    document.getElementById("temporaryButton").addEventListener("click", () => editArticle(postId));
+  }
+
+  export async function editArticle(postId) {
+    console.log("Edit button was clicked");
+    try {
+      const post = getNewPostData();
+      const currentPost = document.getElementById('card' + postId);
+      currentPost.innerHTML = 
+      `<div id="card${post.id}" class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img class="activator" src="${post.imgUrl}">
+      </div>
+      <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">${post.title}<i class="material-icons right">more_vert</i></span>
+        <p>Author: ${post.authorId}, Tags: ${post.tags ? post.tags.join(', ') : 'no tags'}</p>
+      </div>
+      <div class="card-reveal">
+        <span class="card-title grey-text text-darken-4">${post.title}<i class="material-icons right">close</i></span>
+        <p>${post.content}</p>
+      </div>
+      <div class="card-action">
+        <button class="btn waves-effect waves-light" type="button" id="edit">Edit
+          <i class="material-icons right">send</i>
+        </button>
+        <button class="btn waves-effect waves-light red lighten-1" type="button" id="delete">Delete
+          <i class="material-icons right">clear</i>
+        </button>
+      </div>
+      </div>
+      `;
+      await editPostId(post, postId);
+      const temporaryButton = document.getElementById("temporaryButton");
+      buttons.removeChild(temporaryButton);
+      resetForm();
+    } catch (err) {
+      showError(err);
+    } 
+  }
+  
+function getNewPostData() {
+  const formData = new FormData(addPostForm);
+  const newPost = {};
+  for (const entry of formData.entries()) {
+    newPost[entry[0]] = entry[1];
+  }
+  const tags = chipsInstances[0].chipsData.map(chips => chips.tag);
+  newPost['tags'] = tags;
+  return newPost;
+}
+
 async function handleSubmitPost(event) {
   try {
     event.preventDefault();
-    const formData = new FormData(event.target);
-    const newPost = {};
-    for (const entry of formData.entries()) {
-      newPost[entry[0]] = entry[1];
-    }
-    const tags = chipsInstances[0].chipsData.map(chips => chips.tag);
-    newPost['tags'] = tags;
+    const newPost = getNewPostData();
     const created = await addNewPost(newPost);
     addPost(created);
     resetForm();
