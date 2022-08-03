@@ -1,32 +1,32 @@
-import { addNewPost, getAllPosts } from './blogs-api-client.js';
-import { chipsInstances } from './materialize-helpers.js';
+import { BlogsAPI } from './blogs-api-client.js';
+import { Post } from './posts.js';
 
 const postsSection = document.getElementById("posts");
 const erorrsDiv = document.getElementById("errors");
-const addPostForm = document.getElementById("add-post-form");
+const addPostForm = document.getElementById("add-post-form") as HTMLFormElement;
 addPostForm.addEventListener('submit', handleSubmitPost);
 addPostForm.addEventListener('reset', resetForm);
 
 async function init() {
   try {
-    const allPosts = await getAllPosts();
+    const allPosts = await BlogsAPI.getAllPosts();
     showPosts(allPosts);
   } catch (err) {
     showError(err);
   }
 }
 
-export function showPosts(posts) {
+export function showPosts(posts: Post[]) {
   posts.forEach(post => addPost(post));
 }
 
-export function showError(err) {
+export function showError(err: any) {
+  if(erorrsDiv){
   erorrsDiv.innerHTML = `<div>${err}</div>`;
+  }
 }
 
-
-
-export function addPost(post) {
+export function addPost(post: Post) {
   const postElem = document.createElement('article');
   postElem.setAttribute('id', post.id);
   postElem.className = "col s12 m6 l4";
