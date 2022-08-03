@@ -51,18 +51,6 @@
       "id": 4
     },
     {
-      "title": "New Blog",
-      "author": "1",
-      "content": "New blog text here ...\nMore text ...",
-      "url": "https://dz2cdn1.dzone.com/storage/temp/8746383-json-server.png",
-      "tags": [
-        "new",
-        "blog",
-        "here"
-      ],
-      "id": 5
-    },
-    {
       "title": "Anoter Blog",
       "authorId": "1",
       "content": "Another blog text ...",
@@ -74,75 +62,13 @@
       "id": 6
     },
     {
-      "title": "sasad",
-      "authorId": "adasda",
-      "content": "asdsada",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
+      "title": "New",
+      "content": "new",
       "tags": [
-        "asadad",
-        "aassadsad"
+        "1"
       ],
-      "id": 7
-    },
-    {
-      "title": "wdedew",
-      "authorId": "1",
-      "content": "dwqdw",
       "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [
-        "saddas",
-        "asdasd"
-      ],
-      "id": 8
-    },
-    {
-      "title": "sxsa",
-      "authorId": "1",
-      "content": "qswqsq",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [
-        "aaa"
-      ],
-      "id": 9
-    },
-    {
-      "title": "ddew",
-      "authorId": "1",
-      "content": "edwwedew",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [],
-      "id": 10
-    },
-    {
-      "title": "ddew",
-      "authorId": "1",
-      "content": "edwwedew",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [],
-      "id": 11
-    },
-    {
-      "title": "ddew",
-      "authorId": "1",
-      "content": "edwwedew",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [],
-      "id": 12
-    },
-    {
-      "title": "wswqs",
-      "authorId": "1",
-      "content": "qwsdsads",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [],
-      "id": 13
-    },
-    {
-      "title": "dwqeedewq",
-      "authorId": "1",
-      "content": "sdxwsq",
-      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
-      "tags": [],
+      "authorId": 1,
       "id": 14
     },
     {
@@ -152,38 +78,6 @@
       "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
       "tags": [],
       "id": 15
-    },
-    {
-      "title": "",
-      "authorId": "",
-      "content": "",
-      "imageUrl": "",
-      "tags": [],
-      "id": 16
-    },
-    {
-      "title": "wdwed",
-      "authorId": "",
-      "content": "",
-      "imageUrl": "",
-      "tags": [],
-      "id": 17
-    },
-    {
-      "title": "",
-      "authorId": "",
-      "content": "",
-      "imageUrl": "",
-      "tags": [],
-      "id": 18
-    },
-    {
-      "title": "dwedwed",
-      "authorId": "",
-      "content": "",
-      "imageUrl": "",
-      "tags": [],
-      "id": 19
     },
     {
       "title": "ededew",
@@ -217,6 +111,46 @@
         "ccc"
       ],
       "id": 22
+    },
+    {
+      "title": "New Post",
+      "content": "Something",
+      "tags": [
+        "heello"
+      ],
+      "imageUrl": "https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg",
+      "authorId": 1,
+      "id": 23
+    },
+    {
+      "title": "PostId",
+      "content": "postId",
+      "tags": [
+        "snimka"
+      ],
+      "imageUrl": "",
+      "authorId": 1,
+      "id": 24
+    },
+    {
+      "title": "Yes",
+      "content": "yes",
+      "tags": [
+        "yes"
+      ],
+      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
+      "authorId": 1,
+      "id": 25
+    },
+    {
+      "title": "Yes",
+      "content": "yes",
+      "tags": [
+        "yes"
+      ],
+      "imageUrl": "https://assets.logitech.com/assets/64683/performance-mouse-mx.png",
+      "authorId": 1,
+      "id": 26
     }
   ],
   "comments": [
