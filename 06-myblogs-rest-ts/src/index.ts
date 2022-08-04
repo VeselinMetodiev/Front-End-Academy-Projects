@@ -112,13 +112,13 @@ async handleSubmitPost(event: SubmitEvent) {
         np[key] = value.toString();
       })
       // const post = newPost as unknown as Post;
-      if (np.id) {
+      if (np.id) { //Invoked when we update
         const post = new Post(parseInt(np.id), np.title, np.content, np.tags.split(/\W+/), np.imageUrl, parseInt(np.authorId) || 1);
         const updated = await BlogsAPI.updatePost(post);
         this.updatePostDOM(updated);
         AppStateStore.editedPost = undefined;
         this.submitButton.innerText = 'Submit';
-      } else {
+      } else { //Invoked when we create
         const newPost = new PostCreateDto(np.title, np.content, np.tags.split(/\W+/), np.imageUrl, parseInt(np.authorId) || 1);
         const created = await BlogsAPI.addNewPost(newPost);
         this.addPostDOM(created);
