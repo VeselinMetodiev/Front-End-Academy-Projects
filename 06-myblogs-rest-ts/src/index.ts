@@ -18,6 +18,7 @@ class BlogsController {
   erorrsDiv = document.getElementById("errors")!;
   addPostForm = document.getElementById("add-post-form")! as HTMLFormElement;
   resetButton = document.getElementById("form-reset-button")! as HTMLButtonElement;
+  submitButton = document.getElementById("form-submit-button")! as HTMLButtonElement;
 
   async init() {
     this.addPostForm.addEventListener('submit', this.handleSubmitPost.bind(this));
@@ -81,6 +82,7 @@ class BlogsController {
   }
   
  editPost(post: Post) {
+    this.submitButton.innerText = 'Edit';
     this.fillPostForm(post);
     window.scrollTo(0, 0);
     AppStateStore.editedPost = post;
@@ -115,6 +117,7 @@ async handleSubmitPost(event: SubmitEvent) {
         const updated = await BlogsAPI.updatePost(post);
         this.updatePostDOM(updated);
         AppStateStore.editedPost = undefined;
+        this.submitButton.innerText = 'Submit';
       } else {
         const newPost = new PostCreateDto(np.title, np.content, np.tags.split(/\W+/), np.imageUrl, parseInt(np.authorId) || 1);
         const created = await BlogsAPI.addNewPost(newPost);
