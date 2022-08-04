@@ -7,7 +7,7 @@ export interface BlogsApiClient {
     getAllPosts(): Promise<Post[]>;
     getPostById(id: IdType): Promise<Post>;
     addNewPost(post: PostCreateDto): Promise<Post>;
-    updatePost(pid: IdType, ost: Post): Promise<Post>;
+    updatePost(post: Post): Promise<Post>;
     deletePostById(id: IdType): Promise<Post>;
 }
 
@@ -30,15 +30,15 @@ class BlogApiClientImpl implements BlogsApiClient
             body: JSON.stringify(post)
         });
     }
-    async updatePost(id: IdType, post: Post): Promise<Post> {
-        return this.handleRequest(`${API_BASE_URL}/${id}`, {
+    async updatePost(post: Post): Promise<Post> {
+        return this.handleRequest(`${API_BASE_URL}/${post.id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
             body: JSON.stringify(post)
         });
-    }
+    } 
     async deletePostById(id: number): Promise<Post> {
         return this.handleRequest(`${API_BASE_URL}/${id}`, {
             method: 'DELETE'
