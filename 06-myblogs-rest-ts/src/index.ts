@@ -2,6 +2,7 @@ import { AppStateStore } from './state-store.js';
 import { BlogsAPI } from './blogs-api-client.js';
 import { Post, PostCreateDto } from './posts.js';
 import { IdType } from './shared-types.js';
+import { ValidationResult } from './validate.js';
 
 
 // interface BlogControllerType {
@@ -23,6 +24,7 @@ class BlogsController {
   async init() {
     this.addPostForm.addEventListener('submit', this.handleSubmitPost.bind(this));
     this.resetButton.addEventListener('click', this.resetForm.bind(this));
+    this.addPostForm.addEventListener('change', this.validateForm, true);
     try {
       const allPosts = await BlogsAPI.getAllPosts();
       AppStateStore.allPosts = allPosts;
@@ -52,6 +54,8 @@ class BlogsController {
     const postElem = document.getElementById(post.id.toString())!;
     this.updateArticleInnerHtml(postElem, post);
   }
+
+
   
   private updateArticleInnerHtml(postElem: HTMLElement, post: Post) {
     postElem.innerHTML = `
@@ -103,24 +107,15 @@ class BlogsController {
 async handleSubmitPost(event: SubmitEvent) {
     try {
       event.preventDefault();
-      const formData = new FormData(this.addPostForm);
-      type PostDict = {
-        [key: string]: string
-      };
-      const np: PostDict = {};
-      formData.forEach((value, key) => {
-        np[key] = value.toString();
-      })
+      const post = this.getPostFromSnapshop();
       // const post = newPost as unknown as Post;
-      if (np.id) { //Invoked when we update
-        const post = new Post(parseInt(np.id), np.title, np.content, np.tags.split(/\W+/), np.imageUrl, parseInt(np.authorId) || 1);
+      if (post.id) { //Invoked when we update
         const updated = await BlogsAPI.updatePost(post);
         this.updatePostDOM(updated);
         AppStateStore.editedPost = undefined;
         this.submitButton.innerText = 'Submit';
       } else { //Invoked when we create
-        const newPost = new PostCreateDto(np.title, np.content, np.tags.split(/\W+/), np.imageUrl, parseInt(np.authorId) || 1);
-        const created = await BlogsAPI.addNewPost(newPost);
+        const created = await BlogsAPI.addNewPost(post);
         this.addPostDOM(created);
       }
       this.resetForm();
@@ -128,6 +123,19 @@ async handleSubmitPost(event: SubmitEvent) {
       this.showError(err);
     }
   }
+
+getPostFromSnapshop() : PostCreateDto {
+  const formData = new FormData(this.addPostForm);
+  type PostDict = {
+    [key: string]: string
+  };
+
+  const np: PostDict = {};
+      formData.forEach((value, key) => {
+        np[key] = value.toString();
+      })
+      return new Post(np.title, np.content, np.tags.split(/\W+/), np.imageUrl, parseInt(np.authorId) || 1);
+}
   
  resetForm() {
     if (AppStateStore.editedPost) {
@@ -144,6 +152,24 @@ async handleSubmitPost(event: SubmitEvent) {
     } catch (err) {
       this.showError(err);
     }
+  }
+
+  validateForm  = (event: Event)=> {
+    const validationResult: ValidationResult<Post> = {};
+    validationResult['title'] = [`Title is required`];
+    showValidationErrors(validationResult);
+  }
+
+  showValidationErrors(validationResult: ValidationResult<Post>){
+    let field: keyof ValidationResult<Post>;
+    for(field in validationResult) {
+      if(validationResult[field] !== undefined){
+      for(const err of validationResult[field]!){
+      this.showError(`${field} -> ${err}<br>`)
+      }
+    }
+  }
+    this.showError();
   }
 }
 

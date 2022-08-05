@@ -14,12 +14,12 @@ export class PostCreateDto {
 
 export class Post extends PostCreateDto {
     constructor(
-        public id: IdType,
          title: string,
          content: string, 
          tags: string[], 
          imageUrl: string, 
-         authorId: IdType, 
+         authorId: IdType,
+         public id?: IdType,
         ) {
             super(title, content, tags, imageUrl, authorId)
     }
@@ -56,9 +56,9 @@ export class NumberIdGenerator implements IdGenerator<number> {
 }
 
 const SAMPLE_POST = [
-    new Post(0, "New in Typescript", "Typescript becomes stricter...", ['typescript', 'novelties'], "https://assets.logitech.com/assets/64683/performance-mouse-mx.png", 1),
-    new Post(0, "New in ECMAScript", "ES becomes stricter...", ['ecmascript', 'novelties'], "https://assets.logitech.com/assets/64683/performance-mouse-mx.png", 1),
-    new Post(0, "New in JavaScript", "Typescript becomes stricter...", ['javascript', 'novelties'], "https://assets.logitech.com/assets/64683/performance-mouse-mx.png", 2),
+    new Post("New in Typescript", "Typescript becomes stricter...", ['typescript', 'novelties'], "https://assets.logitech.com/assets/64683/performance-mouse-mx.png", 1),
+    new Post("New in ECMAScript", "ES becomes stricter...", ['ecmascript', 'novelties'], "https://assets.logitech.com/assets/64683/performance-mouse-mx.png", 1),
+    new Post("New in JavaScript", "Typescript becomes stricter...", ['javascript', 'novelties'], "https://assets.logitech.com/assets/64683/performance-mouse-mx.png", 2),
 ];
 
 function testPostRepository() {
@@ -74,3 +74,5 @@ function testPostRepository() {
     console.log('Find by author');
     postRepo.findByAuthorId(2).forEach(post => console.log(post));
 }
+
+testPostRepository();
