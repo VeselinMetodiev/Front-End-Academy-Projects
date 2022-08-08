@@ -77,9 +77,9 @@ async function fetchBooks(searchWord: string) {
 </div>
 </article>`;
       resultsElem.insertAdjacentHTML("beforeend", templateString);
-      resultsElem
-      .querySelector(`#button${book.Title}`)!
-      .addEventListener("click", (event) => addToFavourites(book));
+      // resultsElem
+      // .querySelector(`#button${book.Title}`)!
+      // .addEventListener("click", (event) => addToFavourites(book));
     });
     
   } catch (err) {
