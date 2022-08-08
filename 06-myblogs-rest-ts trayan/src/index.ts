@@ -3,6 +3,7 @@ import { AppStateStore } from "./state-store.js";
 import { BlogsAPI } from "./blogs-api-client.js";
 import { Post } from "./posts.js";
 import { IdType } from "./shared-types.js";
+import { ChangedStatus, ValidationStatus } from "./state-enums.js";
 
 // interface BlogControllerType {
 //   postsSection: HTMLElement;
@@ -31,6 +32,14 @@ class BlogsController {
       const allPosts = await BlogsAPI.getAllPosts();
       AppStateStore.allPosts = allPosts;
       this.showPosts(allPosts);
+      //INITIALIZE DEFAULT STATES FOR INPUT FIELDS IN THE FORM
+      AppStateStore.postFormInputStates = {
+        title: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
+        tags: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
+        authorId: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
+        content: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
+        imageUrl: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
+      }
     } catch (err) {
       this.showError(err);
     }
@@ -211,14 +220,18 @@ class BlogsController {
     AppStateStore.postFormErrors = [];
     let field: keyof ValidationResult<Post>;
     for (field in validationResult) {
+      const fieldError = `${field}Error`;
+      console.log(fieldError);
       const filedErrors = validationResult[field];
       if (filedErrors !== undefined) {
         for (const err of filedErrors) {
           AppStateStore.postFormErrors.push(`${field} -> ${err}<br>`);
+          document.getElementById(fieldError)!.innerHTML += (`<div>${field} -> ${err}<br></div>`);
         }
+        
       }
     }
-    this.showError(AppStateStore.postFormErrors.join('')); // deffault is ,
+    this.showError(AppStateStore.postFormErrors.join('')); // default is ,
   }
 }
 

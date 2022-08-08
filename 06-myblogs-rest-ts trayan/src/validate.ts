@@ -1,4 +1,5 @@
 import { Post } from "./posts.js";
+import { ChangedStatus, ValidationStatus } from "./state-enums.js";
 
 export type ValidationConfig<T> = {
     [P in keyof T]?: Validator | Validator[]
@@ -8,15 +9,15 @@ export type ValidationResult<T> = {
     [P in keyof T]?: string[]
 }
 
+//TODO: Another class
+export type FormState<T> = { //Creating map
+    [P in keyof T]?: [ValidationStatus, ChangedStatus]
+}
+
 
 export type Validator = (value: string, field: string) => void;
 
 export type ValidatorFactory = (...args: any) => Validator
-
-type PostValidationConfig = ValidationConfig<Post>
-
-type PostValidationResult = ValidationResult<Post>
-
 
 // Standard validators
 export class Validators {
