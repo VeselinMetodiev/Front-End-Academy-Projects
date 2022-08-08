@@ -16,7 +16,7 @@ export const AppStateStore: AppState = {
         tags: Validators.required(),
         authorId: Validators.required(), // Does not work
         content: Validators.required(),
-        imageUrl: Validators.required(),
+        imageUrl: [Validators.required(), Validators.pattern(/https:\/\/(www)?(.\w+.|\/|)+(png|jpg|jpeg)/)]
     },
     postFormErrors: []
 }
