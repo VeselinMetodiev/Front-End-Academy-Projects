@@ -9,9 +9,16 @@ export type ValidationResult<T> = {
     [P in keyof T]?: string[]
 }
 
+export class FormFieldState { //It is both type and instance => that's why it is a class, not just type
+    constructor(
+    public valid: ValidationStatus,
+    public changed: ChangedStatus
+    ) {}
+}
+
 //TODO: Another class
 export type FormState<T> = { //Creating map
-    [P in keyof T]?: [ValidationStatus, ChangedStatus]
+    [P in keyof T]?: FormFieldState
 }
 
 

@@ -1,8 +1,8 @@
-import { ValidationConfig, ValidationResult } from "./validate";
+import { FormFieldState, ValidationConfig, ValidationResult } from "./validate.js";
 import { AppStateStore } from "./state-store.js";
 import { BlogsAPI } from "./blogs-api-client.js";
 import { Post } from "./posts.js";
-import { IdType } from "./shared-types.js";
+import { FormFieldDict, IdType } from "./shared-types.js";
 import { ChangedStatus, ValidationStatus } from "./state-enums.js";
 
 // interface BlogControllerType {
@@ -16,12 +16,17 @@ import { ChangedStatus, ValidationStatus } from "./state-enums.js";
 class BlogsController {
   postsSection = document.getElementById("posts")!;
   erorrsDiv = document.getElementById("errors")!;
-  protected addPostForm = document.getElementById(
-    "add-post-form"
-  )! as HTMLFormElement;
-  resetButton = document.getElementById(
-    "form-reset-button"
-  )! as HTMLButtonElement;
+  protected addPostForm = document.getElementById("add-post-form")! as HTMLFormElement;
+  resetButton = document.getElementById("form-reset-button")! as HTMLButtonElement;
+
+  initFormState(formElement: HTMLFormElement){
+    const formData = new FormData(formElement);
+    const np: FormFieldDict<FormFieldState> = {};
+    formData.forEach((value, key) => {
+      np[key] = new FormFieldState(ValidationStatus.INVALID, ChangedStatus.PRISTINE)
+    });
+  }
+
 
   async init() {
     this.addPostForm.addEventListener("submit", this.handleSubmitPost);
@@ -32,17 +37,11 @@ class BlogsController {
       const allPosts = await BlogsAPI.getAllPosts();
       AppStateStore.allPosts = allPosts;
       this.showPosts(allPosts);
-      //INITIALIZE DEFAULT STATES FOR INPUT FIELDS IN THE FORM
-      AppStateStore.postFormInputStates = {
-        title: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
-        tags: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
-        authorId: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
-        content: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
-        imageUrl: [ValidationStatus.INVALID, ChangedStatus.PRISTINE ],
-      }
     } catch (err) {
       this.showError(err);
     }
+
+    this.initFormState(this.addPostForm);
   }
 
   showPosts(posts: Post[]) {
@@ -148,10 +147,7 @@ class BlogsController {
 
   getPostFormSnapshot(): Post {
     const formData = new FormData(this.addPostForm);
-    type PostDict = {
-      [key: string]: string;
-    };
-    const np: PostDict = {};
+    const np: FormFieldDict<string> = {};
     formData.forEach((value, key) => {
       np[key] = value.toString();
     });
@@ -171,6 +167,7 @@ class BlogsController {
     } else {
       this.addPostForm.reset();
     }
+    this.defaultFormStates(); //After reset -> return to default form states
   };
 
   async deletePost(postId: IdType) {
