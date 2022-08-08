@@ -1,35 +1,57 @@
 import { ChangedStatus, ValidationStatus } from "./state-enums";
 
 export type FormComponents<Entity> = {
-    [Prop in keyof Entity]?: FormComponent<Prop>
-}
+  [Prop in keyof Entity]?: FormComponent<Prop>;
+};
 
 interface FormComponent<State> {
-    id: string;
-    value: State;
-    valid: ValidationStatus;
-    changed: ChangedStatus;
-    readonly initialValue?: State;
-    reset(): void;
-    validate(): string[]; //validation errors, empty array if not errors
-
+  id: string;
+  value: State;
+  valid: ValidationStatus;
+  changed: ChangedStatus;
+  readonly initialValue: State;
+  reset(): void;
+  validate(): string[]; //validation errors, empty array if not errors
+  render(): string;
 }
 
-export interface FormTextComponent extends FormComponent<string> {
-    multiline: boolean; 
+export interface FormTextComponentType extends FormComponent<string> {
+  multiline: boolean;
 }
-export type FormCheckboxComponent = FormComponent<boolean>
-export interface FormNumberComponent extends FormComponent<number>{
-    min: number;
-    max: number;
+export type FormCheckboxComponentType = FormComponent<boolean>;
+export interface FormNumberComponentType extends FormComponent<number> {
+  min: number;
+  max: number;
 }
-export interface FormUrlComponent extends FormComponent<string>{
-    allowRelative: boolean;
-    allowInsecure: boolean; //HTTP/S
+export interface FormUrlComponentType extends FormComponent<string> {
+  allowRelative: boolean;
+  allowInsecure: boolean; //HTTP/S
 }
 
+export type FormComponentType<Prop> = Prop extends string
+  ? FormTextComponentType
+  : Prop extends number
+  ? FormNumberComponentType
+  : Prop extends boolean
+  ? FormCheckboxComponentType
+  : never;
 
-
-export type FormComponentType<Prop> = Prop extends string ? FormTextComponent 
-: Prop extends number ? FormNumberComponent 
-: Prop extends boolean ? FormCheckboxComponent : never;
+export class FormTextComponent implements FormTextComponentType {
+  constructor(
+    public id: string,
+    public value: string,
+    public multiline: boolean = false,
+    public valid: ValidationStatus = ValidationStatus.INVALID,
+    public changed: ChangedStatus = ChangedStatus.PRISTINE,
+    public initialValue = ' '
+  ) {}
+  reset(): void {
+    throw new Error("Method not implemented.");
+  }
+  validate(): string[] {
+    throw new Error("Method not implemented.");
+  }
+  render(): string {
+    throw new Error("Method not implemented.");
+  }
+}
