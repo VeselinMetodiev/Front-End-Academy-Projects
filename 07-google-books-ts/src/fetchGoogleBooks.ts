@@ -1,3 +1,8 @@
+function init(){
+  document.getElementById("submit")?.addEventListener("click", displayBooks);
+  displayBooks();
+}
+
 async function fetchBooks(searchWord: string) {
   try {
     const resultsElem = document.getElementById("results") as HTMLElement;
@@ -68,11 +73,15 @@ async function fetchBooks(searchWord: string) {
       >Open in Google</a
     >
   </summary>
-  <a href="#">Add to Favourites</a>
+  <button id="button${book.Title}" href="#">Add to Favourites</button>
 </div>
 </article>`;
       resultsElem.insertAdjacentHTML("beforeend", templateString);
+      resultsElem
+      .querySelector(`#button${book.Title}`)!
+      .addEventListener("click", (event) => addToFavourites(book));
     });
+    
   } catch (err) {
     console.log("Error: ", err);
   } finally {
@@ -82,7 +91,7 @@ async function fetchBooks(searchWord: string) {
   }
 }
 
-document.getElementById("submit")?.addEventListener("click", displayBooks);
+
 
 function displayBooks() {
   console.log("Search was clicked.");
@@ -96,4 +105,10 @@ function displayBooks() {
   } else {
     fetchBooks(searchWord);
   }
+}
+
+init();
+
+function addToFavourites(book: { Title: any; Author: any; Thumbnail: any; Description: any; GoogleLink: any; }): void {
+  throw new Error("Function not implemented.");
 }
