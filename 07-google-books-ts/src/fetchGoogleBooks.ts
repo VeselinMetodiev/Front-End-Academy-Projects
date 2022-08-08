@@ -1,11 +1,13 @@
-async function fetchBooks(searchWord) {
+async function fetchBooks(searchWord: string) {
   try {
-    const resultsElem = document.getElementById("results");
-    //delete the books from previous search
-while(resultsElem.firstChild){
-    resultsElem.removeChild(resultsElem.firstChild);
-}
+    const resultsElem = document.getElementById("results") as HTMLElement;
 
+    //delete the books from previous search
+    if (resultsElem !== null) {
+      while (resultsElem.firstChild) {
+        resultsElem.removeChild(resultsElem.firstChild);
+      }
+    }
     const booksInfo = [];
     // const searchWord = "React Native";
     const fetchFromGoogle = await fetch(
@@ -14,19 +16,29 @@ while(resultsElem.firstChild){
       )}`
     );
     console.log(fetchFromGoogle);
-        if(!fetchFromGoogle){
-      resultsElem.insertAdjacentElement('beforeend', `<p> No data for <strong>${searchWord}</strong></p>`);
+    if (!fetchFromGoogle) {
+      resultsElem.insertAdjacentHTML(
+        "beforeend",
+        `<p> No data for <strong>${searchWord}</strong></p>`
+      );
       return;
     }
-    const googleBooks =  await fetchFromGoogle.json();
-    if(!googleBooks.items){
-      resultsElem.insertAdjacentHTML('beforeend', `<p> No data for ${searchWord}</p>`);
+    const googleBooks = await fetchFromGoogle.json();
+    if (!googleBooks.items) {
+      resultsElem.insertAdjacentHTML(
+        "beforeend",
+        `<p> No data for ${searchWord}</p>`
+      );
       return;
     }
     for (const book of googleBooks.items) {
       let description = book.volumeInfo.description;
-      let author = book.volumeInfo.authors ? book.volumeInfo.authors : "Not Specified";
-      let thumbnail = book.volumeInfo.imageLinks.thumbnail ? book.volumeInfo.imageLinks.thumbnail : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
+      const author = book.volumeInfo.authors
+        ? book.volumeInfo.authors
+        : "Not Specified";
+      const thumbnail = book.volumeInfo.imageLinks.thumbnail
+        ? book.volumeInfo.imageLinks.thumbnail
+        : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png";
       if (!description) {
         description = "No description.";
       } else if (description) {
@@ -38,7 +50,7 @@ while(resultsElem.firstChild){
       booksInfo.push({
         Title: book.volumeInfo.title,
         Author: author,
-        Thumbnail: thumbnail ,
+        Thumbnail: thumbnail,
         Description: description,
         GoogleLink: book.volumeInfo.previewLink,
       });
@@ -70,14 +82,17 @@ while(resultsElem.firstChild){
   }
 }
 
-document.getElementById("submit").addEventListener("click", displayBooks);
+document.getElementById("submit")?.addEventListener("click", displayBooks);
 
 function displayBooks() {
   console.log("Search was clicked.");
-  searchWord = document.getElementsByName("search")[0].value;
+  const searchWord = (document.getElementById("search")! as HTMLInputElement).value;
   console.log("SearchWord", searchWord);
   if (searchWord === "") {
-    document.getElementsById("results").innerText = "Type Something, Buddy!";
+    const results = document.getElementById("results");
+    if(results !== null){
+    results.innerText = "Type Something, Buddy!";
+    }
   } else {
     fetchBooks(searchWord);
   }

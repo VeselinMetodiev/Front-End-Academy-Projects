@@ -6,5 +6,11 @@ module.exports = {
     root: true,
     rules:{
         "@typescript-eslint/no-non-null-assertion": "off"
-    }
+    },
+        "globals": {
+          "window": true,
+          "document": true,
+          "console": true,
+          "fetch": false
+        },
   };
