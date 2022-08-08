@@ -27,11 +27,15 @@ class BlogsController {
     });
   }
 
+  private changeFormState(){
+    console.log("Button up")
+  }
 
   async init() {
     this.addPostForm.addEventListener("submit", this.handleSubmitPost);
     this.resetButton.addEventListener("click", this.resetForm);
     this.addPostForm.addEventListener("change", this.validateForm, true);
+    this.addPostForm.addEventListener("keyup", this.changeFormState);
 
     try {
       const allPosts = await BlogsAPI.getAllPosts();
@@ -167,7 +171,6 @@ class BlogsController {
     } else {
       this.addPostForm.reset();
     }
-    this.defaultFormStates(); //After reset -> return to default form states
   };
 
   async deletePost(postId: IdType) {
