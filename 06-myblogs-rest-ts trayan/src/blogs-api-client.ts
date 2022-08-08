@@ -1,4 +1,4 @@
-import { Post, PostCreateDto } from "./posts.js";
+import { Post } from "./posts.js";
 import { IdType } from "./shared-types.js";
 
 const API_BASE_URL = "http://localhost:4000/api/posts";
@@ -6,7 +6,7 @@ const API_BASE_URL = "http://localhost:4000/api/posts";
 export interface BlogsApiClient {
     getAllPosts(): Promise<Post[]>;
     getPostById(id: IdType): Promise<Post>;
-    addNewPost(post: PostCreateDto): Promise<Post>;
+    addNewPost(post: Post): Promise<Post>;
     updatePost(post: Post): Promise<Post>;
     deletePostById(id: IdType): Promise<Post>;
 }
@@ -21,7 +21,7 @@ class BlogApiClientImpl implements BlogsApiClient {
         return this.handleRequest(`${API_BASE_URL}/${id}`);
     }
 
-    async addNewPost(post: PostCreateDto): Promise<Post> {
+    async addNewPost(post: Post): Promise<Post> {
         return this.handleRequest(API_BASE_URL, {
             method: 'POST',
             headers: {

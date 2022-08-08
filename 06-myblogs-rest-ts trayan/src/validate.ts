@@ -18,7 +18,7 @@ type PostValidationConfig = ValidationConfig<Post>
 type PostValidationResult = ValidationResult<Post>
 
 
-// Standad validators
+// Standard validators
 export class Validators {
     static required: ValidatorFactory = () => (value: string, field: string) => {
         if(value.trim().length === 0) {

@@ -59,6 +59,16 @@
       "imageUrl": "https://www.publicdomainpictures.net/pictures/40000/velka/robin-bird.jpg",
       "authorId": 1,
       "id": 24
+    },
+    {
+      "title": "Sample Post",
+      "content": "Some text",
+      "tags": [
+        "tag"
+      ],
+      "imageUrl": "https://bestlifeonline.com/wp-content/uploads/sites/3/2018/07/astronaut-floating-in-space.jpg",
+      "authorId": 1,
+      "id": 25
     }
   ],
   "comments": [
