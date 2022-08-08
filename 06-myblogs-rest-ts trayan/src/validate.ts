@@ -1,7 +1,7 @@
-import { Post } from "./posts";
+import { Post } from "./posts.js";
 
 export type ValidationConfig<T> = {
-    [P in keyof T]?: Validator //| Validator[]
+    [P in keyof T]?: Validator | Validator[]
 }
 
 export type ValidationResult<T> = {
@@ -21,9 +21,9 @@ type PostValidationResult = ValidationResult<Post>
 // Standard validators
 export class Validators {
     static required: ValidatorFactory = () => (value: string, field: string) => {
-        if(value.trim().length === 0) {
-            throw `The field '${field}' is required`
-        }
+        if(value.trim().length === 0 || Number.isNaN(parseInt(value))) {
+            throw `The field '${field}' is required`;
+        } 
     }
     static pattern: ValidatorFactory = (validationPattern: RegExp) => (value: string, field: string) => {
         if(!validationPattern.test(value)) {
@@ -34,7 +34,7 @@ export class Validators {
         if(value.length < min) {
             throw `The field '${field}' should be at least ${min} characters long`
         } else if (value.length > max) {
-            throw `The field '${field}' should be no more tan ${max} characters long`
+            throw `The field '${field}' should be no more than ${max} characters long`
         }
     }
 }

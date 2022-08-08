@@ -11,8 +11,12 @@ export interface AppState {
 export const AppStateStore: AppState = {
     editedPost: undefined,
     allPosts: [],
-    postFormValidationConfig: {
-        title: Validators.required()
+    postFormValidationConfig: { //Field name from Post + validation method from validate.js
+        title: [Validators.required(), Validators.len(3, 60)], //More validations for one field => put them in an array
+        tags: Validators.required(),
+        authorId: Validators.required(), // Does not work
+        content: Validators.required(),
+        imageUrl: Validators.required(),
     },
     postFormErrors: []
 }
