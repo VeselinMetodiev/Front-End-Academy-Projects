@@ -218,7 +218,7 @@ class BlogsController {
         }
       }
     }
-    this.showError(AppStateStore.postFormErrors);
+    this.showError(AppStateStore.postFormErrors.join('')); // deffault is ,
   }
 }
 
