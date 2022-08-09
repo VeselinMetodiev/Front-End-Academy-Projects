@@ -27,18 +27,13 @@ class BooksController {
   async fetchBooks(searchWord: string) {
     try {
       //delete the books from previous search
-      if (this.resultsElem !== null) {
-        while (this.resultsElem.firstChild) {
-          this.resultsElem.removeChild(this.resultsElem.firstChild);
-        }
-      }
+      this.deletePreviousSearchResult();
       const booksInfo = [];
       const fetchFromGoogle = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
           searchWord
         )}`
       );
-      console.log(fetchFromGoogle);
       if (!fetchFromGoogle) {
         this.resultsElem.insertAdjacentHTML(
           "beforeend",
@@ -108,6 +103,14 @@ class BooksController {
     }
   }
 
+
+  private deletePreviousSearchResult() {
+    if (this.resultsElem !== null) {
+      while (this.resultsElem.firstChild) {
+        this.resultsElem.removeChild(this.resultsElem.firstChild);
+      }
+    }
+  }
   // addToFavourites(book: Book): void {
   //   throw new Error("Function not implemented.");
   // }
