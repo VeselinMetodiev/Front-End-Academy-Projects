@@ -1,11 +1,10 @@
 export class Book {
     constructor(
         public title: string,
-        public content: string,
-        public tags: string[], //Todo change contents
-        public imageUrl: string,
-        public authorId: IdType,
-        public id: IdType,
+        public author: string,
+        public thumbnail: string,
+        public description: string,
+        public googleLink: string
     ) {
         // super(title, content, tags, imageUrl, authorId);
     }
