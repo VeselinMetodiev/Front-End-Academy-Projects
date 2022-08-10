@@ -49,6 +49,7 @@ class UsersController {
       }
 
   private async changeAppState() { 
+    this.erorrsDiv.innerHTML = '';
     if (AppStateStore.appState === AppStateEnum.SIGNIN) {
     const user = this.getUserFormSnapshot(this.addUserForm);
     const allUsers = await UsersAPI.getAllUsers();
@@ -64,7 +65,8 @@ class UsersController {
         
     }
     } else if (AppStateStore.appState === AppStateEnum.REGISTRATION) {
-      if(this.erorrsDiv.getElementsByClassName('err').length === 0){
+      console.log(document.getElementsByClassName('err').length);
+      if(document.getElementsByClassName('err').length === 0){
         const user = this.getUserFormSnapshot(this.addUserForm);
         const userSubmit = await UsersAPI.addNewUser(user);
         AppStateStore.appState = AppStateEnum.LOGGEDIN;
@@ -73,6 +75,7 @@ class UsersController {
         this.loginButton.innerText = 'Log out';
       } else {
         console.log('You still have validation errors!');
+        this.showError('You still have validation errors!');
       }
       } else if (AppStateStore.appState === AppStateEnum.LOGGEDIN) {
       AppStateStore.appState = AppStateEnum.SIGNIN;
@@ -115,7 +118,9 @@ class UsersController {
         }
       }
     }
+    if(AppStateStore.appState === AppStateEnum.REGISTRATION){
     this.showValidationErrors(validationResult);
+    }
   };
 
   showValidationErrors(validationResult: ValidationResult<User>) {
