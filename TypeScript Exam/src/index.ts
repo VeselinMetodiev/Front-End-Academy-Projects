@@ -48,11 +48,15 @@ class UsersController {
         );
       }
 
-  private async changeAppState() { 
+  private async changeAppState() {
+    try {
     this.erorrsDiv.innerHTML = '';
     if (AppStateStore.appState === AppStateEnum.SIGNIN) {
     const user = this.getUserFormSnapshot(this.addUserForm);
     const allUsers = await UsersAPI.getAllUsers();
+    if(user.username === ''){
+      throw 'Please enter some data';
+    }
     const match = allUsers.filter(us => us.username === user.username && us.password === us.password)
     if(match.length > 0){
       AppStateStore.appState = AppStateEnum.LOGGEDIN;
@@ -60,22 +64,21 @@ class UsersController {
       this.registerButton.style.display = 'none';
       this.loginButton.innerText = 'Log out';
     } else {
-        console.log('Username or the password does not exist in the database.');
-        this.showError('Username or the password does not exist in the database.');
-        
+        throw('Username or the password does not exist in the database.');
     }
     } else if (AppStateStore.appState === AppStateEnum.REGISTRATION) {
-      console.log(document.getElementsByClassName('err').length);
       if(document.getElementsByClassName('err').length === 0){
         const user = this.getUserFormSnapshot(this.addUserForm);
+        if(user.username === ''){
+          throw 'Please enter some data';
+        }
         const userSubmit = await UsersAPI.addNewUser(user);
         AppStateStore.appState = AppStateEnum.LOGGEDIN;
         this.mainSection.innerHTML = loggedInStateDOM(user);
         this.registerButton.style.display = 'none';
         this.loginButton.innerText = 'Log out';
       } else {
-        console.log('You still have validation errors!');
-        this.showError('You still have validation errors!');
+        throw('You still have validation errors!');
       }
       } else if (AppStateStore.appState === AppStateEnum.LOGGEDIN) {
       AppStateStore.appState = AppStateEnum.SIGNIN;
@@ -83,7 +86,9 @@ class UsersController {
       this.loginButton.innerText = 'Login';
       this.registerButton.style.display = 'block';
     }
-    console.log(AppStateStore.appState);
+  } catch(err){
+    this.showError(err);
+  }
   }
 
   validateForm = (event: Event) => {
@@ -130,13 +135,11 @@ class UsersController {
       const fieldError = `${field}Error`;
       const fieldErrorSpan = document.getElementById(fieldError);
         for(const element of document.getElementsByClassName('err')){
-          console.log((element as HTMLElement).innerText);
           element.remove();
         }
       const filedErrors = validationResult[field];
       if (filedErrors !== undefined) {
         for (const err of filedErrors) {
-          console.log(fieldError);
           AppStateStore.postFormErrors.push(`${field} -> ${err}<br>`);
           if(fieldErrorSpan){
           fieldErrorSpan.innerHTML += (`<div class='err'>${field} -> ${err}<br></div>`);
