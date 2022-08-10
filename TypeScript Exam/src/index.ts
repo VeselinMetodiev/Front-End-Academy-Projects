@@ -50,6 +50,7 @@ class UsersController {
 
   private async changeAppState() {
     try {
+      this.validateForm;
     this.erorrsDiv.innerHTML = '';
     if (AppStateStore.appState === AppStateEnum.SIGNIN) {
     const user = this.getUserFormSnapshot(this.addUserForm);
@@ -130,13 +131,17 @@ class UsersController {
 
   showValidationErrors(validationResult: ValidationResult<User>) {
     AppStateStore.postFormErrors = [];
+    console.log(document.getElementsByClassName('err').length);
+    for(const element of document.getElementsByClassName('err')){
+      for(const child of element.childNodes){
+      (child as HTMLElement).remove();
+      element.remove();
+      }
+    }
     let field: keyof ValidationResult<User>;
     for (field in validationResult) {
       const fieldError = `${field}Error`;
       const fieldErrorSpan = document.getElementById(fieldError);
-        for(const element of document.getElementsByClassName('err')){
-          element.remove();
-        }
       const filedErrors = validationResult[field];
       if (filedErrors !== undefined) {
         for (const err of filedErrors) {

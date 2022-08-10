@@ -15,8 +15,8 @@ export const AppStateStore : AppState = {
         firstName: [Validators.required(), Validators.len(2, 15)],
         lastName: [Validators.required(), Validators.len(2, 15)],
         description: [Validators.len(0, 512)],
-        password: [Validators.pattern(/(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/)],
-        userPicture: [Validators.pattern(/https:\/\/(www)?(.\w+.|\/|)+(png|jpg|jpeg)/)],
+        password: [Validators.pattern(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/)],
+       // userPicture: [Validators.pattern(/https:\/\/(www)?(.\w+.|\/|)+(png|jpg|jpeg/)],
         gender:[Validators.pattern(/Male|Female/)]
     },
     postFormErrors: []
