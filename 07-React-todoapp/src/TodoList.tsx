@@ -9,12 +9,14 @@ interface Props {
     onChangeStatus: TodoListener;
     onUpdate: TodoListener;
     onDelete : TodoListener;
+    onCancel : TodoListener;
 }
 
 export default function TodoList({todos, filter, ...rest} : Props) {
     return (<div className="TodoList">
-        {todos.filter(todo => !filter ? true: todo.status === filter).map(todo => 
-        (<TodoItem todo={todo} key={todo.id} {...rest} />))
+        {todos
+        .filter(todo => !filter ? true: todo.status === filter)
+        .map(todo => (<TodoItem todo={todo} key={todo.id} {...rest} />))
         }
     </div>)
 }

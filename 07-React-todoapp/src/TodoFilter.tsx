@@ -17,7 +17,7 @@ export default function todoFilter({filter, onFilterChange}: TodoFilterProps)
     return (
         <select className='TodoFilter' value={filter} onChange={handleFilterChange}>
             <option value='0'>ALL</option>
-            <option value={TodoStatus.Active}>Active</option>
+            <option value={TodoStatus.Active}>Active</option> 
             <option value={TodoStatus.Completed}>Completed</option>
             <option value={TodoStatus.Canceled}>Canceled</option>
         </select>

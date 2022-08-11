@@ -8,11 +8,17 @@ interface TodoItemProps {
     onChangeStatus: TodoListener;
     onUpdate: TodoListener;
     onDelete : TodoListener;
+    onCancel: TodoListener;
 }
 
-const TodoItem = ({todo, onChangeStatus, onUpdate, onDelete}: TodoItemProps) => {
+const TodoItem = ({todo, onChangeStatus, onUpdate, onDelete, onCancel}: TodoItemProps) => {
+
 function handleCompletion(event: React.MouseEvent){
     onChangeStatus({...todo, status: TodoStatus.Completed})
+}
+
+function handleCompletionCancel(event: React.MouseEvent){
+    onChangeStatus({...todo, status: TodoStatus.Canceled})
 }
     return (
         <div className="TodoItem">
@@ -23,11 +29,17 @@ function handleCompletion(event: React.MouseEvent){
             <span className="TodoItem-right">
                 <span className="TodoItem-status">
                     {TodoStatus[todo.status]}</span>
-                    {todo.status === TodoStatus.Active ? 
+                    {
+                    todo.status === TodoStatus.Active ? 
+                    <span>
                     <span className="TodoItem-button fas fa-check-circle"
-                    onClick={handleCompletion}></span> :
-                    <span className="TodoItem-button fas fa-times-circle danger"
-                    onClick={() => onDelete(todo)}></span>
+                    onClick={handleCompletion}></span>
+                    <span className="TodoItem-button fas fa-circle-dot"
+                    onClick={handleCompletionCancel}></span> 
+                    </span> : todo.status === TodoStatus.Completed ?
+                    <span className="TodoItem-button fas fa-trash-can danger"
+                    onClick={() => onDelete(todo)}></span> : <span className="TodoItem-button fas fa-trash danger"
+                    onClick={() => onCancel(todo)}></span>
                     }
             </span>
         </div>

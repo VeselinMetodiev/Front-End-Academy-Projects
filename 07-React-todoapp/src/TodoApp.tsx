@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Todo, TodoStatus } from './todo.model';
 import MOCK_TODOS from './mock-todos';
@@ -33,9 +32,16 @@ class TodoApp extends Component<{}, TodoAppState> {
     this.handleUpdateTodo = this.handleUpdateTodo.bind(this);
   }
 
+  //HandleUpdate and Cancel todo are the same
 handleUpdateTodo(todo:Todo) {
   this.setState(({todos}) => ({
     todos: todos.map(td => td.id === todo.id ? todo: td)
+  }))
+}
+
+handleCancelTodo = (todo:Todo) => {
+  this.setState(({todos}) => ({
+    todos: todos.filter(td => td.id !== todo.id)
   }))
 }
 
@@ -44,6 +50,8 @@ handleDeleteTodo = (todo:Todo) => {
     todos: todos.filter(td => td.id !== todo.id)
   }))
 }
+
+
 handleCreateTodo = (todo:Todo) => {
   this.setState(({todos}) => ({
     todos: todos.concat(todo)
@@ -64,6 +72,7 @@ this.setState({filter: status})
         <TodoList todos={this.state.todos} filter={this.state.filter}
         onChangeStatus={this.handleUpdateTodo}
         onUpdate={this.handleCreateTodo}
+        onCancel={this.handleCancelTodo}
         onDelete={this.handleDeleteTodo}/>
       </header>
     </div>
