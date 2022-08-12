@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "firstName": "Veselin",
+      "lastName": "Metodiev",
+      "username": "vekata",
+      "password": "123456",
+      "gender": "Male",
+      "userRole": "User",
+      "userPicture": "https://activebulgariansociety.org/uploads//blog/ad533bfcfdaee82ebc54cf69d5561e6c.jpg",
+      "description": "I am myself.",
+      "status": 1,
+      "registrationTimestamp": "Fri Aug 12 2022",
+      "lastModificationTimestamp": "Fri Aug 12 2022",
+      "id": 3
+    }
+  ]
+}
