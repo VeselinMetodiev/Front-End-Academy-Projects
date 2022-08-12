@@ -9,8 +9,6 @@ export enum UserStatus {
 }
 
 export class User {
-    static nextId = 0;
-    id = ++User.nextId;
     constructor(
         public firstName : string,
         public lastName : string,
@@ -23,5 +21,6 @@ export class User {
         public status : UserStatus,
         public registrationTimestamp : string,
         public lastModificationTimestamp : string,
+        public id:IdType = undefined
     ) {}
 }

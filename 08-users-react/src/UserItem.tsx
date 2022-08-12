@@ -42,7 +42,6 @@ function handleCompletionCancel(event: React.MouseEvent){
                     onClick={() => onDelete(user)}></span> : <span className="TodoItem-button fas fa-trash danger"
                     onClick={() => onCancel(user)}></span>
                     }
-                    
             </span>
         </div>
     )
