@@ -1,46 +1,46 @@
 import React from "react";
-import { TodoListener } from "../model/shared-types";
-import { Todo, TodoStatus } from "../model/todo.model"
+import { UserListener } from "../model/shared-types";
+import { User, UserStatus } from "../model/user.model"
 import { Button, StyleSheet, Text, View, } from "react-native";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
-interface TodoItemProps {
-    todo: Todo;
-    onUpdate: TodoListener;
-    onDelete: TodoListener;
-    onEdit: TodoListener;
+interface userItemProps {
+    user: User;
+    onUpdate: UserListener;
+    onDelete: UserListener;
+    onEdit: UserListener;
 }
 
-const TodoItem = ({ todo, onUpdate, onDelete, onEdit }: TodoItemProps) => {
+const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
     function handleCompletion() {
-        onUpdate({ ...todo, status: TodoStatus.Completed })
+        onUpdate({ ...user, status: UserStatus.ACTIVE})
     }
     return (
-        <View style={styles.todoItem}>
-            <Text style={styles.todoText}>
-                {todo.id} {todo.text} - {new Date(todo.deadline).toDateString()}
+        <View style={styles.userItem}>
+            <Text style={styles.userText}>
+                {user.id} {user.firstName} - {user.lastName}
             </Text>
 
-            <View style={styles.todoItemRight}>
-                <Text style={styles.todoItemStatus}>{TodoStatus[todo.status].substring(0, 1)}</Text>
-                {todo.status === TodoStatus.Active ?
+            <View style={styles.userItemRight}>
+                <Text style={styles.userItemStatus}>{UserStatus[user.status].substring(0, 1)}</Text>
+                {user.status === UserStatus.ACTIVE ?
                     <FontAwesome.Button style={styles.button} name="check-circle" size={40} color="green" backgroundColor='transparent'
                         onPress={handleCompletion} /> :
                     // <Button color="green" onPress={handleCompletion} title='Complete'/> :
                     <FontAwesome.Button style={styles.button} name="times-circle" size={40} color="red" backgroundColor='transparent'
-                        onPress={() => onDelete(todo)} />
+                        onPress={() => onDelete(user)} />
                 }
                 <FontAwesome.Button style={styles.button} name="pencil-square" size={40} color="gray" backgroundColor='transparent'
-                    onPress={() => onEdit(todo)} />
+                    onPress={() => onEdit(user)} />
             </View>
         </View >
     )
 }
 
-export default TodoItem
+export default userItem
 
 const styles = StyleSheet.create({
-    todoItem: {
+    userItem: {
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
@@ -50,15 +50,15 @@ const styles = StyleSheet.create({
         backgroundImage: 'gray',
         border: 1,
     },
-    todoText: {
+    userText: {
         width: '65%',
         fontSize: 24,
     },
-    todoItemId: {
+    userItemId: {
         paddingRight: 10,
         fontSize: 24,
     },
-    todoItemRight: {
+    userItemRight: {
         width: '35%',
         display: 'flex',
         flexDirection: 'row',
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         backgroundImage: 'gray',
         border: 1
     },
-    todoItemStatus: {
+    userItemStatus: {
         fontSize: 24,
     },
     button: {

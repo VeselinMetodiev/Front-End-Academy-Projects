@@ -1,0 +1,102 @@
+{
+  "users": [
+    {
+      "firstName": "Roger",
+      "lastName": "Federer",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Sat Aug 13 2022",
+      "lastModificationTimestamp": "Sat Aug 13 2022",
+      "id": 2
+    },
+    {
+      "firstName": "Vesko",
+      "lastName": "Metodiev",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "https://www.qries.com/images/banner_logo.png",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Sat Aug 13 2022",
+      "lastModificationTimestamp": "Sat Aug 13 2022",
+      "id": 3
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Sat Aug 13 2022",
+      "lastModificationTimestamp": "Sat Aug 13 2022",
+      "id": 4
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Mon Aug 15 2022",
+      "lastModificationTimestamp": "Mon Aug 15 2022",
+      "id": 5
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Mon Aug 15 2022",
+      "lastModificationTimestamp": "Mon Aug 15 2022",
+      "id": 6
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Mon Aug 15 2022",
+      "lastModificationTimestamp": "Mon Aug 15 2022",
+      "id": 7
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "",
+      "userRole": "User",
+      "userPicture": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Mon Aug 15 2022",
+      "lastModificationTimestamp": "Mon Aug 15 2022",
+      "id": 8
+    }
+  ]
+}

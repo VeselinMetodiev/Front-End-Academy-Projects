@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { FlatList } from "react-native";
-import { FilterType, TodoListener } from "../model/shared-types";
+import { TodoListener } from "../model/shared-types";
 import { Todo, TodoStatus } from "../model/todo.model";
+import { FilterType } from "../TodoApp";
 import TodoItem from "./TodoItem";
 
 interface Props {

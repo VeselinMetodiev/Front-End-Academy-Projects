@@ -1,6 +1,5 @@
-import { Todo, TodoStatus } from "./todo.model";
-
-export type FilterType = TodoStatus | undefined;
+import { FilterType } from "../TodoApp";
+import { Todo } from "./todo.model";
 
 export type IdType = number | undefined
 

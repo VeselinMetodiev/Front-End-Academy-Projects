@@ -1,6 +1,7 @@
 import React from "react";
-import { FilterChangeListener, FilterType } from "../model/shared-types";
+import { FilterChangeListener } from "../model/shared-types";
 import { TodoStatus } from "../model/todo.model";
+import { FilterType } from "../TodoApp";
 import './TodoFilter.css';
 
 interface TodoFilterProps {
