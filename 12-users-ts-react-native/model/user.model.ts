@@ -16,7 +16,7 @@ export class User {
         public password : string,
         public gender : string,
         public userRole: UserRole,
-        public userPicture : string,
+        public pictureUrl : string,
         public description : string,
         public status : UserStatus,
         public registrationTimestamp : string,

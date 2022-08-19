@@ -13,10 +13,10 @@ interface Props {
 }
 
 export default function UserList({ users, filter, ...rest }: Props) {
-    const visibleUsers = (Users: User[], filter: FilterType) => Users.filter(User => !filter ? true : User.status === filter);
+    const visibleUsers = (users: User[], filter: FilterType) => users.filter(user => !filter ? true : user.status === filter);
     const memoizedVisibleUsers = useMemo(() => visibleUsers(users, filter), [users, filter]);
     return (
         <FlatList<User> style={{width: '100%'}} data={memoizedVisibleUsers}
-            renderItem={({ item: User }) => <UserItem user={User} key={User.id} {...rest} />}
+            renderItem={({ item: user }) => <UserItem user={user} key={user.id} {...rest} />}
         />);
 }
