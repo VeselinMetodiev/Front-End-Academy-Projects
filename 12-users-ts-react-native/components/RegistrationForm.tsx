@@ -32,13 +32,13 @@ export default class RegistrationForm extends Component<UserInputProps, UserInpu
     lastName: this.props.user?.lastName ||'',
     username: this.props.user?.username ||'',
     password: this.props.user?.password ||'',
-    gender: this.props.user?.gender||'',
-    userRole: UserRole.USER,
+    gender: this.props.user?.gender || '',
+    userRole: this.props.user?.userRole ||UserRole.USER,
     pictureUrl: this.props.user?.pictureUrl ||'',
     description: this.props.user?.description ||'',
-    userStatus: UserStatus.ACTIVE,
-    registrationTimespan: new Date().toDateString(),
-    lastModificationTimespan: new Date().toDateString()
+    userStatus: this.props.user?.status || UserStatus.ACTIVE,
+    registrationTimespan: this.props.user?.registrationTimestamp || new Date().toDateString(),
+    lastModificationTimespan: this.props.user?.lastModificationTimestamp || new Date().toDateString()
 }
 
 handleUserSubmit = () => {
