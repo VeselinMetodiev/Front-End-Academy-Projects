@@ -1,7 +1,7 @@
 import { Identifiable, IdType } from "../model/shared-types.js";
 import { User } from "../model/user.model.js";
 
-const API_BASE_URL = "http://10.16.6.23/api";
+const API_BASE_URL = "http://10.16.6.23:4000/api";
 
 export interface ApiClient<K, V extends Identifiable<K>>{
     findAll(): Promise<V[]>;
@@ -61,5 +61,4 @@ export class ApiClientImpl<K, V extends Identifiable<K>> implements ApiClient<K,
     }
 }
 
-export const TodosAPI = new ApiClientImpl<IdType, User>('todos');
-
+export const UsersAPI = new ApiClientImpl<IdType, User>('users');
