@@ -35,16 +35,17 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
   return (
     <View style={styles.userItem}>
       <Text style={styles.userText}>
-        {user.id} {user.firstName} - {user.lastName}
+        {user.id} {user.username}
       </Text>
+      <View style={styles.userItemLeft}>
       <Image style={styles.avatars} source={{ uri: user.pictureUrl }} />
       <Text style={styles.userItemStatus}>
-          {UserStatus[user.status]}
+          {UserStatus[user.status].substring(0,1)}
         </Text>
+        </View>
       <View style={styles.userItemRight}>
         {user.status === UserStatus.ACTIVE ? (
           <>
-          <Text style={styles.userItemStatus}>Deactivate</Text>
             <FontAwesome.Button
               style={styles.button}
               name="check-circle"
@@ -53,16 +54,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
               backgroundColor="transparent"
               onPress={handleUserDeactivation}
             />
-            <Text style={styles.userItemStatus}>Suspend</Text>
-            <FontAwesome.Button
-              style={styles.button}
-              name="check-circle"
-              size={40}
-              color="green"
-              backgroundColor="transparent"
-              onPress={handleUserSuspension}
-            />
-            <Text style={styles.userItemStatus}>Delete</Text>
             <FontAwesome.Button
               style={styles.button}
               name="times-circle"
@@ -74,7 +65,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
           </>
         ) : (
             <>
-            <Text style={styles.userItemStatus}>Activate</Text>
           <FontAwesome.Button
             style={styles.button}
             name="check-circle"
@@ -85,7 +75,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
           />
           </>
         )}
-        <Text style={styles.userItemStatus}>Edit</Text>
         <FontAwesome.Button
           style={styles.button}
           name="pencil-square"
@@ -113,7 +102,7 @@ const styles = StyleSheet.create({
     border: 1,
   },
   userText: {
-    width: "20%",
+    width: '20%',
     fontSize: 26,
   },
   userItemId: {
@@ -121,7 +110,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   userItemRight: {
-    width: "80%",
+    width: "30%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 15,
+    padding: 0,
+    backgroundImage: "gray",
+    border: 1,
+  },
+  userItemLeft: {
+    width: "30%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",

@@ -34,7 +34,7 @@ export default class RegistrationForm extends Component<UserInputProps, UserInpu
     password: this.props.user?.password ||'',
     gender: this.props.user?.gender || '',
     userRole: this.props.user?.userRole ||UserRole.USER,
-    pictureUrl: this.props.user?.pictureUrl ||'',
+    pictureUrl: this.props.user?.pictureUrl || '',
     description: this.props.user?.description ||'',
     userStatus: this.props.user?.status || UserStatus.ACTIVE,
     registrationTimespan: this.props.user?.registrationTimestamp || new Date().toDateString(),
