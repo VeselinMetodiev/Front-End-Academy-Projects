@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     gap: 10,
 },
 });
