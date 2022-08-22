@@ -2,6 +2,7 @@ import { Picker } from "@react-native-picker/picker";
 import { StatusBar } from "expo-status-bar";
 import React, { Component, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import TurboButton from "./builders/TurboButton";
 import LoginForm from "./components/LoginForm";
 import RegistrationForm from "./components/RegistrationForm";
 import UserList from "./components/UserList";
@@ -91,6 +92,7 @@ export default class App extends Component<{}, UserAppState> {
   render() {
     return (
       <View style={styles.container}>
+        <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChange}>Click me</TurboButton>
         <RegistrationForm
           key={this.state.editedUser?.id}
           user={this.state.editedUser}
