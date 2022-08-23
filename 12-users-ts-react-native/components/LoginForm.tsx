@@ -1,16 +1,60 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Views } from "../App";
+import { UsersAPI } from "../dao/rest-api-client";
+import { AppStateListener, Optional } from "../model/shared-types";
+import { User } from "../model/user.model";
 
-export default function RegistrationForm() {
+interface UserInputProps {
+  onLoginUser: AppStateListener
+}
+
+interface UserInputState {
+  username: string;
+  password: string;
+  lastModificationTimespan: string;
+}
+
+
+export default class LoginForm extends Component<UserInputProps, UserInputState> {
+  state: Readonly<UserInputState> = {
+    username: '',
+    password: '',
+    lastModificationTimespan: new Date().toDateString()
+  }
+
+  handleSignUp = async () => {
+    console.log(this.state.username + ' ' + this.state.password)
+    const allUsers = await UsersAPI.findAll();
+    let currentUser = undefined;
+    allUsers.forEach((user) => {
+      if (user.username === this.state.username && user.password === this.state.password){
+        currentUser = user;
+      }
+    })
+    if(currentUser){
+      this.props.onLoginUser(Views.InApp);
+      console.log('Such user exists')
+    } else {
+      console.log("Such user does not exist.")
+    }
+  }
+
+  handleFieldChanged(field: string, text: string) {
+    const stateUpdate = { [field]: text } as unknown as UserInputState;
+    this.setState(stateUpdate);
+  }
+
+  render() {
   return (
     <View style={styles.container}>
       <Text style={styles.titleText}> Login Form </Text>
       <View>
-        <TextInput placeholder="UserName" style={styles.input}/>
-        <TextInput secureTextEntry={true} placeholder="Password" style={styles.input}/>
+        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'username')} placeholder="Username" style={styles.input}/>
+        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'password')} secureTextEntry={true} placeholder="Password" style={styles.input}/>
         <View style={styles.buttons}>
         <Button
-          onPress={() => alert("Main button pressed")}
+          onPress={this.handleSignUp}
           title="Login"
           color="#542867"
           accessibilityLabel="Sign up"
@@ -32,6 +76,7 @@ export default function RegistrationForm() {
       </View>
     </View>
   );
+}
 }
 
 const styles = StyleSheet.create({

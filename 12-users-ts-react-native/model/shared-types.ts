@@ -1,13 +1,10 @@
 // import { FilterType } from "./TodoApp";
+import { Views } from "../App";
 import { User, UserStatus } from "./user.model";
 
 export type IdType = number | undefined
 
 export type Identifiable<K> = {id: K }
-
-export enum ApplicationState {
-  Registration, Login, InApp
-}
 
 export type FormFieldDict<Value> = {
     [field: string]: Value
@@ -28,7 +25,7 @@ export interface UserListener {
   }
   
   export interface AppStateListener {
-    (st: ApplicationState) : void;
+    (currentView: Views) : void;
   }
   
   export type FilterType = UserStatus | undefined;
@@ -36,4 +33,3 @@ export interface UserListener {
   // export interface FilterChangeListener {
   //   (filter: FilterType): void;
   // }
-  

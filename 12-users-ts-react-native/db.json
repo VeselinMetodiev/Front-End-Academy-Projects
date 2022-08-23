@@ -1,18 +1,46 @@
 {
   "users": [
     {
-      "firstName": "georgi",
-      "lastName": "georgiev",
+      "firstName": "Georgi",
+      "lastName": "Georgiev",
       "username": "georgi",
-      "password": "",
-      "gender": "",
+      "password": "georgi",
+      "gender": "Male",
       "userRole": "User",
-      "pictureUrl": "https://st.depositphotos.com/1224365/2498/i/450/depositphotos_24980235-stock-photo-portrait-of-a-normal-man.jpg",
-      "description": "",
+      "pictureUrl": "https://www.lyricopera.org/globalassets/headshots/morgan_peter_260x325.jpg",
+      "description": "Nothing",
       "status": 1,
-      "registrationTimestamp": "Fri Aug 19 2022",
-      "lastModificationTimestamp": "Fri Aug 19 2022",
-      "id": 12
+      "registrationTimestamp": "Mon Aug 22 2022",
+      "lastModificationTimestamp": "Mon Aug 22 2022",
+      "id": 1
+    },
+    {
+      "firstName": "Ivan",
+      "lastName": "Ivanov",
+      "username": "ivan",
+      "password": "ivan",
+      "gender": "Male",
+      "userRole": "User",
+      "pictureUrl": "https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg?cs=srgb&dl=adult-beach-beard-736716.jpg&fm=jpg",
+      "description": "ivan",
+      "status": 1,
+      "registrationTimestamp": "Mon Aug 22 2022",
+      "lastModificationTimestamp": "Mon Aug 22 2022",
+      "id": 2
+    },
+    {
+      "firstName": "Petar",
+      "lastName": "Petrov",
+      "username": "petar",
+      "password": "petar",
+      "gender": "Male",
+      "userRole": "User",
+      "pictureUrl": "https://gallowglasssecurity.com/wp-content/themes/yootheme/cache/Petar-Petrov-Head-of-Health-and-Safety-scaled-3739ce3a.jpeg",
+      "description": "petar",
+      "status": 1,
+      "registrationTimestamp": "Mon Aug 22 2022",
+      "lastModificationTimestamp": "Mon Aug 22 2022",
+      "id": 3
     }
   ]
 }

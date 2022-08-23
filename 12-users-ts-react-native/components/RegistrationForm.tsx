@@ -1,7 +1,8 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { Component, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { ApplicationState, AppStateListener, Optional, UserListener } from "../model/shared-types";
+import { Views } from "../App";
+import { AppStateListener, Optional, UserListener } from "../model/shared-types";
 import { User, UserRole, UserStatus } from "../model/user.model";
 
 interface UserInputProps {
@@ -67,15 +68,13 @@ handleFieldChanged(field: string, text: string) {
       this.setState({firstName: '', lastName: '', username: '', password: '', gender: '', pictureUrl: '', description: ''})
   }
 
-  handleUserLogin = (event: React.FormEvent) => {
-      event.preventDefault(); //if none - it will reload the page
+  handleUserLogin = () => {
       console.log("Changing State");
-      this.props.onLoginUser(ApplicationState.Login);
+      this.props.onLoginUser(Views.InApp);
       }
 
 render() {
   return (
-    <View>
       <View style={styles.registrationForm}>
       <Text style={styles.titleText}> Registration Form </Text>
         <TextInput onChangeText={this.handleFieldChanged.bind(this, 'firstName')} value={this.state.firstName} placeholder="First Name" style={styles.input}/>
@@ -110,14 +109,13 @@ render() {
           accessibilityLabel="Reset Form"
         />
         <Button
-          onPress={() => alert("Main button pressed")}
+          onPress={this.handleUserLogin}
           title="Main"
           color="#542867"
           accessibilityLabel="Back to Login form"
         />
         </View>
       </View>
-    </View>
   );
 }
 }

@@ -10,11 +10,16 @@ import { UsersAPI } from "./dao/rest-api-client";
 import { FilterType, Optional } from "./model/shared-types";
 import { User } from "./model/user.model";
 
+export enum Views {
+  Registration = 1, Login, InApp
+}
+
 interface UserAppState {
   users: User[];
   editedUser: Optional<User>;
   filter: FilterType;
   errors: string | undefined;
+  activeView: Views;
 }
 
 export default class App extends Component<{}, UserAppState> {
@@ -22,6 +27,7 @@ export default class App extends Component<{}, UserAppState> {
     users: [],
     editedUser: undefined,
     filter: undefined,
+    activeView: Views.Registration,
     errors: undefined,
   };
 
@@ -89,23 +95,49 @@ export default class App extends Component<{}, UserAppState> {
     this.setState({ filter: status });
   };
 
+  handleViewChange = () => {
+    this.setState(({ activeView }) => ({
+      activeView: activeView === Views.Registration ? Views.Login : Views.Registration
+    }));
+  }
+
+  handleLoginUser= () => {
+    console.log('view change')
+    this.setState({ activeView : Views.InApp})
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChange}>Click me</TurboButton>
-        <RegistrationForm
-          key={this.state.editedUser?.id}
-          user={this.state.editedUser}
-          onCreateUser={this.handleCreateUser}
-          onLoginUser={() => alert("Login")}
-        />
-        <UserList
-          users={this.state.users}
-          filter={this.state.filter}
-          onUpdate={this.handleUpdateUser}
-          onDelete={this.handleDeleteUser}
-          onEdit={this.handleEditUser}
-        />
+        {(() => {
+          switch (this.state.activeView) {
+            case Views.Registration:
+              return (
+                <ScrollView>
+                  <RegistrationForm
+                    key={this.state.editedUser?.id}
+                    user={this.state.editedUser}
+                    onCreateUser={this.handleCreateUser}
+                    onLoginUser={this.handleLoginUser}
+                  />
+                  </ScrollView>
+                );
+            case Views.Login:
+              return (
+                <LoginForm onLoginUser={this.handleLoginUser}/>);
+            case Views.InApp:
+              return (
+                <UserList
+                users={this.state.users}
+                filter={this.state.filter}
+                onUpdate={this.handleUpdateUser}
+                onDelete={this.handleDeleteUser}
+                onEdit={this.handleEditUser}
+              />
+        )}
+        })()}
+
       </View>
     );
   }
