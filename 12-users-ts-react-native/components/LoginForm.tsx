@@ -7,6 +7,7 @@ import { User } from "../model/user.model";
 
 interface UserInputProps {
   onLoginUser: AppStateListener
+  onRegUser: AppStateListener
 }
 
 interface UserInputState {
@@ -39,6 +40,9 @@ export default class LoginForm extends Component<UserInputProps, UserInputState>
       console.log("Such user does not exist.")
     }
   }
+  goToReg = () => {
+    this.props.onRegUser(Views.Registration);
+  }
 
   handleFieldChanged(field: string, text: string) {
     const stateUpdate = { [field]: text } as unknown as UserInputState;
@@ -66,7 +70,7 @@ export default class LoginForm extends Component<UserInputProps, UserInputState>
           accessibilityLabel="Reset Form"
         />
          <Button
-          onPress={() => alert("Register button pressed")}
+          onPress={this.goToReg}
           title="Register"
           color="#841584"
           accessibilityLabel="Submit Register"

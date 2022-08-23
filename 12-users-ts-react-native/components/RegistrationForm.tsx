@@ -70,7 +70,7 @@ handleFieldChanged(field: string, text: string) {
 
   handleUserLogin = () => {
       console.log("Changing State");
-      this.props.onLoginUser(Views.InApp);
+      this.props.onLoginUser(Views.Login);
       }
 
 render() {
@@ -110,7 +110,7 @@ render() {
         />
         <Button
           onPress={this.handleUserLogin}
-          title="Main"
+          title="Signup"
           color="#542867"
           accessibilityLabel="Back to Login form"
         />

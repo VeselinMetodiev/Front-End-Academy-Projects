@@ -55,6 +55,20 @@
       "registrationTimestamp": "Tue Aug 23 2022",
       "lastModificationTimestamp": "Tue Aug 23 2022",
       "id": 4
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "Other",
+      "userRole": "User",
+      "pictureUrl": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Tue Aug 23 2022",
+      "lastModificationTimestamp": "Tue Aug 23 2022",
+      "id": 5
     }
   ]
 }

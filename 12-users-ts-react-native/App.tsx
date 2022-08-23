@@ -102,15 +102,21 @@ export default class App extends Component<{}, UserAppState> {
     }));
   }
 
-  handleLoginUser= () => {
-    console.log('view change')
+  handleInAppView= () => {
     this.setState({ activeView : Views.InApp})
+  }
+
+  handleLoginView = () => {
+    this.setState({ activeView : Views.Login})
+  }
+
+  handleRegistrationView = () => {
+    this.setState({ activeView : Views.Registration})
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChange}>Click me</TurboButton>
         {(() => {
           switch (this.state.activeView) {
             case Views.Registration:
@@ -120,15 +126,17 @@ export default class App extends Component<{}, UserAppState> {
                     key={this.state.editedUser?.id}
                     user={this.state.editedUser}
                     onCreateUser={this.handleCreateUser}
-                    onLoginUser={this.handleLoginUser}
+                    onLoginUser={this.handleLoginView}
                   />
                   </ScrollView>
                 );
             case Views.Login:
               return (
-                <LoginForm onLoginUser={this.handleLoginUser}/>);
+                <LoginForm onRegUser={this.handleRegistrationView} onLoginUser={this.handleInAppView}/>);
             case Views.InApp:
               return (
+                <View>
+                <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChange}>Log out</TurboButton>
                 <UserList
                 users={this.state.users}
                 filter={this.state.filter}
@@ -136,6 +144,7 @@ export default class App extends Component<{}, UserAppState> {
                 onDelete={this.handleDeleteUser}
                 onEdit={this.handleEditUser}
               />
+              </View>
         )}
         })()}
 
