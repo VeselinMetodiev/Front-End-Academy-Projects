@@ -1,9 +1,11 @@
 import React from "react";
 import { UserListener } from "../model/shared-types";
 import { User, UserStatus } from "../model/user.model";
-import { Button, StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { UsersAPI } from "../dao/rest-api-client";
+
 
 interface userItemProps {
   user: User;
@@ -34,15 +36,18 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
   }
   return (
     <View style={styles.userItem}>
-      <Text style={styles.userText}>
-        {user.id} {user.username}
-      </Text>
-      <View style={styles.userItemLeft}>
-      <Image style={styles.avatars} source={{ uri: user.pictureUrl }} />
-      <Text style={styles.userItemStatus}>
-          {UserStatus[user.status].substring(0,1)}
-        </Text>
-        </View>
+      <Card>
+    <Card.Title title={user.username} subtitle={user.firstName + ' ' + user.lastName} left={undefined} />
+    <Card.Content>
+      <Title>Card title</Title>
+      <Paragraph>{user.description}</Paragraph>
+    </Card.Content>
+    <Card.Cover source={{ uri: user.pictureUrl }} />
+    <Card.Actions>
+      <Button>Cancel</Button>
+      <Button>Ok</Button>
+    </Card.Actions>
+  </Card>
       <View style={styles.userItemRight}>
         {user.status === UserStatus.ACTIVE ? (
           <>
@@ -101,16 +106,12 @@ const styles = StyleSheet.create({
     backgroundImage: "gray",
     border: 1,
   },
-  userText: {
-    width: '20%',
-    fontSize: 26,
-  },
   userItemId: {
     paddingRight: 10,
     fontSize: 24,
   },
   userItemRight: {
-    width: "30%",
+    width: "50%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
