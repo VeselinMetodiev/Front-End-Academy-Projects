@@ -49,9 +49,9 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
           <>
             <FontAwesome.Button
               style={styles.button}
-              name="check-circle"
+              name="dot-circle-o"
               size={40}
-              color="green"
+              color="orange"
               backgroundColor="transparent"
               onPress={handleUserDeactivation}
             />
