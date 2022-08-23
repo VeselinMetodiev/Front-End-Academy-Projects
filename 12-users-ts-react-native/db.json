@@ -1,20 +1,6 @@
 {
   "users": [
     {
-      "firstName": "Georgi",
-      "lastName": "Georgiev",
-      "username": "georgi",
-      "password": "georgi",
-      "gender": "Male",
-      "userRole": "User",
-      "pictureUrl": "https://www.lyricopera.org/globalassets/headshots/morgan_peter_260x325.jpg",
-      "description": "Nothing",
-      "status": 1,
-      "registrationTimestamp": "Mon Aug 22 2022",
-      "lastModificationTimestamp": "Mon Aug 22 2022",
-      "id": 1
-    },
-    {
       "firstName": "Ivan",
       "lastName": "Ivanov",
       "username": "ivan",
@@ -55,6 +41,20 @@
       "registrationTimestamp": "Tue Aug 23 2022",
       "lastModificationTimestamp": "Tue Aug 23 2022",
       "id": 4
+    },
+    {
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "gender": "Other",
+      "userRole": "User",
+      "pictureUrl": "",
+      "description": "",
+      "status": 1,
+      "registrationTimestamp": "Tue Aug 23 2022",
+      "lastModificationTimestamp": "Tue Aug 23 2022",
+      "id": 5
     }
   ]
 }

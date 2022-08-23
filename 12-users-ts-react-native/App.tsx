@@ -135,7 +135,7 @@ export default class App extends Component<{}, UserAppState> {
                 <LoginForm onRegUser={this.handleRegistrationView} onLoginUser={this.handleInAppView}/>);
             case Views.InApp:
               return (
-                <View>
+              <>
                 <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChange}>Log out</TurboButton>
                 <UserList
                 users={this.state.users}
@@ -144,7 +144,7 @@ export default class App extends Component<{}, UserAppState> {
                 onDelete={this.handleDeleteUser}
                 onEdit={this.handleEditUser}
               />
-              </View>
+              </>
         )}
         })()}
 

@@ -36,7 +36,7 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
   }
   return (
     <View style={styles.userItem}>
-      <Card>
+      <Card style={styles.card}>
     <Card.Title title={user.username} subtitle={user.firstName + ' ' + user.lastName} left={undefined} />
     <Card.Content>
       <Title>{UserStatus[user.status]}</Title>
@@ -46,7 +46,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
     <Card.Actions>
     <View style={styles.userItemRight}>
         {user.status === UserStatus.ACTIVE ? (
-          <>
             <FontAwesome.Button
               style={styles.button}
               name="dot-circle-o"
@@ -55,7 +54,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
               backgroundColor="transparent"
               onPress={handleUserDeactivation}
             />
-          </>
         ) : (
             <>
           <FontAwesome.Button
@@ -95,24 +93,21 @@ export default userItem;
 
 const styles = StyleSheet.create({
   userItem: {
-    flex: 1,
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: 'center',
     gap: 15,
     padding: 5,
     backgroundImage: "gray",
     border: 1,
     marginLeft: 20,
   },
+  card: {
+  },
   userItemId: {
     paddingRight: 10,
     fontSize: 24,
   },
   userItemRight: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: "row", 
+    alignContent: 'center',
     gap: 15,
     padding: 0,
     backgroundImage: "gray",
