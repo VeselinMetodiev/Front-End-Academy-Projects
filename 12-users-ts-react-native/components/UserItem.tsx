@@ -39,16 +39,12 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
       <Card>
     <Card.Title title={user.username} subtitle={user.firstName + ' ' + user.lastName} left={undefined} />
     <Card.Content>
-      <Title>Card title</Title>
+      <Title>{UserStatus[user.status]}</Title>
       <Paragraph>{user.description}</Paragraph>
     </Card.Content>
     <Card.Cover source={{ uri: user.pictureUrl }} />
     <Card.Actions>
-      <Button>Cancel</Button>
-      <Button>Ok</Button>
-    </Card.Actions>
-  </Card>
-      <View style={styles.userItemRight}>
+    <View style={styles.userItemRight}>
         {user.status === UserStatus.ACTIVE ? (
           <>
             <FontAwesome.Button
@@ -58,14 +54,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
               color="green"
               backgroundColor="transparent"
               onPress={handleUserDeactivation}
-            />
-            <FontAwesome.Button
-              style={styles.button}
-              name="times-circle"
-              size={40}
-              color="red"
-              backgroundColor="transparent"
-              onPress={() => onDelete(user)}
             />
           </>
         ) : (
@@ -80,6 +68,14 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
           />
           </>
         )}
+         <FontAwesome.Button
+              style={styles.button}
+              name="times-circle"
+              size={40}
+              color="red"
+              backgroundColor="transparent"
+              onPress={() => onDelete(user)}
+            />
         <FontAwesome.Button
           style={styles.button}
           name="pencil-square"
@@ -89,6 +85,8 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
           onPress={() => onEdit(user)}
         />
       </View>
+    </Card.Actions>
+  </Card>
     </View>
   );
 };
@@ -111,8 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   userItemRight: {
-    width: "50%",
-    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     gap: 15,
