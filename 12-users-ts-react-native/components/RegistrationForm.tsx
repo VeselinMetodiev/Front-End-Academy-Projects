@@ -75,6 +75,7 @@ handleFieldChanged(field: string, text: string) {
 
 render() {
   return (
+    <View style={styles.container}>
       <View style={styles.registrationForm}>
       <Text style={styles.titleText}> Registration Form </Text>
         <TextInput onChangeText={this.handleFieldChanged.bind(this, 'firstName')} value={this.state.firstName} placeholder="First Name" style={styles.input}/>
@@ -83,8 +84,9 @@ render() {
         <TextInput onChangeText={this.handleFieldChanged.bind(this, 'password')} value={this.state.password} secureTextEntry={true} placeholder="Password" style={styles.input}/>
         <TextInput onChangeText={this.handleFieldChanged.bind(this, 'pictureUrl')} value={this.state.pictureUrl} placeholder="Picture URL" style={styles.input}/>
         <TextInput onChangeText={this.handleFieldChanged.bind(this, 'description')} value={this.state.description} placeholder="Description" style={styles.input}/>
+      </View>
+      <View style={{ borderWidth: 1, borderColor: 'red', borderRadius: 4 }}>
         <Text style={styles.gender}>Gender</Text>
-        <View style={{ borderWidth: 1, borderColor: 'red', borderRadius: 4 }}>
         <Picker
           selectedValue={this.state.gender}
           onValueChange={this.handleFieldChanged.bind(this, 'gender')}
@@ -93,8 +95,8 @@ render() {
           <Picker.Item label="Female" value="Female" />
           <Picker.Item label="Other" value="Other" />
         </Picker>
-        </View>
         <Text>Selected: {this.state.gender}</Text>
+        </View>
         <View style={styles.buttons}>
         <Button
           onPress={this.handleUserSubmit}
@@ -115,21 +117,23 @@ render() {
           accessibilityLabel="Back to Login form"
         />
         </View>
-      </View>
+        </View>
   );
 }
 }
 
 const styles = StyleSheet.create({
-  registrationForm: {
-    width: "85%",
+  container: {
+    width: "100%",
     backgroundColor: "#B2C8DF",
     borderRadius: 10,
-    padding: 15,
-    justifyContent: 'center',
+    paddingTop: 50,
+    marginTop: 20,
+    padding: 140,
+  },
+  registrationForm: {
     alignItems: "center",
-    paddingHorizontal: 100,
-    marginTop: 50,
+    paddingBottom: 10,
   },
   titleText: {
     fontSize: 20,
@@ -152,9 +156,8 @@ const styles = StyleSheet.create({
     fontSize: 45,
     marginTop: 20,
     marginBottom: 30,
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: 10,
 },
 });

@@ -41,6 +41,20 @@
       "registrationTimestamp": "Tue Aug 23 2022",
       "lastModificationTimestamp": "Tue Aug 23 2022",
       "id": 4
+    },
+    {
+      "firstName": "Ivan",
+      "lastName": "Ivanov",
+      "username": "Ivan",
+      "password": "ivan",
+      "gender": "Other",
+      "userRole": "User",
+      "pictureUrl": "https://gallowglasssecurity.com/wp-content/themes/yootheme/cache/Petar-Petrov-Head-of-Health-and-Safety-scaled-3739ce3a.jpeg",
+      "description": "I am Ivan.",
+      "status": 1,
+      "registrationTimestamp": "Tue Aug 23 2022",
+      "lastModificationTimestamp": "Tue Aug 23 2022",
+      "id": 5
     }
   ]
 }
