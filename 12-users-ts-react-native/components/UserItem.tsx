@@ -55,7 +55,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
               onPress={handleUserDeactivation}
             />
         ) : (
-            <>
           <FontAwesome.Button
             style={styles.button}
             name="check-circle"
@@ -64,7 +63,6 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
             backgroundColor="transparent"
             onPress={handleUserActivation}
           />
-          </>
         )}
          <FontAwesome.Button
               style={styles.button}
@@ -82,7 +80,7 @@ const userItem = ({ user, onUpdate, onDelete, onEdit }: userItemProps) => {
           backgroundColor="transparent"
           onPress={() => onEdit(user)}
         />
-      </View>
+        </View>
     </Card.Actions>
   </Card>
     </View>
@@ -94,33 +92,15 @@ export default userItem;
 const styles = StyleSheet.create({
   userItem: {
     gap: 15,
-    padding: 5,
-    backgroundImage: "gray",
-    border: 1,
-    marginLeft: 20,
+    padding: 15,
+    border: 10,
   },
   card: {
   },
-  userItemId: {
-    paddingRight: 10,
-    fontSize: 24,
-  },
   userItemRight: {
-    flexDirection: "row", 
-    alignContent: 'center',
-    gap: 15,
-    padding: 0,
-    backgroundImage: "gray",
-    border: 1,
-  },
-  userItemLeft: {
-    width: "30%",
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
     gap: 15,
     padding: 0,
-    backgroundImage: "gray",
     border: 1,
   },
   userItemStatus: {

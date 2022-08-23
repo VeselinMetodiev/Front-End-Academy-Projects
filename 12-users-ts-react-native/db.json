@@ -23,7 +23,7 @@
       "userRole": "User",
       "pictureUrl": "https://gallowglasssecurity.com/wp-content/themes/yootheme/cache/Petar-Petrov-Head-of-Health-and-Safety-scaled-3739ce3a.jpeg",
       "description": "petar",
-      "status": 1,
+      "status": 3,
       "registrationTimestamp": "Mon Aug 22 2022",
       "lastModificationTimestamp": "Mon Aug 22 2022",
       "id": 3
@@ -37,24 +37,10 @@
       "userRole": "User",
       "pictureUrl": "https://images.pexels.com/photos/8035299/pexels-photo-8035299.jpeg",
       "description": "I am Boris.",
-      "status": 3,
-      "registrationTimestamp": "Tue Aug 23 2022",
-      "lastModificationTimestamp": "Tue Aug 23 2022",
-      "id": 4
-    },
-    {
-      "firstName": "",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "gender": "Other",
-      "userRole": "User",
-      "pictureUrl": "",
-      "description": "",
       "status": 1,
       "registrationTimestamp": "Tue Aug 23 2022",
       "lastModificationTimestamp": "Tue Aug 23 2022",
-      "id": 5
+      "id": 4
     }
   ]
 }
