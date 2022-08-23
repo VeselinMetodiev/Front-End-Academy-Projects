@@ -41,6 +41,20 @@
       "registrationTimestamp": "Mon Aug 22 2022",
       "lastModificationTimestamp": "Mon Aug 22 2022",
       "id": 3
+    },
+    {
+      "firstName": "Boris",
+      "lastName": "Borisov",
+      "username": "boris",
+      "password": "boris",
+      "gender": "Male",
+      "userRole": "User",
+      "pictureUrl": "https://images.pexels.com/photos/8035299/pexels-photo-8035299.jpeg",
+      "description": "I am Boris.",
+      "status": 1,
+      "registrationTimestamp": "Tue Aug 23 2022",
+      "lastModificationTimestamp": "Tue Aug 23 2022",
+      "id": 4
     }
   ]
 }

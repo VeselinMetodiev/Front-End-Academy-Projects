@@ -79,6 +79,7 @@ export default class App extends Component<{}, UserAppState> {
         this.setState(({ users }) => ({
           users: users.concat(created),
           errors: undefined,
+          activeView: Views.InApp,
         }));
       }
     } catch (err) {
