@@ -95,14 +95,16 @@ export default userItem;
 
 const styles = StyleSheet.create({
   userItem: {
-    display: "flex",
+    flex: 1,
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
+    alignItems: 'center',
     gap: 15,
     padding: 5,
     backgroundImage: "gray",
     border: 1,
+    marginLeft: 20,
   },
   userItemId: {
     paddingRight: 10,

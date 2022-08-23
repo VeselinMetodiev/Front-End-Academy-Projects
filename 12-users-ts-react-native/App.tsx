@@ -156,8 +156,7 @@ export default class App extends Component<{}, UserAppState> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    width: '100%',
     paddingTop: 40,
     backgroundColor: "#F7ECDE",
   },

@@ -86,7 +86,7 @@ export default class LoginForm extends Component<UserInputProps, UserInputState>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#B2C8DF",
     alignItems: "center",
     justifyContent: "center",
   },
