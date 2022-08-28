@@ -212,9 +212,11 @@ export default class App extends Component<{}, AppState> {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboarAvoidingView}
       >
-        <TurboButton textSize={30} backgroundColor="green" color="white" onPress={this.handleViewChangePosts} >
+       { this.state.activeView === Views.PostFormView || this.state.activeView === Views.PostListView &&
+         <TurboButton textSize={30} backgroundColor="green" color="white" onPress={this.handleViewChangePosts} >
           {this.state.activeView === Views.PostListView ? 'Add New Post' : 'Show All Posts'}
         </TurboButton>
+  }
         {(() => {
           switch (this.state.activeView) {
             case Views.Registration:
@@ -233,6 +235,7 @@ export default class App extends Component<{}, AppState> {
               return (
               <>
                 <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChange}>Log out</TurboButton>
+                <TurboButton textSize={32} buttonSize={100} backgroundColor="green" color="white" onPress={this.handleViewChangePosts}>Go to posts</TurboButton>
                 <UserList
                 users={this.state.users}
                 filter={this.state.filter}
