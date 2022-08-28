@@ -1,9 +1,9 @@
 import React, { Component, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { Views } from "../App";
-import { UsersAPI } from "../dao/rest-api-client";
-import { AppStateListener, Optional } from "../model/shared-types";
-import { User } from "../model/user.model";
+import { Views } from "../../App";
+import { UsersAPI } from "../../dao/rest-api-client";
+import { AppStateListener, Optional } from "../../model/shared-types";
+import { User } from "../../model/user.model";
 
 interface UserInputProps {
   onLoginUser: AppStateListener

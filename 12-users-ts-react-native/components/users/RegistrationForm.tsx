@@ -1,9 +1,9 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { Component, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
-import { Views } from "../App";
-import { AppStateListener, Optional, UserListener } from "../model/shared-types";
-import { User, UserRole, UserStatus } from "../model/user.model";
+import { Views } from "../../App";
+import { AppStateListener, Optional, UserListener } from "../../model/shared-types";
+import { User, UserRole, UserStatus } from "../../model/user.model";
 
 interface UserInputProps {
   user: Optional<User>;

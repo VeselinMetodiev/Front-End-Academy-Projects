@@ -1,4 +1,5 @@
-import React, { forwardRef, ReactNode } from 'react';
+import { IconType } from '@rneui/themed/dist/Icon';
+import React, { ForwardedRef, forwardRef, ReactNode } from 'react';
 import { Text, View, StyleSheet, Pressable, TextStyle, OpaqueColorValue, PressableProps, PressableStateCallbackType } from 'react-native';
 
 interface IButtonProps {
@@ -9,6 +10,9 @@ interface IButtonProps {
   color?: string | OpaqueColorValue | undefined;
   text?: string | undefined;
   buttonSize?: number
+  textStyle ?: TextStyle;
+  ref?: ForwardedRef<any>;
+  name: IconType;
 
 }
 

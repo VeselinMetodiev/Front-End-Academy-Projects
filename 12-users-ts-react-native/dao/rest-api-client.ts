@@ -1,7 +1,8 @@
+import { Post } from "../model/posts.model.js";
 import { Identifiable, IdType } from "../model/shared-types.js";
 import { User } from "../model/user.model.js";
 
-const API_BASE_URL = "http://192.168.10.74:4000/api";
+const API_BASE_URL = "http://192.168.100.178:4000/api";
 
 export interface ApiClient<K, V extends Identifiable<K>>{
     findAll(): Promise<V[]>;
@@ -62,3 +63,5 @@ export class ApiClientImpl<K, V extends Identifiable<K>> implements ApiClient<K,
 }
 
 export const UsersAPI = new ApiClientImpl<IdType, User>('users');
+//export const TodosAPI = new ApiClientImpl<IdType, Todo>('todos');
+export const BlogsAPI = new ApiClientImpl<IdType, Post>('posts');

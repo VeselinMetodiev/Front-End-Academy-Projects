@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { FlatList } from "react-native";
-import { FilterType, UserListener } from "../model/shared-types";
-import { User, UserStatus } from "../model/User.model";
+import { FilterType, UserListener } from "../../model/shared-types";
+import { User, UserStatus } from "../../model/User.model";
 import UserItem from "./UserItem";
 
 interface Props {

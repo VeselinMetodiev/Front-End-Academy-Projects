@@ -1,10 +1,10 @@
 import React from "react";
-import { UserListener } from "../model/shared-types";
-import { User, UserStatus } from "../model/user.model";
+import { UserListener } from "../../model/shared-types";
+import { User, UserStatus } from "../../model/user.model";
 import { StyleSheet, Text, View, Image } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import { UsersAPI } from "../dao/rest-api-client";
+import { UsersAPI } from "../../dao/rest-api-client";
 
 
 interface userItemProps {
