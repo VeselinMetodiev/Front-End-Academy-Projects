@@ -23,6 +23,7 @@ interface AppState {
   scrollIndex: number;
   selectedTag: string[];
 }
+
 export const EMPTY_IMAGE_DATA = { uri: '', width: 0, height: 0 };
 const EMPTY_POST = new Post('', '', [], EMPTY_IMAGE_DATA, 1);
 
@@ -115,7 +116,7 @@ class App extends Component<{}, AppState> {
     })
   }
 
-  handleFilter = (tags:string[]) =>{
+  handleFilter = (tags: string[]) => {
    this.setState({selectedTag: tags})
   }
 
@@ -133,6 +134,10 @@ class App extends Component<{}, AppState> {
     }));
   }
 
+  handleCancelTags = () => {
+    this.setState({selectedTag: []});
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -143,6 +148,9 @@ class App extends Component<{}, AppState> {
         >
           <IconButton size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
             {this.state.activeView === Views.PostListView ? 'Add New Post' : 'Show All Posts'}
+          </IconButton>
+          <IconButton size={30} backgroundColor="orange" color="white" onPress={this.handleCancelTags} name='check-circle' >
+            Close Tags
           </IconButton>
           {(() => {
             switch (this.state.activeView) {

@@ -9,10 +9,10 @@ import {
 import { PostListener, TagListener } from "../model/shared-types";
 
 interface IButtonProps {
-  style1: TextStyle;
-  style2: TextStyle;
+  styleView: TextStyle;
+  styleText: TextStyle;
+  styleTextPressed: TextStyle;
   tags: string[];
-  onPress: any;
   filterTags: string[];
   onFilter: (tags: string[])=> void;
 }
@@ -21,28 +21,34 @@ export default class TagButton extends Component<IButtonProps, {}> {
 
     handleFilter = (tag:string) => {
         if(this.props.filterTags.includes(tag)){
-            this.props.onFilter(this.props.filterTags.filter(tagF => tagF !==tag));
-        }else{
+            this.props.onFilter(this.props.filterTags.filter(tagF => tagF !== tag));
+        } else {
             this.props.onFilter(this.props.filterTags.concat(tag));
         }
-        
+
     }
 
   render() {
     const {
-      style1,
-      style2,
+      styleView,
+      styleText,
+      styleTextPressed,
       tags,
-      onPress,
       onFilter,
     }: IButtonProps = this.props;
     return (
-      <View style={style1}>
+      <View style={styleView}>
         {tags.map((tag) => (
           <Pressable key={tag} onPress={() => this.handleFilter(tag)}>
-            <Text key={tag} style={style2}>
+            {this.props.filterTags.includes(tag) ? 
+            <Text key={tag} style={styleTextPressed}>
               {tag}
             </Text>
+            :
+            <Text key={tag} style={styleText}>
+              {tag}
+            </Text>
+  }
           </Pressable>
         ))}
       </View>

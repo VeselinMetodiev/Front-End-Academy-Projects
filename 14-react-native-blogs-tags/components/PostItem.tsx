@@ -37,7 +37,7 @@ export default class PostItem extends Component<PostItemProps, {}> {
                         <View style={styles.postContent} >
                             <Text style={styles.title}>{post.title} </Text>
                             <Text style={styles.postMetadata}>{PostStatus[post.status]},  Author ID: {post.authorId}</Text>
-                            <TagButton style1 = {styles.postTags} style2 = {styles.postTag} tags = {post.tags} onPress={() => console.log(1)} filterTags={filterTags}
+                            <TagButton styleView = {styles.postTags} styleTextPressed = {styles.postTagPressed} styleText = {styles.postTag} tags = {post.tags} filterTags={filterTags}
                             onFilter={onFilter}/>
                         </View>
                     </View>
@@ -112,6 +112,16 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         backgroundColor: '#fccb58',
+        borderRadius: 15,
+        borderColor: 'green',
+    },
+    postTagPressed: {
+        margin: 5,
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        fontSize: 18,
+        fontWeight: 'bold',
+        backgroundColor: 'orange',
         borderRadius: 15,
         borderColor: 'green',
     },

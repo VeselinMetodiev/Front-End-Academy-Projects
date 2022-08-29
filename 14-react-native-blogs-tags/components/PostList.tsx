@@ -3,6 +3,7 @@ import { FlatList, View } from "react-native";
 import { FilterType, PostListener, TagListener } from "../model/shared-types";
 import { Post } from "../model/posts.model";
 import PostItem, { ITEM_HEIGHT, PostItemListener } from "./PostItem";
+import React from "react";
 
 interface Props {
     posts: Post[];
@@ -15,14 +16,10 @@ interface Props {
 }
 
 const PostList = forwardRef<FlatList<Post>, Props>((props, fRef) => {
-    const [selectedTag, setSelectedTag] = useState('');
-
-   
-
     const { posts, filter, scrollIndex,filterTags, ...rest }: Props = props;
-    const visiblePosts = (posts: Post[], filter: string[]) => posts.filter(post =>{
-        for(const tagI in filter){
-            if(!post.tags.includes(filter[tagI]))
+    const visiblePosts = (posts: Post[], filterTags: string[]) => posts.filter(post =>{
+        for(const tagI in filterTags){
+            if(!post.tags.includes(filterTags[tagI]))
                 return false
         }
         return true;
