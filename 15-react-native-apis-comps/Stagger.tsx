@@ -1,67 +1,83 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { Animated, FlatList, ScrollView, StyleSheet, Text } from 'react-native';
+import { Animated, FlatList, SafeAreaView, StyleSheet, Text, View, Dimensions } from 'react-native';
 
 const ITEM_WIDTH = 300;
+const PAGE_SIZE = 20;
 
-const arrValues: number[] = [];
-for(let i = 1; i < 500; i++){
-    arrValues.push(i)
+type Item = string;
+
+interface StaggerState {
+    items: Item[];
+    page: number;
 }
 
-export default class Stagger extends Component {
-    animatedValue = arrValues.map(value => new Animated.Value(0))
+export default class Stagger extends Component<{}, StaggerState> {
+    state: Readonly<StaggerState> = {
+        items: [],
+        page: 0,
+    };
+
+    animatedValues: Animated.Value[] = [];
 
     componentDidMount(): void {
-        this.animate();
+        this.loadMoreItems();
     }
 
-    animate() {
-        const animations = arrValues.map((val, index) => Animated.timing(this.animatedValue[index], {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-           
-        }));
-        Animated.stagger(100, animations).start()
+    addAnimatedValues(newItems: Item[]) {
+        newItems.forEach(item => this.animatedValues.push(new Animated.Value(0)));
+        const newAnimations = newItems.map((val, index) =>
+            Animated.timing(this.animatedValues[index + this.state.page * PAGE_SIZE], {
+                toValue: 1,
+                duration: 500,
+                useNativeDriver: true,
+            }).start());
     }
 
-  render() {
-    const animItems = arrValues.map((val, index) => (
-        <Animated.View key={index} style={[styles.item, {opacity: this.animatedValue[index], 
-            backgroundColor: this.animatedValue[index].interpolate({
-                inputRange: [0, 100],
-                outputRange: ['orange', 'blue'],
-              }),
-              marginLeft: this.animatedValue[index].interpolate({
-                inputRange: [0, 1],
-                outputRange: [-ITEM_WIDTH/2, 0]
-              }),
-              transform: [
-                {
-                  rotate: this.animatedValue[index].interpolate({
+    addItems(newItems: Item[]) {
+        this.addAnimatedValues(newItems);
+        this.setState(({ items, page }) => ({ items: items.concat(newItems), page: page + 1 }));
+
+    }
+
+    loadMoreItems = () => {
+        const newItems: Item[] = [];
+        for (let i = this.state.page * PAGE_SIZE; i < (this.state.page + 1) * PAGE_SIZE; i++) {
+            newItems.push(`Item ${i}`);
+        }
+        this.addItems(newItems);
+    }
+
+    render() {
+        const animItems = this.state.items.map((val, index) => (
+            <Animated.View key={index} style={[styles.item, {
+                opacity: this.animatedValues[index],
+                marginLeft: this.animatedValues[index].interpolate({
                     inputRange: [0, 1],
-                    outputRange: ['0deg', '360deg'],
-                  }),
-                },
-              ]
-              }]}>
-            <Text style={styles.text}> Item {val}</Text>
-        </Animated.View>
-    ));
-    return (
-      <FlatList contentContainerStyle={styles.container}
-        data={animItems}
-        renderItem={({ item }) => item}
-        // onEndReachedThreshold={0.2}
-        // onEndReached={this.loadMoreItems}
-        >
-    </FlatList>
-    )
-  }
+                    outputRange: [-ITEM_WIDTH, 0],
+                    extrapolate: 'clamp',
+                })
+            }]}>
+                <Text style={styles.text}>{val}</Text>
+            </Animated.View>
+        ));
+        return (
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    data={animItems}
+                    renderItem={({ item }) => item}
+                    onEndReachedThreshold={0.1}
+                    onEndReached={this.loadMoreItems}
+                >
+                </FlatList>
+            </SafeAreaView>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        height: Dimensions.get('window').height,
+    },
     item: {
         backgroundColor: '#ccc',
         padding: 10,
@@ -72,12 +88,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginLeft: 0,
         marginTop: 3,
-
     },
     text: {
         fontSize: 20,
     },
-    container: {
-        
-    }
-})
+});

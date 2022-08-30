@@ -1,20 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Stagger from './Stagger';
+import React from "react";
+import AppAnimation01 from "./AppAnimation01";
+import AppAnimation02 from "./AppAnimation02";
+import AppEasing from "./AppEasing";
+import ProgressBar from "./ProgressBar";
+import Stagger from "./Stagger";
 
-export default function App() {
-  return (
-    
-    <Stagger />
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default () =>
+(<ProgressBar min={0} max={100}/>)
