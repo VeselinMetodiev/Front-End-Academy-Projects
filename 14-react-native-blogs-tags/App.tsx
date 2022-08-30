@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, SafeAreaView, ScrollView, StatusBar, KeyboardAvoidingView, Platform, FlatList } from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView, StatusBar, KeyboardAvoidingView, Platform, FlatList, Animated } from "react-native";
 import { BlogsAPI } from "./dao/rest-api-client";
 import { FilterType, Optional } from "./model/shared-types";
 import { Form } from "./components/formbuilder/Form";
@@ -9,15 +9,17 @@ import { FormComponentConfigs } from "./components/formbuilder/form-types";
 import IconButton from './components/IconButton';
 import * as yup from 'yup';
 import PostItem, { ITEM_HEIGHT, PostItemProps } from "./components/PostItem";
+import ProgressBar from "./ProgressBar";
 
 export enum Views {
-  PostFormView = 1, PostListView
+  PostFormView = 1, PostListView, ProgressBarView,
 }
 
 interface AppState {
   activeView: Views;
   errors: string | undefined;
   posts: Post[];
+  page: number;
   filter: FilterType;
   editedPost: Post;
   scrollIndex: number;
@@ -27,11 +29,14 @@ interface AppState {
 export const EMPTY_IMAGE_DATA = { uri: '', width: 0, height: 0 };
 const EMPTY_POST = new Post('', '', [], EMPTY_IMAGE_DATA, 1);
 
+export const DEFAULT_PAGE_SIZE = 5;
+
 class App extends Component<{}, AppState> {
   state: AppState = {
-    activeView: Views.PostListView,
+    activeView: Views.ProgressBarView,
     errors: '',
     posts: [],
+    page: 0,
     filter: undefined,
     editedPost: EMPTY_POST,
     scrollIndex: 0,
@@ -39,14 +44,26 @@ class App extends Component<{}, AppState> {
   }
   postsListRef = React.createRef<FlatList<Post>>()
 
+  postsAnimatedValues: Animated.Value[] = [];
+
   async componentDidMount() {
-    try {
-      const allPosts = await BlogsAPI.findAll();
-      this.setState({ posts: allPosts, errors: undefined })
-    } catch (err) {
-      this.setState({ errors: err as string })
-    }
+    this.loadMoreItems();
   }
+
+
+addPosts(newPosts: Post[]) {
+    this.setState(({ posts, page }) => ({ posts: posts.concat(newPosts), page: page + 1 }));
+}
+
+loadMoreItems = async () => {
+  try {
+     const newPosts = await BlogsAPI.findByPage(this.state.page, DEFAULT_PAGE_SIZE);
+     this.setState({ errors: undefined })
+     this.addPosts(newPosts);
+   } catch (err) {
+     this.setState({ errors: err as string })
+   }
+}
 
   componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<AppState>, snapshot?: any): void {
     if (this.state.activeView === Views.PostListView) {
@@ -138,19 +155,21 @@ class App extends Component<{}, AppState> {
     this.setState({selectedTag: []});
   }
 
+  changeView = () => {
+    this.setState({activeView: Views.PostListView});
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar backgroundColor="green" />
+        { this.state.activeView === Views.ProgressBarView ? <ProgressBar onFinish={this.changeView} min={0} max={100}/> : 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboarAvoidingView}
         >
           <IconButton size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
             {this.state.activeView === Views.PostListView ? 'Add New Post' : 'Show All Posts'}
-          </IconButton>
-          <IconButton size={30} backgroundColor="orange" color="white" onPress={this.handleCancelTags} name='check-circle' >
-            Close Tags
           </IconButton>
           {(() => {
             switch (this.state.activeView) {
@@ -165,14 +184,18 @@ class App extends Component<{}, AppState> {
               case Views.PostListView:
                 return (
                   <PostList ref={this.postsListRef} posts={this.state.posts}
+                  page={this.state.page}
                   filter={this.state.filter}
                   onDelete={this.handleDeletePost}
                   onEdit={this.handleEditTodo}
                   onFilter={this.handleFilter}
-                  scrollIndex={this.state.scrollIndex} filterTags={this.state.selectedTag}                  />);
+                  onCancelTags={this.handleCancelTags}
+                  scrollIndex={this.state.scrollIndex} filterTags={this.state.selectedTag}
+                  onLoadMorePosts={this.loadMoreItems}/>);
             }
           })()}
         </KeyboardAvoidingView>
+  }
       </SafeAreaView>
     );
   }
