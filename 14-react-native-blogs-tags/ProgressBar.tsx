@@ -22,7 +22,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
 countInterval: NodeJS.Timer | undefined = undefined;
 
 componentDidMount() {
-  this.countInterval = setInterval(() => this.setState({current: this.state.current + 33}), 100);
+  this.countInterval = setInterval(() => this.setState({current: this.state.current + 1}), 100);
 }
 
 componentDidUpdate() {
