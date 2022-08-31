@@ -2,27 +2,45 @@ import React, { useEffect, useState, useRef, Component } from "react";
 import { Text, View, StyleSheet, Animated, Button } from "react-native";
 import Constants from "expo-constants";
 
+interface ProgressBarState {
+  current: number;
+}
+
 interface ProgressBarProps {
   min: number;
-  max: number;
-  current: number;
+  max: number
 }
 
 const translation = new Animated.Value(0);
 
-class ProgressBar extends Component<ProgressBarProps> {
+class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
+  state: Readonly<ProgressBarState> = {
+    current: this.props.min,
+};
 
-componentDidUpdate(prevProps : ProgressBarProps) {
-  // Typical usage (don't forget to compare props):
-  if (this.props.current !== prevProps.current) {
-    Animated.timing(translation, {
-      toValue: this.props.current,
-      duration: (this.props.current - this.props.min) * 150,
-      useNativeDriver: true,
-  }).start();
+countInterval: NodeJS.Timer | undefined = undefined;
+
+componentDidMount() {
+  this.countInterval = setInterval(() => this.setState({current: this.state.current + 3}), 100);
+}
+
+componentDidUpdate() {
+  this.newAnimations(this.state.current);
+  if (this.state.current >= this.props.max) {
+    clearInterval(this.countInterval);
   }
 }
-        
+
+  newAnimations = (count: number) => 
+  {
+    Animated.timing(translation, {
+                toValue: count,
+                duration: 100,
+                useNativeDriver: true,
+            }).start();
+            console.log(count);
+  }
+          
   render() {
     return (
       <View style={styles.container}>
@@ -40,7 +58,7 @@ componentDidUpdate(prevProps : ProgressBarProps) {
             }
             ]}     
           >
-               <Text>{this.props.current}%</Text>
+               <Text>{this.state.current}%</Text>
           </Animated.View>
         </View>
       </View>

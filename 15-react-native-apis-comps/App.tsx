@@ -1,9 +1,33 @@
-import React from "react";
-import AppAnimation01 from "./AppAnimation01";
-import AppAnimation02 from "./AppAnimation02";
-import AppEasing from "./AppEasing";
-import ProgressBar from "./ProgressBar";
-import Stagger from "./Stagger";
+import React, { Component } from 'react'
+import { Pressable, View, Text } from 'react-native';
+import Toaster from './Toaster'
 
-export default () =>
-(<ProgressBar min={0} max={100}/>)
+interface AppState {
+    visible: boolean;
+}
+
+export default class App extends Component {
+    state: Readonly<AppState> = {
+        visible: false,
+    }
+
+    showToaster = () => {
+        this.setState({visible: true})
+    }
+
+    hideToaster = () => {
+        this.setState({visible: false})
+    }
+    
+  render() {
+    return (
+        <View>
+        <Pressable onPress={this.showToaster}>
+            <Text>Click</Text>
+        </Pressable>
+        <Toaster delay={4000} message={'You got a message!'} duration={500} positionX={320} positionY={100} visible={this.state.visible}/>
+        </View>
+      
+    )
+  }
+}
