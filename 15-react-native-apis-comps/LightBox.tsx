@@ -57,11 +57,12 @@ export default class LightBox extends Component<LightBoxProps, LightBoxState> {
 
   render() {
     const windowWidth = this.state.dimension.window.width;
-    const imageHeight = this.props.height;
+    const imageHeight = Math.floor(0.8 * this.props.height);
 
     return (
-      <View style={[styles.scrollContainer, { height: this.props.height}]}>
+      <View style={[styles.scrollContainer, { height: this.props.height, width: windowWidth}]}>
         <Animated.ScrollView
+          style={{width: windowWidth}}
           horizontal={true}
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
