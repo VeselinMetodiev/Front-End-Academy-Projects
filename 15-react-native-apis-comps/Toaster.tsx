@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Animated, Text, View, StyleSheet } from 'react-native';
+import TextsInToaster from './TextsInToaster';
 
 const SHORT_DURATION = 3000;
 const LONG_DURATION = 5000;
@@ -18,7 +19,7 @@ interface ToasterProps {
     onShown?: () => void;
     onHide?: any;
     opacity?: number;
-    message: string;
+    messages: string[];
 }
 
 const translationToaster = new Animated.ValueXY({x: 0, y: 0});
@@ -70,10 +71,10 @@ export default class Toaster extends Component<ToasterProps, {}> {
                   { translateX: translationToaster.x },
                   { translateY: translationToaster.y },
                 ],
-            }
+              }   
             ]}     
           >
-            <Text>{this.props.message}</Text>
+            <TextsInToaster messages={this.props.messages}/>
             <View style={styles.progressBar}>
           <Animated.View
             style={[
@@ -89,7 +90,8 @@ export default class Toaster extends Component<ToasterProps, {}> {
           >
           </Animated.View>
         </View>
-          </Animated.View>      
+          </Animated.View>  
+    
   }
         </View>
           
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: 'center',
     backgroundColor: "#ecf0f1",
     padding: 8,
   },
