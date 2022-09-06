@@ -26,7 +26,7 @@ export default class Favourites extends Component<{}, AppState> {
 
   render() {
     return (
-                <DropZone droppedItems={this.state.droppedItems}/>
+        <DropZone droppedItems={this.state.droppedItems}/>
     )
   }
 }

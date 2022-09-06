@@ -4,9 +4,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { ImageModel } from "../model/Image";
 import { IdType, ImageListener, Point } from "../model/shared-types";
+import { Views } from "../App";
 
 
 interface ImageItemProps {
+  currentView: Views,
   image: ImageModel;
   onUpdate: ImageListener;
   onDelete: ImageListener;
@@ -33,7 +35,7 @@ export default class ImageItem extends Component<ImageItemProps, ImageItemState>
     };
 
     isDropArea(gesture:PanResponderGestureState) {
-      return gesture.moveY > 1400;
+      return gesture.moveY < this.props.dropZoneHeight;
     }
 
   // private _val: Point;
@@ -59,7 +61,7 @@ export default class ImageItem extends Component<ImageItemProps, ImageItemState>
             console.log("Dropped circle with id: " + this.props.id)
             this.props.onDrop(this.props.id!);
               Animated.timing(this.translationOpacity, {
-              toValue: 0,
+              toValue: 1,
               duration: 2000,
               useNativeDriver: true,
             }).start(() =>
@@ -85,7 +87,7 @@ render() {
     }]
   }
   return (
-   // <Animated.View {...this.panResponder.panHandlers} style={{ ...panStyle, ...styles.imageItem, ...{opacity: this.translationOpacity} }}>
+    <Animated.View {...this.panResponder.panHandlers} style={{ ...panStyle, ...styles.imageItem, ...{opacity: this.translationOpacity} }}>
    <View>
       <Card style={styles.card}>
     <Card.Title title={this.props.image.title} left={undefined} />
@@ -124,7 +126,7 @@ render() {
     </Card.Actions>
   </Card>
   </View>
-   // </Animated.View>
+   </Animated.View>
   );
 }
 };

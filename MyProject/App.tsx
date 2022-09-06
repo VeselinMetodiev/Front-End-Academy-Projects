@@ -7,6 +7,7 @@ import { ImagesAPI } from './dao/rest-api-client';
 import { ImageModel } from './model/Image';
 import { Optional, Point } from './model/shared-types';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Favourites from './DragToFavourites';
 
 export enum Views {
   FormView = 1, ImageListView, FavouritesView,
@@ -89,6 +90,8 @@ export default class App extends Component<{}, AppState>  {
 
   handleDrop = (id:number) => {
     this.setState({droppedItems : this.state.droppedItems.concat(id)})
+    const currentImage = this.state.images.find((im) => im.id === id);
+    currentImage && this.setState({favourites : this.state.favourites.concat(currentImage)})
   }
 
   handleViewChange = () => {
@@ -131,17 +134,20 @@ export default class App extends Component<{}, AppState>  {
                 )
               case Views.ImageListView:
                 return (
-                  <ImagesList onDrop={this.handleDrop} onFavourite={this.addToFavourites} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
+                  <View style={{flex:1}}>
+                  <Favourites/> 
+                  <ImagesList currentView={this.state.activeView} onDrop={this.handleDrop} onFavourite={this.addToFavourites} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
                   onEdit={this.handleEditImage}/>
+                  </View>
                 )
               case Views.FavouritesView:
                 return (
-                  <ImagesList onDrop={this.handleDrop} onFavourite={this.removeFromFavourites} images={this.state.favourites} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
+                  <ImagesList currentView={this.state.activeView} onDrop={this.handleDrop} onFavourite={this.removeFromFavourites} images={this.state.favourites} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
                   onEdit={this.handleEditImage}/>
                )
             }
           })()}
-      {/* <Favourites/> */}
+      
        </KeyboardAvoidingView>
       </SafeAreaView>
   );
