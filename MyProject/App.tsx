@@ -10,7 +10,11 @@ import FormikForm from './FormikForm';
 import { ImageModel } from './model/Image';
 import { Optional, Point } from './model/shared-types';
 import MyModal from './MyModal';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+export enum Views {
+  FormView = 1, ImageListView, FavouritesView,
+}
 
 interface AppState {
   errors: string | undefined;
@@ -18,6 +22,7 @@ interface AppState {
   editedImage: Optional<ImageModel>;
   panState: Point | undefined;
   droppedItems: number[];
+  activeView: Views;
 }
 
 export default class App extends Component<{}, AppState>  {
@@ -26,7 +31,8 @@ export default class App extends Component<{}, AppState>  {
     images: [],
     editedImage: undefined,
     panState: undefined,
-    droppedItems: []
+    droppedItems: [],
+    activeView: Views.FormView,
   }
 
   async componentDidMount() {
@@ -87,6 +93,16 @@ export default class App extends Component<{}, AppState>  {
     this.setState({droppedItems : this.state.droppedItems.concat(id)})
   }
 
+  handleViewChange = () => {
+    this.setState(({ activeView }) => ({
+      activeView: activeView === Views.ImageListView ? Views.FormView : Views.ImageListView
+    }));
+  }
+
+  handleViewChangeFavourites = () => {
+    this.setState(({ activeView : Views.FavouritesView}));
+  }
+
   render() {
   return (
     <SafeAreaView style={styles.container}>
@@ -95,9 +111,30 @@ export default class App extends Component<{}, AppState>  {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboarAvoidingView}
         >
-      <ImageForm image={this.state.editedImage} key={this.state.editedImage?.id} onCreateImage={this.handleCreateImage}/>
-      <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
-                    onEdit={this.handleEditImage}/>
+          <FontAwesome.Button size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
+            {this.state.activeView === Views.ImageListView ? 'Add New Image' : 'Show All Images'}
+          </FontAwesome.Button>
+          <FontAwesome.Button size={30} backgroundColor="orange" color="white" onPress={this.handleViewChangeFavourites} name='heart' >
+            Favourites
+          </FontAwesome.Button>
+          {(() => {
+            switch (this.state.activeView) {
+              case Views.FormView:
+                return (
+                  <ImageForm image={this.state.editedImage} key={this.state.editedImage?.id} onCreateImage={this.handleCreateImage}/>
+                )
+              case Views.ImageListView:
+                return (
+                  <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
+                  onEdit={this.handleEditImage}/>
+                )
+              case Views.FavouritesView:
+                return (
+                  <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
+                  onEdit={this.handleEditImage}/>
+                )
+            }
+          })()}
       {/* <Favourites/> */}
        </KeyboardAvoidingView>
       </SafeAreaView>

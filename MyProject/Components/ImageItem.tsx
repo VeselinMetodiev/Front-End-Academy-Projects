@@ -84,7 +84,8 @@ render() {
     }]
   }
   return (
-    <Animated.View {...this.panResponder.panHandlers} style={{ ...panStyle, ...styles.imageItem, ...{opacity: this.translationOpacity} }}>
+   // <Animated.View {...this.panResponder.panHandlers} style={{ ...panStyle, ...styles.imageItem, ...{opacity: this.translationOpacity} }}>
+   <View>
       <Card style={styles.card}>
     <Card.Title title={this.props.image.title} left={undefined} />
     <Card.Content>
@@ -113,7 +114,8 @@ render() {
         </View>
     </Card.Actions>
   </Card>
-    </Animated.View>
+  </View>
+   // </Animated.View>
   );
 }
 };
