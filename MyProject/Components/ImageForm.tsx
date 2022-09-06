@@ -5,8 +5,8 @@ import { IdType, ImageListener, Optional } from '../model/shared-types'
 import ImagePickerExample from './ImagePicker';
 import * as yup from "yup";
 import { Formik } from 'formik';
-import DatePicker from 'react-native-modern-datepicker';
-import MyModal from '../MyModal';
+import ImageDatePicker from './ImageDatePicker';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 interface ImageFormProps {
   image: Optional<ImageModel>;
@@ -70,22 +70,16 @@ this.setState({dateOfPicture: date})
 }
 
   render() {
-    const inputStyle = {
-      borderWidth: 1,
-      borderColor: '#4e4e4e',
-      padding: 12,
-      marginBottom: 5,
-    };
     return (
          <View style={styles.container}>
       <View style={styles.registrationForm}>
       <Text style={styles.titleText}> Image Form </Text>
       <Formik
         initialValues={{ 
-          title: '',
-          description: '', 
-          authorName: '',
-          imageURI: '', 
+          title: this.state.title,
+          description: this.state.description, 
+          authorName: this.state.authorName,
+          imageURI: this.state.imageURI, 
           tags: [],
         }}
         onSubmit={values => console.log(JSON.stringify(values))}
@@ -108,7 +102,7 @@ this.setState({dateOfPicture: date})
           <View style={styles.registrationForm}>
             <TextInput
               value={values.title}
-              style={inputStyle}
+              style={styles.input}
               onChangeText={handleChange('title')}
               onBlur={() => setFieldTouched('title')}
               placeholder="Title"
@@ -118,7 +112,7 @@ this.setState({dateOfPicture: date})
             }            
             <TextInput
               value={values.description}
-              style={inputStyle}
+              style={styles.input}
               onChangeText={handleChange('description')}
               onBlur={() => setFieldTouched('description')}
               placeholder="Description"
@@ -128,18 +122,17 @@ this.setState({dateOfPicture: date})
             }
             <TextInput
               value={values.authorName}
-              style={inputStyle}
+              style={styles.input}
               onChangeText={handleChange('authorName')}
               placeholder="Author"
               onBlur={() => setFieldTouched('authorName')}
-
             />
             {touched.authorName && errors.authorName &&
-              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.authorName}</Text>
+              <Text style={{ fontSize: 14, color: '#FF0D10' }}>{errors.authorName.toUpperCase()}</Text>
             }
              <TextInput
               value={values.imageURI}
-              style={inputStyle}
+              style={styles.input}
               onChangeText={handleChange('imageURI')}
               placeholder="Image URL"
               onBlur={() => setFieldTouched('imageURI')}
@@ -148,22 +141,27 @@ this.setState({dateOfPicture: date})
               <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.imageURI}</Text>
             }
             <ImagePickerExample onSubmit={this.handleSetImage}/>
-            <MyModal
-      onSetDate={this.handleDate}/>
+            <ImageDatePicker onSetDate={this.handleDate}/>
             <View style={styles.buttons}>
-            <Button
+            <FontAwesome.Button
               color="#841584"
-              title='Submit'
               disabled={!isValid}
               onPress={() => {this.handleImageSubmit(values); resetForm()}}
               accessibilityLabel="Submit Image"
-            />
-              <Button
+              name={'envelope'}
+              size={40}
+            >
+            Submit
+            </FontAwesome.Button>
+              <FontAwesome.Button
           onPress={() => {this.handleImageReset; resetForm()}}
-          title="Reset"
           color="#842317"
           accessibilityLabel="Reset Form"
-        />
+          name='resistance'
+          size={40}
+        >
+Reset
+</FontAwesome.Button>
         </View>
           </View>
         )}
@@ -177,6 +175,7 @@ this.setState({dateOfPicture: date})
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    height: '100%',
     backgroundColor: "#B2C8DF",
     borderRadius: 10,
     paddingTop: 70,
@@ -191,24 +190,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 30,
   },
-  gender: {
-    fontSize: 14,
-    fontWeight: "400",
-  },
   input: {
     borderColor: "#6E85B7",
     borderWidth: 2,
     borderRadius: 5,
-    marginBottom: 5,
-    padding: 5,
-    width: 250,
+    marginBottom: 10,
+    padding: 12,
+    width: 300,
   },
   buttons: {
     fontSize: 45,
     marginTop: 20,
     marginBottom: 30,
     flexDirection: 'row',
-    justifyContent: 'center',
     gap: 10,
 },
 });

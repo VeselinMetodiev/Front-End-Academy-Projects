@@ -4,12 +4,8 @@ import { Dimensions, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, V
 import ImageForm from './Components/ImageForm';
 import ImagesList from './Components/ImagesList';
 import { ImagesAPI } from './dao/rest-api-client';
-import Favourites from './DragToFavourites';
-import DynamicForm from './DynamicForm';
-import FormikForm from './FormikForm';
 import { ImageModel } from './model/Image';
 import { Optional, Point } from './model/shared-types';
-import MyModal from './MyModal';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export enum Views {
@@ -23,6 +19,7 @@ interface AppState {
   panState: Point | undefined;
   droppedItems: number[];
   activeView: Views;
+  favourites: ImageModel[];
 }
 
 export default class App extends Component<{}, AppState>  {
@@ -33,6 +30,7 @@ export default class App extends Component<{}, AppState>  {
     panState: undefined,
     droppedItems: [],
     activeView: Views.FormView,
+    favourites: []
   }
 
   async componentDidMount() {
@@ -86,7 +84,7 @@ export default class App extends Component<{}, AppState>  {
   };
 
   handleEditImage = (image: ImageModel) => {
-    this.setState({ editedImage: image });
+    this.setState({ activeView : Views.FormView, editedImage: image });
   };
 
   handleDrop = (id:number) => {
@@ -101,6 +99,14 @@ export default class App extends Component<{}, AppState>  {
 
   handleViewChangeFavourites = () => {
     this.setState(({ activeView : Views.FavouritesView}));
+  }
+
+  addToFavourites = (image: ImageModel) => {
+    this.setState({favourites: this.state.favourites.concat(image)})
+  }
+
+  removeFromFavourites = (image: ImageModel) => {
+    this.setState({favourites: this.state.favourites.filter((im) => im.id !== image.id)})
   }
 
   render() {
@@ -125,14 +131,14 @@ export default class App extends Component<{}, AppState>  {
                 )
               case Views.ImageListView:
                 return (
-                  <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
+                  <ImagesList onDrop={this.handleDrop} onFavourite={this.addToFavourites} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
                   onEdit={this.handleEditImage}/>
                 )
               case Views.FavouritesView:
                 return (
-                  <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
+                  <ImagesList onDrop={this.handleDrop} onFavourite={this.removeFromFavourites} images={this.state.favourites} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
                   onEdit={this.handleEditImage}/>
-                )
+               )
             }
           })()}
       {/* <Favourites/> */}
@@ -144,9 +150,10 @@ export default class App extends Component<{}, AppState>  {
 
 const styles = StyleSheet.create({
   container: {
-    height: Dimensions.get('window').height,
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? 30 : 0
   },
   keyboarAvoidingView: {
-    flex: 1
-  },
+    flex: 1,
+  }
 });

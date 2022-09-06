@@ -10,11 +10,12 @@ interface Props {
     onDelete: ImageListener;
     onEdit: ImageListener;
     onDrop: any;
+    onFavourite?: (image: ImageModel) => void
 }
 
-export default function UserList({ images, onDrop, ...rest }: Props) {
+export default function UserList({ images, onDrop, onFavourite, ...rest }: Props) {
     return (
         <FlatList<ImageModel> style={{width: '100%'}} data={images}
-            renderItem={({ item: user }) => <UserItem dropZoneHeight={1000} id={user.id} image={user} onDrop={onDrop} key={user.id} {...rest} />}
+            renderItem={({ item: user }) => <UserItem onFavourite={onFavourite!} dropZoneHeight={1000} id={user.id} image={user} onDrop={onDrop} key={user.id} {...rest} />}
         />);
 }

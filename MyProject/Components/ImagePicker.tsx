@@ -33,7 +33,7 @@ export default class ImagePickerExample extends Component<ImagePickerProps, Imag
   };
 render(){
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <Button title="Pick an image from camera roll" onPress={this.pickImage} />
       {/* {this.state.imageURI && <Image source={{ uri: this.state.imageURI }} style={{ width: 200, height: 200 }} />} */}
     </View>

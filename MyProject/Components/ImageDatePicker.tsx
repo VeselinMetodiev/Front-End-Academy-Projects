@@ -6,7 +6,7 @@ interface ModalProps {
     onSetDate: any;
 }
 
-class MyModal extends Component<ModalProps, {}> {
+class ImageDatePicker extends Component<ModalProps, {}> {
   state = {
     modalVisible: false
   };
@@ -66,7 +66,6 @@ class MyModal extends Component<ModalProps, {}> {
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     marginTop: 22
   },
   modalView: {
@@ -106,4 +105,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MyModal;
+export default ImageDatePicker;

@@ -14,6 +14,7 @@ interface ImageItemProps {
   dropZoneHeight: number;
   id: IdType;
   onDrop: (id:number) => void;
+  onFavourite: (image: ImageModel) => void
 }
 
 interface ImageItemState {
@@ -110,6 +111,14 @@ render() {
           color="gray"
           backgroundColor="transparent"
           onPress={() => this.props.onEdit(this.props.image)}
+        />
+         <FontAwesome.Button
+          style={styles.button}
+          name="heart-o"
+          size={40}
+          color="orange"
+          backgroundColor="transparent"
+          onPress={() => this.props.onFavourite(this.props.image)}
         />
         </View>
     </Card.Actions>
