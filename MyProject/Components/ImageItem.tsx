@@ -142,8 +142,9 @@ const styles = StyleSheet.create({
   imageItemRight: {
     flexDirection: "row",
     gap: 15,
-    padding: 0,
+    padding: 10,
     border: 1,
+    marginBottom: 15,
   },
   imageItemStatus: {
     fontSize: 24,
