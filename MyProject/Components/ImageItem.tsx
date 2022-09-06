@@ -87,8 +87,8 @@ render() {
     }]
   }
   return (
-    <Animated.View {...this.panResponder.panHandlers} style={{ ...panStyle, ...styles.imageItem, ...{opacity: this.translationOpacity} }}>
-   <View>
+    <View>
+   <Animated.View {...this.panResponder.panHandlers} style={{ ...panStyle, ...styles.imageItem, ...{opacity: this.translationOpacity} }}>
       <Card style={styles.card}>
     <Card.Title title={this.props.image.title} left={undefined} />
     <Card.Content>
@@ -96,7 +96,8 @@ render() {
       <Paragraph>{this.props.image.description}</Paragraph>
     </Card.Content>
     <Card.Cover style={styles.avatars} source={{ uri: this.props.image.imageURI }} />
-    <Card.Actions>
+    </Card>
+    </Animated.View>
     <View style={styles.imageItemRight}>
          <FontAwesome.Button
               style={styles.button}
@@ -123,10 +124,7 @@ render() {
           onPress={() => this.props.onFavourite(this.props.image)}
         />
         </View>
-    </Card.Actions>
-  </Card>
   </View>
-   </Animated.View>
   );
 }
 };

@@ -95,13 +95,13 @@ export default class App extends Component<{}, AppState>  {
   }
 
   handleViewChange = () => {
-    this.setState(({ activeView }) => ({
+    this.setState(({ editedImage: undefined, activeView }) => ({
       activeView: activeView === Views.ImageListView ? Views.FormView : Views.ImageListView
     }));
   }
 
   handleViewChangeFavourites = () => {
-    this.setState(({ activeView : Views.FavouritesView}));
+    this.setState(({ activeView : Views.FavouritesView, editedImage: undefined}));
   }
 
   addToFavourites = (image: ImageModel) => {
