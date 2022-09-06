@@ -5,8 +5,11 @@ import ImageForm from './Components/ImageForm';
 import ImagesList from './Components/ImagesList';
 import { ImagesAPI } from './dao/rest-api-client';
 import Favourites from './DragToFavourites';
+import DynamicForm from './DynamicForm';
+import FormikForm from './FormikForm';
 import { ImageModel } from './model/Image';
 import { Optional, Point } from './model/shared-types';
+import MyModal from './MyModal';
 
 
 interface AppState {
@@ -92,11 +95,10 @@ export default class App extends Component<{}, AppState>  {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboarAvoidingView}
         >
-      <StatusBar style="auto" />
       <ImageForm image={this.state.editedImage} key={this.state.editedImage?.id} onCreateImage={this.handleCreateImage}/>
       <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
                     onEdit={this.handleEditImage}/>
-      <Favourites/>
+      {/* <Favourites/> */}
        </KeyboardAvoidingView>
       </SafeAreaView>
   );

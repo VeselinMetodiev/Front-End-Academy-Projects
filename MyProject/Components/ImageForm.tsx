@@ -3,7 +3,10 @@ import { Button, TextInput, View, Text, StyleSheet } from 'react-native';
 import { ImageModel } from '../model/Image';
 import { IdType, ImageListener, Optional } from '../model/shared-types'
 import ImagePickerExample from './ImagePicker';
-import * as Yup from "yup";
+import * as yup from "yup";
+import { Formik } from 'formik';
+import DatePicker from 'react-native-modern-datepicker';
+import MyModal from '../MyModal';
 
 interface ImageFormProps {
   image: Optional<ImageModel>;
@@ -34,6 +37,7 @@ export default class ImageForm extends Component<ImageFormProps, ImageFormState>
   renderError = (message: string) => {
   return <Text>{message}</Text>;
   }
+  setDate: any;
 
   handleFieldChanged(field: string, text: string) {
     const stateUpdate = { [field]: text } as unknown as ImageFormState;
@@ -44,13 +48,13 @@ export default class ImageForm extends Component<ImageFormProps, ImageFormState>
     this.setState({title: '', description: '', tags: [], imageURI: '', authorName: '', dateOfPicture: ''})
 }
 
-handleImageSubmit = () => {
+handleImageSubmit = (values : Partial<ImageModel>) => {
   this.props.onCreateImage(new ImageModel(
-      this.state.title,
-      this.state.description,
+      values.title!,
+      values.description!,
       this.state.tags,
-      this.state.imageURI,
-      this.state.authorName,
+      this.state.imageURI ? this.state.imageURI : values.imageURI!,
+      values.authorName!,
       this.state.dateOfPicture,
       this.state.id ? parseInt(this.state.id) : undefined));
       this.setState({title: '', description: '', tags: [], imageURI: '', authorName: '', dateOfPicture: ''})
@@ -60,36 +64,111 @@ handleSetImage = (imageURL: string) => {
   this.setState({imageURI: imageURL})
 }
 
-onSubmit = (values: any) => {
-  alert(JSON.stringify(values, null, 2));
-};
+handleDate = (date: string) => {
+  console.log('setting state for date:' + date)
+this.setState({dateOfPicture: date})
+}
 
   render() {
+    const inputStyle = {
+      borderWidth: 1,
+      borderColor: '#4e4e4e',
+      padding: 12,
+      marginBottom: 5,
+    };
     return (
          <View style={styles.container}>
       <View style={styles.registrationForm}>
       <Text style={styles.titleText}> Image Form </Text>
-        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'title')} value={this.state.title} placeholder="Title" style={styles.input}/>
-        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'description')} multiline={true} numberOfLines={2} value={this.state.description} placeholder="Description" style={styles.input}/>
-        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'authorName')} value={this.state.authorName} placeholder="Author" style={styles.input}/>
-        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'dateOfPicture')} value={this.state.dateOfPicture} placeholder="Date" style={styles.input}/>
-        <TextInput onChangeText={this.handleFieldChanged.bind(this, 'imageURI')} value={this.state.imageURI} placeholder="Picture URL" style={styles.input}/>
-        <ImagePickerExample onSubmit={this.handleSetImage}/>
-      </View>
-        <View style={styles.buttons}>
-        <Button
-          onPress={this.handleImageSubmit}
-          title="Submit"
-          color="#841584"
-          accessibilityLabel="Submit Image"
-        />
-        <Button
-          onPress={this.handleImageReset}
+      <Formik
+        initialValues={{ 
+          title: '',
+          description: '', 
+          authorName: '',
+          imageURI: '', 
+          tags: [],
+        }}
+        onSubmit={values => console.log(JSON.stringify(values))}
+        validationSchema={yup.object().shape({
+          title: yup
+            .string()
+            .required()
+            .min(2)
+            .max(40),
+          description: yup
+            .string()
+            .max(256),
+          authorName: yup
+            .string()
+            .min(3)
+            .max(40),
+        })}
+       >
+        {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit, resetForm }) => (
+          <View style={styles.registrationForm}>
+            <TextInput
+              value={values.title}
+              style={inputStyle}
+              onChangeText={handleChange('title')}
+              onBlur={() => setFieldTouched('title')}
+              placeholder="Title"
+            />
+            {touched.title && errors.title &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.title}</Text>
+            }            
+            <TextInput
+              value={values.description}
+              style={inputStyle}
+              onChangeText={handleChange('description')}
+              onBlur={() => setFieldTouched('description')}
+              placeholder="Description"
+            />
+            {touched.description && errors.description &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.description}</Text>
+            }
+            <TextInput
+              value={values.authorName}
+              style={inputStyle}
+              onChangeText={handleChange('authorName')}
+              placeholder="Author"
+              onBlur={() => setFieldTouched('authorName')}
+
+            />
+            {touched.authorName && errors.authorName &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.authorName}</Text>
+            }
+             <TextInput
+              value={values.imageURI}
+              style={inputStyle}
+              onChangeText={handleChange('imageURI')}
+              placeholder="Image URL"
+              onBlur={() => setFieldTouched('imageURI')}
+            />
+            {touched.imageURI && errors.imageURI &&
+              <Text style={{ fontSize: 12, color: '#FF0D10' }}>{errors.imageURI}</Text>
+            }
+            <ImagePickerExample onSubmit={this.handleSetImage}/>
+            <MyModal
+      onSetDate={this.handleDate}/>
+            <View style={styles.buttons}>
+            <Button
+              color="#841584"
+              title='Submit'
+              disabled={!isValid}
+              onPress={() => {this.handleImageSubmit(values); resetForm()}}
+              accessibilityLabel="Submit Image"
+            />
+              <Button
+          onPress={() => {this.handleImageReset; resetForm()}}
           title="Reset"
           color="#842317"
           accessibilityLabel="Reset Form"
         />
         </View>
+          </View>
+        )}
+      </Formik>
+      </View>
         </View>
     )
   }
