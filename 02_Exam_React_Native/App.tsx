@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { Dimensions, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, View } from 'react-native';
 import QuestionForm from './Components/QuestionsForm';
+import QuestionsList from './Components/QuestionsList';
 import { questionsAPI } from './dao/rest-api-client';
 import { Question } from './model/question';
 import { Optional, Point } from './model/shared-types';
@@ -27,19 +28,20 @@ export default class App extends Component<{}, AppState>  {
   async componentDidMount() {
     try {
       const allquestions = await questionsAPI.findAll();
+      console.log(allquestions)
       this.setState({ questions: allquestions, errors: undefined });
     } catch (err) {
       this.setState({ errors: err as string });
     }
   }
 
-  handleUpdatequestion(question: Question) {
+  handleUpdateQuestion(question: Question) {
     this.setState(({ questions }) => ({
       questions: questions.map((td) => (td.id === question.id ? question : td)),
     }));
   }
 
-  handleDeletequestion= async (question: Question) => {
+  handleDeleteQuestion= async (question: Question) => {
     try {
       await questionsAPI.deleteById(question.id);
       this.setState(({ questions }) => ({
@@ -74,7 +76,7 @@ export default class App extends Component<{}, AppState>  {
     }
   };
 
-  handleEditquestion = (question: Question) => {
+  handleEditQuestion = (question: Question) => {
     this.setState({ editedQuestion: question });
   };
 
@@ -91,6 +93,8 @@ export default class App extends Component<{}, AppState>  {
           style={styles.keyboarAvoidingView}
         >
       <QuestionForm question={this.state.editedQuestion} onCreateQuestion={this.handleCreateQuestion}/>
+      <QuestionsList onDrop={this.handleDrop} questions={this.state.questions} onUpdate={() => console.log('update')} onDelete={this.handleDeleteQuestion}
+                  onEdit={this.handleEditQuestion}/>     
        </KeyboardAvoidingView>
       </SafeAreaView>
   );

@@ -9,7 +9,11 @@ interface DynamicFormState {
     inputs: string[]
 }
 
-export default class DynamicForm extends Component<{}, DynamicFormState> {
+interface DynamicFormProps {
+   onEnteredAnswer: (answer: string) => void;
+}
+
+export default class DynamicAnswerForm extends Component<DynamicFormProps, DynamicFormState> {
     state: Readonly<DynamicFormState> = {
         textValue: '',
         numInputs: 1,
@@ -22,6 +26,7 @@ export default class DynamicForm extends Component<{}, DynamicFormState> {
         inputs[index] = value;
         // we are also setting the text value to the input field onChangeText
         this.setState({ textValue: value })
+        this.props.onEnteredAnswer(value);
     }
 
     addInput = () => {
@@ -43,6 +48,7 @@ export default class DynamicForm extends Component<{}, DynamicFormState> {
          this.setState({ inputs: this.state.inputs.concat(imageURL) });
          // increase the number of inputs
          this.setState({ numInputs: this.state.numInputs + 1 });
+         this.props.onEnteredAnswer(imageURL);
     }
 
     addFields = () => {

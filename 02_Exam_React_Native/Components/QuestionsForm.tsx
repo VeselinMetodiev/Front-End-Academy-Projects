@@ -7,7 +7,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Answer } from '../model/Answer';
 import { Question } from '../model/Question';
 import ImagePickerExample from './ImagePicker';
-import DynamicForm from './DynamicForm';
+import DynamicForm from './DynamicAnswerForm';
 
 interface QuestionsFormProps {
   question: Optional<Question>;
@@ -17,7 +17,7 @@ interface QuestionsFormProps {
 interface QuestionsFormState {
   text: string,
   pointsNumber: number,
-  answers: Answer[],
+  answers: string[],
   imageURI: string,
   dateCreated: string,
   dateModified: string | undefined,
@@ -69,6 +69,10 @@ handleSetImage = (imageURL: string) => {
   this.setState({imageURI: imageURL})
 }
 
+addAnswer = (answer: string) => {
+  this.setState({answers: this.state.answers.concat(answer)})
+}
+
 
   render() {
     return (
@@ -84,20 +88,18 @@ handleSetImage = (imageURL: string) => {
           answers: this.state.answers,
         }}
         onSubmit={values => console.log(JSON.stringify(values))}
-        // validationSchema={yup.object().shape({
-        //   title: yup
-        //     .string()
-        //     .required()
-        //     .min(2)
-        //     .max(40),
-        //   pointsNumber: yup
-        //     .string()
-        //     .max(256),
-        //   authorName: yup
-        //     .string()
-        //     .min(3)
-        //     .max(40),
-        // })}
+        validationSchema={yup.object().shape({
+          text: yup
+            .string()
+            .min(2)
+            .max(150),
+          pointsNumber: yup
+            .number(),
+          authorName: yup
+            .string()
+            .min(3)
+            .max(40),
+        })}
        >
         {({ values, handleChange, errors, setFieldTouched, touched, isValid, handleSubmit, resetForm }) => (
           <View style={styles.registrationForm}>
@@ -133,7 +135,7 @@ handleSetImage = (imageURL: string) => {
             }
             <ImagePickerExample onSubmit={this.handleSetImage}/>
             <Text style={styles.textAnswers}>Answers</Text>
-            <DynamicForm/>
+            <DynamicForm onEnteredAnswer={this.addAnswer}/>
             <View style={styles.buttons}>
             <FontAwesome.Button
               color="#841584"
@@ -167,7 +169,6 @@ Reset
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: '100%',
     backgroundColor: "#B2C8DF",
     borderRadius: 10,
     paddingTop: 70,
