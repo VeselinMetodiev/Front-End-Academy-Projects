@@ -11,15 +11,17 @@ import {
 import { TextInput } from "react-native-paper";
 import ImagePickerExample from "./ImagePicker";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Answer } from "../model/Answer";
 
 interface DynamicFormState {
   textValue: string; // this will be attached with each input onChangeText
   numInputs: number; // our number of inputs, we can add the length or decrease
   inputs: string[];
+  answers: Answer[];
 }
 
 interface DynamicFormProps {
-  onEnteredAnswer: (answers: string[]) => void;
+  onEnteredAnswer: (answers: Answer[]) => void;
 }
 
 export default class DynamicAnswerForm extends Component<
@@ -30,11 +32,29 @@ export default class DynamicAnswerForm extends Component<
     textValue: "",
     numInputs: 1,
     inputs: [],
+    answers: [new Answer(
+        '',
+        '',
+        '',
+        '',
+        '',
+    )],
   };
 
-  setInputValue = (index: number, value: string) => {
+  setInputValue = (index: number, value: string, field: string) => {
     // first, we are storing input value to refInputs array to track them
     const inputs = this.state.inputs;
+    switch (field) {
+      case "text":
+        this.state.answers[index].text = value;
+        break;
+    case "imageURI":
+        this.state.answers[index].imageURI = value;
+        break;
+    case "score":
+        this.state.answers[index].scorePercentage = value;
+        break;
+    }
     inputs[index] = value;
     // we are also setting the text value to the input field onChangeText
     this.setState({ textValue: value });
@@ -43,28 +63,44 @@ export default class DynamicAnswerForm extends Component<
   addInput = () => {
     // add a new element in our refInputs array
     this.setState({ inputs: this.state.inputs.concat("") });
+
+    this.setState({ answers: this.state.answers.concat(
+        new Answer(
+            '',
+            '',
+            '',
+            '',
+            '',
+        )) });
+
+
     // increase the number of inputs
     this.setState({ numInputs: this.state.numInputs + 1 });
   };
 
   removeInput = (i: number) => {
     // remove from the array by index value
-    this.setState({ inputs: this.state.inputs.filter((value, index) => index !== i)});
+    this.setState({
+      inputs: this.state.inputs.filter((value, index) => index !== i),
+    });
+    this.setState({
+      answers: this.state.answers.filter((value, index) => index !== i),
+    });
     // decrease the number of inputs
     this.setState({ numInputs: this.state.numInputs - 1 });
   };
 
-  handleSetImage = (imageURL: string) => {
-    // add a new element in our refInputs array
-    this.setState({ inputs: this.state.inputs.concat(imageURL) });
-    // increase the number of inputs
-    this.setState({ numInputs: this.state.numInputs + 1 });
-    // this.props.onEnteredAnswer(imageURL);
-  };
+    // handleSetImage = (imageURL: string) => {
+    //   // add a new element in our refInputs array
+    //   this.setState({ inputs: this.state.inputs.concat(imageURL) });
+    //   // increase the number of inputs
+    //   this.setState({ numInputs: this.state.numInputs + 1 });
+    //   // this.props.onEnteredAnswer(imageURL);
+    // };
 
   handleAnswersSubmit = () => {
-    this.setState({ textValue: "", numInputs: 1, inputs: [] });
-    this.props.onEnteredAnswer(this.state.inputs);
+    this.setState({ textValue: "", numInputs: 1, inputs: [], answers: [] });
+    this.props.onEnteredAnswer(this.state.answers);
   };
 
   addFields = () => {
@@ -75,9 +111,21 @@ export default class DynamicAnswerForm extends Component<
           <Text>{i + 1}.</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(value) => this.setInputValue(i, value)}
-            value={this.state.inputs[i]}
-            placeholder="placeholder"
+            onChangeText={(value) => this.setInputValue(i, value, "text")}
+            value={this.state.answers[i] ? this.state.answers[i].text : ''}
+            placeholder="Text"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => this.setInputValue(i, value, "imageURI")}
+            value={this.state.answers[i] ? this.state.answers[i].imageURI : ''}
+            placeholder="Image URL"
+          />
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => this.setInputValue(i, value, "score")}
+            value={this.state.answers[i] ? this.state.answers[i].scorePercentage + '' : ''}
+            placeholder="Score percentage"
           />
           {/* To remove the input */}
           <Pressable
@@ -90,7 +138,7 @@ export default class DynamicAnswerForm extends Component<
               color="red"
             />
           </Pressable>
-          <ImagePickerExample onSubmit={this.handleSetImage} />
+          {/* { <ImagePickerExample onSubmit={this.handleSetImage} /> } */}
         </View>
       );
     }

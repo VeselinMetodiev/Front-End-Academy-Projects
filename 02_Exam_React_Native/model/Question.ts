@@ -5,7 +5,7 @@ export class Question {
     constructor(
         public text: string,
         public pointsNumber: number,
-        public answers: string[],
+        public answers: Answer[],
         public imageURI: string,
         public dateCreated: string,
         public dateModified: string,

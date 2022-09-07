@@ -22,7 +22,7 @@ interface QuestionsFormProps {
 interface QuestionsFormState {
   text: string;
   pointsNumber: number;
-  answers: string[];
+  answers: Answer[];
   imageURI: string;
   dateCreated: string;
   dateModified: string | undefined;
@@ -91,7 +91,7 @@ export default class QuestionForm extends Component<
     this.setState({ imageURI: imageURL });
   };
 
-  addAnswer = (answers: string[]) => {
+  addAnswer = (answers: Answer[]) => {
     this.setState({ answers: this.state.answers.concat(answers) });
   };
 

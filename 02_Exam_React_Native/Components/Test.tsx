@@ -24,7 +24,7 @@ export default class Test extends Component<TestProps, {}> {
       <Pressable>
       <Card.Content>
       <Title>{`Answer ${index}`}</Title>
-      <Paragraph>{answer}</Paragraph>
+      <Paragraph>{`${answer.text} Score %: ${answer.scorePercentage}`}</Paragraph>
     </Card.Content>
     </Pressable>
         )}

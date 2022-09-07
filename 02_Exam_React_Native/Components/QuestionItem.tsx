@@ -38,7 +38,7 @@ render() {
     {this.props.question.answers.map((answer, index) => 
     <Card.Content key={index}>
     <Title>{`Answer ${index}`}</Title>
-    <Paragraph>{answer}</Paragraph>
+    <Paragraph>{`${answer.text} Score %: ${answer.scorePercentage}`}</Paragraph>
   </Card.Content>
     )}
     <Card.Actions>
