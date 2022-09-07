@@ -1,18 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { Dimensions, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, View } from 'react-native';
-import ImageForm from './Components/ImageForm';
-import ImagesList from './Components/ImagesList';
-import { ImagesAPI } from './dao/rest-api-client';
-import Favourites from './DragToFavourites';
-import { ImageModel } from './model/Image';
+import QuestionForm from './Components/QuestionsForm';
+import { questionsAPI } from './dao/rest-api-client';
+import { Question } from './model/question';
 import { Optional, Point } from './model/shared-types';
 
 
 interface AppState {
   errors: string | undefined;
-  images: ImageModel[];
-  editedImage: Optional<ImageModel>;
+  questions: Question[];
+  editedQuestion: Optional<Question>;
   panState: Point | undefined;
   droppedItems: number[];
 }
@@ -20,32 +18,32 @@ interface AppState {
 export default class App extends Component<{}, AppState>  {
   state: Readonly<AppState> = {
     errors: undefined,
-    images: [],
-    editedImage: undefined,
+    questions: [],
+    editedQuestion: undefined,
     panState: undefined,
     droppedItems: []
   }
 
   async componentDidMount() {
     try {
-      const allImages = await ImagesAPI.findAll();
-      this.setState({ images: allImages, errors: undefined });
+      const allquestions = await questionsAPI.findAll();
+      this.setState({ questions: allquestions, errors: undefined });
     } catch (err) {
       this.setState({ errors: err as string });
     }
   }
 
-  handleUpdateImage(image: ImageModel) {
-    this.setState(({ images }) => ({
-      images: images.map((td) => (td.id === image.id ? image : td)),
+  handleUpdatequestion(question: Question) {
+    this.setState(({ questions }) => ({
+      questions: questions.map((td) => (td.id === question.id ? question : td)),
     }));
   }
 
-  handleDeleteImage= async (image: ImageModel) => {
+  handleDeletequestion= async (question: Question) => {
     try {
-      await ImagesAPI.deleteById(image.id);
-      this.setState(({ images }) => ({
-        images: images.filter((td) => td.id !== image.id),
+      await questionsAPI.deleteById(question.id);
+      this.setState(({ questions }) => ({
+        questions: questions.filter((td) => td.id !== question.id),
         errors: undefined,
       }));
     } catch (err) {
@@ -53,21 +51,21 @@ export default class App extends Component<{}, AppState>  {
     }
   };
 
-  handleCreateImage = async (image: ImageModel) => {
+  handleCreateQuestion = async (question: Question) => {
     try {
-      if (image.id) {
-        //edit image
-        const updated = await ImagesAPI.update(image);
-        this.setState(({ images }) => ({
-          images: images.map((us) => (us.id === updated.id ? updated : us)),
+      if (question.id) {
+        //edit question
+        const updated = await questionsAPI.update(question);
+        this.setState(({ questions }) => ({
+          questions: questions.map((us) => (us.id === updated.id ? updated : us)),
           errors: undefined,
-          editedImage: undefined,
+          editedQuestion: undefined,
         }));
       } else {
-        // create image
-        const created = await ImagesAPI.create(image);
-        this.setState(({ images }) => ({
-          images: images.concat(created),
+        // create question
+        const created = await questionsAPI.create(question);
+        this.setState(({ questions }) => ({
+          questions: questions.concat(created),
           errors: undefined,
         }));
       }
@@ -76,8 +74,8 @@ export default class App extends Component<{}, AppState>  {
     }
   };
 
-  handleEditImage = (image: ImageModel) => {
-    this.setState({ editedImage: image });
+  handleEditquestion = (question: Question) => {
+    this.setState({ editedQuestion: question });
   };
 
   handleDrop = (id:number) => {
@@ -92,11 +90,7 @@ export default class App extends Component<{}, AppState>  {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboarAvoidingView}
         >
-      <StatusBar style="auto" />
-      <ImageForm image={this.state.editedImage} key={this.state.editedImage?.id} onCreateImage={this.handleCreateImage}/>
-      <ImagesList onDrop={this.handleDrop} images={this.state.images} onUpdate={() => console.log('update')} onDelete={this.handleDeleteImage}
-                    onEdit={this.handleEditImage}/>
-      <Favourites/>
+      <QuestionForm question={this.state.editedQuestion} onCreateQuestion={this.handleCreateQuestion}/>
        </KeyboardAvoidingView>
       </SafeAreaView>
   );

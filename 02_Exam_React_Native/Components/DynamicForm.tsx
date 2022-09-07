@@ -1,6 +1,7 @@
 import React, { Component, FormEvent } from 'react'
 import { View, StyleSheet, ScrollView, Pressable, Text, Button } from 'react-native'
 import { TextInput } from 'react-native-paper'
+import ImagePickerExample from './ImagePicker';
 
 interface DynamicFormState {
     textValue: string; // this will be attached with each input onChangeText
@@ -37,6 +38,13 @@ export default class DynamicForm extends Component<{}, DynamicFormState> {
         this.setState({ numInputs: this.state.numInputs - 1 });
     }
 
+    handleSetImage = (imageURL: string) => {
+         // add a new element in our refInputs array
+         this.setState({ inputs: this.state.inputs.concat(imageURL) });
+         // increase the number of inputs
+         this.setState({ numInputs: this.state.numInputs + 1 });
+    }
+
     addFields = () => {
         const inputs: JSX.Element[] = [];
         for (let i = 0; i < this.state.numInputs; i++) {
@@ -47,11 +55,13 @@ export default class DynamicForm extends Component<{}, DynamicFormState> {
                         style={styles.input}
                         onChangeText={value => this.setInputValue(i, value)}
                         value={this.state.inputs[i]}
+                        placeholder="placeholder"
                     />
                     {/* To remove the input */}
                     <Pressable onPress={() => this.removeInput(i)} style={{ marginLeft: 5 }}>
                         <Button title={''} color="red" />
                     </Pressable>
+                    <ImagePickerExample onSubmit={this.handleSetImage}/>
                 </View>
             );
         }
@@ -62,11 +72,12 @@ export default class DynamicForm extends Component<{}, DynamicFormState> {
         return (
             <ScrollView contentContainerStyle={styles.container}>
                  <>{this.addFields()}</>
+                <>{this.state.inputs}</>
                 <Pressable onPress={this.addInput} style={styles.addButton}>
                     <Text style={{ color: 'white', fontWeight: 'bold' }}>+ Add a new answer</Text>
                 </Pressable>
                 <View style={{ marginTop: 25 }}>
-                    <Text>Answers:</Text>
+                    <Text>You have answered:</Text>
                     {this.state.inputs.map((value, i) => {
                         return <Text key={i} style={styles.answer}>{`${i + 1} - ${value}`}</Text>
                     })}

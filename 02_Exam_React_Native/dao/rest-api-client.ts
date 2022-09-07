@@ -1,4 +1,5 @@
 import { ImageModel } from "../model/Image.js";
+import { Question } from "../model/Question.js";
 import { Identifiable, IdType } from "../model/shared-types.js";
 
 const API_BASE_URL = "http://10.16.6.23:4000/api";
@@ -61,4 +62,4 @@ export class ApiClientImpl<K, V extends Identifiable<K>> implements ApiClient<K,
     }
 }
 
-export const ImagesAPI = new ApiClientImpl<IdType, ImageModel>('images');
+export const questionsAPI = new ApiClientImpl<IdType, Question>('questions');
