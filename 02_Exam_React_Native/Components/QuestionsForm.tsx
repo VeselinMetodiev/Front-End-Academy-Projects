@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, TextInput, View, Text, StyleSheet } from "react-native";
+import { Button, TextInput, View, Text, StyleSheet, ScrollView } from "react-native";
 import {
   IdType,
   QuestionListener,
@@ -123,10 +123,9 @@ export default class QuestionForm extends Component<
               setFieldTouched,
               touched,
               isValid,
-              handleSubmit,
               resetForm,
             }) => (
-              <View style={styles.registrationForm}>
+              <ScrollView contentContainerStyle={styles.registrationForm}>
                 <TextInput
                   value={values.text}
                   style={styles.input}
@@ -181,7 +180,7 @@ export default class QuestionForm extends Component<
                 <View style={styles.buttons}>
                   <FontAwesome.Button
                     color="#841584"
-                    disabled={!isValid}
+                   // disabled={!isValid}
                     onPress={() => {
                       this.handleQuestionSubmit(values);
                       resetForm();
@@ -205,7 +204,7 @@ export default class QuestionForm extends Component<
                     Reset
                   </FontAwesome.Button>
                 </View>
-              </View>
+              </ScrollView>
             )}
           </Formik>
         </View>
@@ -219,7 +218,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#B2C8DF",
     borderRadius: 10,
-    paddingTop: 70,
+    paddingTop: 20,
     //padding: 140,
   },
   registrationForm: {

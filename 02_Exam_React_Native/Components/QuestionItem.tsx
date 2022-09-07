@@ -14,6 +14,8 @@ interface QuestionItemProps {
   dropZoneHeight: number;
   id: IdType;
   onDrop: (id:number) => void;
+  onUp: (num: number) => void;
+  onDown: (num: number) => void;
 }
 
 interface QuestionItemState {
@@ -56,6 +58,22 @@ render() {
           color="gray"
           backgroundColor="transparent"
           onPress={() => this.props.onEdit(this.props.question)}
+        />
+         <FontAwesome.Button
+              style={styles.button}
+              name="arrow-up"
+              size={40}
+              color="green"
+              backgroundColor="transparent"
+              onPress={() => {console.log('up was pressed'); this.props.onUp(0)}}
+            />
+        <FontAwesome.Button
+          style={styles.button}
+          name="arrow-down"
+          size={40}
+          color="red"
+          backgroundColor="transparent"
+          onPress={() => this.props.onDown(0)}
         />
         </View>
     </Card.Actions>

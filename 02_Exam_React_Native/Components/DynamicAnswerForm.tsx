@@ -77,7 +77,7 @@ export default class DynamicAnswerForm extends Component<DynamicFormProps, Dynam
                     />
                     {/* To remove the input */}
                     <Pressable onPress={() => this.removeInput(i)} style={{ marginLeft: 5 }}>
-                        <Button title={''} color="red" />
+                        <Button onPress={() => this.removeInput(i)} title={''} color="red" />
                     </Pressable>
                     <ImagePickerExample onSubmit={this.handleSetImage}/>
                 </View>
@@ -92,7 +92,7 @@ export default class DynamicAnswerForm extends Component<DynamicFormProps, Dynam
                  <>{this.addFields()}</>
                 <>{this.state.inputs}</>
                 <Pressable onPress={this.addInput} style={styles.addButton}>
-                    <Text style={{ color: 'white', fontWeight: 'bold' }}>+ Add a new answer</Text>
+                    <Text style={{ color: 'orange', fontWeight: 'bold' }}>+ Add a new answer</Text>
                 </Pressable>
                 <View style={{ marginTop: 25 }}>
                     <Text>You have answered:</Text>
@@ -118,8 +118,8 @@ export default class DynamicAnswerForm extends Component<DynamicFormProps, Dynam
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'lightgreen',
+       borderWidth: 1,
+       borderColor: 'black'
     },
     buttons: {
         fontSize: 45,
