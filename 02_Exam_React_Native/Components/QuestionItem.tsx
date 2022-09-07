@@ -23,7 +23,7 @@ interface QuestionItemState {
 }
 
 
-export default class questionItem extends Component<QuestionItemProps, QuestionItemState> {
+export default class QuestionItem extends Component<QuestionItemProps, QuestionItemState> {
   
 render() {
   return (
@@ -35,7 +35,7 @@ render() {
       <Paragraph>{this.props.question.text}</Paragraph>
     </Card.Content>
     <Card.Cover style={styles.avatars} source={{ uri: this.props.question.imageURI }} />
-    {this.props.question.answers.map((index, answer) => 
+    {this.props.question.answers.map((answer, index) => 
     <Card.Content>
     <Title>{`Answer ${index}`}</Title>
     <Paragraph>{answer}</Paragraph>

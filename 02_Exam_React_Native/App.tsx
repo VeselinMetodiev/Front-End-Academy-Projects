@@ -8,6 +8,7 @@ import {
   StyleSheet,
   View,
   Text,
+  ScrollView,
 } from "react-native";
 import QuestionForm from "./Components/QuestionsForm";
 import QuestionsList from "./Components/QuestionsList";
@@ -15,6 +16,7 @@ import { questionsAPI } from "./dao/rest-api-client";
 import { Question } from "./model/question";
 import { Optional, Point } from "./model/shared-types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Test from "./Components/Test";
 
 interface AppState {
   errors: string | undefined;
@@ -94,7 +96,6 @@ export default class App extends Component<{}, AppState> {
   };
 
   handleEditQuestion = (question: Question) => {
-    scrollTo();
     this.setState({ editedQuestion: question });
   };
 
@@ -146,8 +147,7 @@ export default class App extends Component<{}, AppState> {
         >
           <View>
           <FontAwesome.Button size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
-           {/* {this.state.activeView === Views.ImageListView ? 'Add New Image' : 'Show All Images'} */}
-           Start The Test
+           {this.state.activeView === Views.FormView ? 'Start the test' : 'Complete test'}
           </FontAwesome.Button>
           {(() => {
             switch (this.state.activeView) {
@@ -171,7 +171,7 @@ export default class App extends Component<{}, AppState> {
                 )
               case Views.QuizView:
                 return (
-                  <Text>Error 404</Text>
+                  <Test questions={this.state.questions}></Test>
                )
             }
           })()}

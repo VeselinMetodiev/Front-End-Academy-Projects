@@ -91,8 +91,8 @@ export default class QuestionForm extends Component<
     this.setState({ imageURI: imageURL });
   };
 
-  addAnswer = (answer: string) => {
-    this.setState({ answers: this.state.answers.concat(answer) });
+  addAnswer = (answers: string[]) => {
+    this.setState({ answers: this.state.answers.concat(answers) });
   };
 
   render() {

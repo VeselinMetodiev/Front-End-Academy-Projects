@@ -19,7 +19,7 @@ interface DynamicFormState {
 }
 
 interface DynamicFormProps {
-  onEnteredAnswer: (answer: string) => void;
+  onEnteredAnswer: (answers: string[]) => void;
 }
 
 export default class DynamicAnswerForm extends Component<
@@ -59,12 +59,12 @@ export default class DynamicAnswerForm extends Component<
     this.setState({ inputs: this.state.inputs.concat(imageURL) });
     // increase the number of inputs
     this.setState({ numInputs: this.state.numInputs + 1 });
-    this.props.onEnteredAnswer(imageURL);
+    // this.props.onEnteredAnswer(imageURL);
   };
 
   handleAnswersSubmit = () => {
     this.setState({ textValue: "", numInputs: 1, inputs: [] });
-    this.state.inputs.forEach((answer) => this.props.onEnteredAnswer(answer));
+    this.props.onEnteredAnswer(this.state.inputs);
   };
 
   addFields = () => {
