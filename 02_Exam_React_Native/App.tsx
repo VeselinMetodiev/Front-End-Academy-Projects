@@ -7,12 +7,14 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
+  Text,
 } from "react-native";
 import QuestionForm from "./Components/QuestionsForm";
 import QuestionsList from "./Components/QuestionsList";
 import { questionsAPI } from "./dao/rest-api-client";
 import { Question } from "./model/question";
 import { Optional, Point } from "./model/shared-types";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 interface AppState {
   errors: string | undefined;
@@ -20,7 +22,13 @@ interface AppState {
   editedQuestion: Optional<Question>;
   panState: Point | undefined;
   droppedItems: number[];
+  activeView: Views;
 }
+
+export enum Views {
+  FormView = 1, QuizView,
+}
+
 
 export default class App extends Component<{}, AppState> {
   state: Readonly<AppState> = {
@@ -29,6 +37,7 @@ export default class App extends Component<{}, AppState> {
     editedQuestion: undefined,
     panState: undefined,
     droppedItems: [],
+    activeView: Views.FormView
   };
 
   async componentDidMount() {
@@ -85,6 +94,7 @@ export default class App extends Component<{}, AppState> {
   };
 
   handleEditQuestion = (question: Question) => {
+    scrollTo();
     this.setState({ editedQuestion: question });
   };
 
@@ -120,6 +130,12 @@ export default class App extends Component<{}, AppState> {
     this.setState({ questions: newArray });
   };
 
+  handleViewChange = () => {
+    this.setState(({ activeView }) => ({
+      activeView: activeView === Views.FormView ? Views.QuizView : Views.FormView
+    }));
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -129,6 +145,15 @@ export default class App extends Component<{}, AppState> {
           style={styles.keyboarAvoidingView}
         >
           <View>
+          <FontAwesome.Button size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
+           {/* {this.state.activeView === Views.ImageListView ? 'Add New Image' : 'Show All Images'} */}
+           Start The Test
+          </FontAwesome.Button>
+          {(() => {
+            switch (this.state.activeView) {
+              case Views.FormView:
+                return (
+                  <View>
             <QuestionForm
               question={this.state.editedQuestion}
               onCreateQuestion={this.handleCreateQuestion}
@@ -142,6 +167,15 @@ export default class App extends Component<{}, AppState> {
               onDelete={this.handleDeleteQuestion}
               onEdit={this.handleEditQuestion}
             />
+            </View>
+                )
+              case Views.QuizView:
+                return (
+                  <Text>Error 404</Text>
+               )
+            }
+          })()}
+            
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
