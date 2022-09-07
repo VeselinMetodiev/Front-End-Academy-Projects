@@ -36,7 +36,7 @@ render() {
     </Card.Content>
     <Card.Cover style={styles.avatars} source={{ uri: this.props.question.imageURI }} />
     {this.props.question.answers.map((answer, index) => 
-    <Card.Content>
+    <Card.Content key={index}>
     <Title>{`Answer ${index}`}</Title>
     <Paragraph>{answer}</Paragraph>
   </Card.Content>

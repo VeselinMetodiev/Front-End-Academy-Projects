@@ -49,7 +49,7 @@ export default class DynamicAnswerForm extends Component<
 
   removeInput = (i: number) => {
     // remove from the array by index value
-    this.setState({ inputs: this.state.inputs.splice(i, 1) });
+    this.setState({ inputs: this.state.inputs.filter((value, index) => index !== i)});
     // decrease the number of inputs
     this.setState({ numInputs: this.state.numInputs - 1 });
   };
@@ -101,19 +101,12 @@ export default class DynamicAnswerForm extends Component<
     return (
       <ScrollView contentContainerStyle={styles.container}>
         <>{this.addFields()}</>
-        <>{this.state.inputs}</>
         <Pressable onPress={this.addInput} style={styles.addButton}>
           <Text style={{ color: "orange", fontWeight: "bold" }}>
             + Add a new answer
           </Text>
         </Pressable>
         <View style={{ marginTop: 25 }}>
-          <Text>You have answered:</Text>
-          {this.state.inputs.map((value, i) => {
-            return (
-              <Text key={i} style={styles.answer}>{`${i + 1} - ${value}`}</Text>
-            );
-          })}
           <View style={styles.buttons}>
             <FontAwesome.Button
               color="#841584"
