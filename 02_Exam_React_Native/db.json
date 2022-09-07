@@ -56,6 +56,24 @@
       "dateModified": "",
       "type": 1,
       "id": 2
+    },
+    {
+      "text": "",
+      "pointsNumber": 0,
+      "answers": [
+        {
+          "text": "A",
+          "scorePercentage": "10",
+          "imageURI": "",
+          "dateCreated": "",
+          "dateModified": ""
+        }
+      ],
+      "imageURI": "",
+      "dateCreated": "Wed Sep 07 2022",
+      "dateModified": "",
+      "type": 1,
+      "id": 3
     }
   ]
 }

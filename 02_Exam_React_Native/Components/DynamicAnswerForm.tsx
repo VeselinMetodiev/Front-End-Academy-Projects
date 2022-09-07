@@ -12,12 +12,17 @@ import { TextInput } from "react-native-paper";
 import ImagePickerExample from "./ImagePicker";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Answer } from "../model/Answer";
+import { Formik } from "formik";
+import * as yup from "yup"
 
 interface DynamicFormState {
   textValue: string; // this will be attached with each input onChangeText
   numInputs: number; // our number of inputs, we can add the length or decrease
   inputs: string[];
   answers: Answer[];
+  text: string;
+  imageURI: string;
+  scorePercentage: string;
 }
 
 interface DynamicFormProps {
@@ -29,6 +34,9 @@ export default class DynamicAnswerForm extends Component<
   DynamicFormState
 > {
   state: Readonly<DynamicFormState> = {
+    text: '',
+    imageURI: '',
+    scorePercentage: '',
     textValue: "",
     numInputs: 1,
     inputs: [],
@@ -52,7 +60,11 @@ export default class DynamicAnswerForm extends Component<
         this.state.answers[index].imageURI = value;
         break;
     case "score":
+        if(parseInt(value) || value === '') {
         this.state.answers[index].scorePercentage = value;
+        } else {
+            console.log('Score Percentage should be a number')
+        }
         break;
     }
     inputs[index] = value;
@@ -107,26 +119,68 @@ export default class DynamicAnswerForm extends Component<
     const inputs: JSX.Element[] = [];
     for (let i = 0; i < this.state.numInputs; i++) {
       inputs.push(
+        
         <View key={i} style={{ flexDirection: "row", alignItems: "center" }}>
+             <Formik
+            initialValues={{
+              text: this.state.text,
+              scorePercentage: this.state.scorePercentage,
+              imageURI: this.state.imageURI,
+            }}
+            onSubmit={(values) => console.log(JSON.stringify(values))}
+            validationSchema={yup.object().shape({
+              text: yup.string().min(10).max(150),
+              imageURL: yup.string().url(),
+              scorePercentage: yup.number(),
+            })}
+          >
+             {({
+              values,
+              handleChange,
+              errors,
+              setFieldTouched,
+              touched,
+              isValid,
+              resetForm,
+            }) => (
+                <View>
           <Text>{i + 1}.</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(value) => this.setInputValue(i, value, "text")}
+            onChangeText={(value) => {this.setInputValue(i, value, "text"); handleChange("text")}}
             value={this.state.answers[i] ? this.state.answers[i].text : ''}
             placeholder="Text"
+            onBlur={() => setFieldTouched("text")}
           />
+          {touched.text && errors.text && (
+                  <Text style={{ fontSize: 12, color: "#FF0D10" }}>
+                    {errors.text}
+                  </Text>
+                )}
           <TextInput
             style={styles.input}
             onChangeText={(value) => this.setInputValue(i, value, "imageURI")}
             value={this.state.answers[i] ? this.state.answers[i].imageURI : ''}
             placeholder="Image URL"
+            onBlur={() => setFieldTouched("imageURI")}
           />
+          {touched.imageURI && errors.imageURI && (
+                  <Text style={{ fontSize: 12, color: "#FF0D10" }}>
+                    {errors.text}
+                  </Text>
+                )}
           <TextInput
             style={styles.input}
             onChangeText={(value) => this.setInputValue(i, value, "score")}
-            value={this.state.answers[i] ? this.state.answers[i].scorePercentage + '' : ''}
+            value={this.state.answers[i] ? this.state.answers[i].scorePercentage : ''}
             placeholder="Score percentage"
+            onBlur={() => setFieldTouched("scorePercentage")}
           />
+          {touched.scorePercentage && errors.scorePercentage && (
+                  <Text style={{ fontSize: 12, color: "#FF0D10" }}>
+                    {errors.text}
+                  </Text>
+                )}
           {/* To remove the input */}
           <Pressable
             onPress={() => this.removeInput(i)}
@@ -139,6 +193,9 @@ export default class DynamicAnswerForm extends Component<
             />
           </Pressable>
           {/* { <ImagePickerExample onSubmit={this.handleSetImage} /> } */}
+          </View>
+            )}
+            </Formik>
         </View>
       );
     }
@@ -188,5 +245,12 @@ const styles = StyleSheet.create({
   },
   addButton: {},
   answer: {},
-  input: {},
+  input: {
+    borderColor: "#6E85B7",
+    borderWidth: 2,
+    borderRadius: 5,
+    marginBottom: 10,
+    padding: 12,
+    width: 300,
+  },
 });
