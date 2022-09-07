@@ -1,4 +1,3 @@
-import { ImageModel } from "./Image";
 import { Question } from "./Question";
 
 export type IdType = number | undefined

@@ -1,4 +1,3 @@
-import { ImageModel } from "../model/Image.js";
 import { Question } from "../model/Question.js";
 import { Identifiable, IdType } from "../model/shared-types.js";
 

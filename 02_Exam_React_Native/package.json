@@ -19,6 +19,9 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.5",
+    "react-native-multiple-choice": "^0.0.8",
+    "react-native-multiple-choice-picker": "^1.0.6",
+    "react-native-multiple-select": "^0.5.11",
     "react-native-paper": "^4.12.4",
     "react-native-web": "~0.18.7",
     "yup": "^0.32.11"
