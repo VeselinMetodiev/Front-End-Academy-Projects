@@ -21,7 +21,7 @@ export default class Test extends Component<TestProps, {}> {
       </Card.Content>
       <Card.Cover style={styles.avatars} source={{ uri: question.imageURI }} />
       {question.answers.map((answer, index) => 
-      <Pressable key={index}>
+      <Pressable>
       <Card.Content>
       <Title>{`Answer ${index}`}</Title>
       <Paragraph>{answer}</Paragraph>
