@@ -119,7 +119,6 @@ export default class DynamicAnswerForm extends Component<
     const inputs: JSX.Element[] = [];
     for (let i = 0; i < this.state.numInputs; i++) {
       inputs.push(
-        
         <View key={i} style={{ flexDirection: "row", alignItems: "center" }}>
              <Formik
             initialValues={{
@@ -159,7 +158,7 @@ export default class DynamicAnswerForm extends Component<
                 )}
           <TextInput
             style={styles.input}
-            onChangeText={(value) => this.setInputValue(i, value, "imageURI")}
+            onChangeText={(value) => { this.setInputValue(i, value, "imageURI"); handleChange('imageURI') }}
             value={this.state.answers[i] ? this.state.answers[i].imageURI : ''}
             placeholder="Image URL"
             onBlur={() => setFieldTouched("imageURI")}
