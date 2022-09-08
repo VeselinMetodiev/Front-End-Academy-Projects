@@ -16,8 +16,9 @@ import { questionsAPI } from "./dao/rest-api-client";
 import { Question } from "./model/question";
 import { Optional, Point } from "./model/shared-types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Test from "./Components/Test";
+import Test from "./Components/TestPlayer";
 import Results from "./Components/Results";
+import TestPlayer from "./Components/TestPlayer";
 
 interface AppState {
   errors: string | undefined;
@@ -181,7 +182,7 @@ export default class App extends Component<{}, AppState> {
                 )
               case Views.QuizView:
                 return (
-                  <Test onSubmit={this.setScore} questions={this.state.questions}></Test>
+                  <TestPlayer onSubmit={this.setScore} questions={this.state.questions}></TestPlayer>
                )
                case Views.CompletedView:
                 return (

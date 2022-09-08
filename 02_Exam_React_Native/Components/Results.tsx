@@ -26,7 +26,7 @@ export default class Results extends Component<ResultsProps, ResultsState> {
           <Card.Content>
             <Title>Points Number: {question.pointsNumber}</Title>
             <Paragraph>{question.text}</Paragraph>
-            <Paragraph>{this.props.selectedAnswers[index]}</Paragraph>
+            <Paragraph>{`You selected ${this.props.selectedAnswers[index]}`}</Paragraph>
           </Card.Content>
           </Card>
       </View>
