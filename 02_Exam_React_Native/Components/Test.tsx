@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Pressable, Text, Animated } from "react-native";
+import { View, StyleSheet, Pressable, Text, Animated, Button } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { Answer } from "../model/Answer";
 import { Question } from "../model/Question";
 
 interface TestProps {
   questions: Question[];
-  onSubmit: (score: number, answers: string[]) => void;
+  onSubmit: (score: number, answers: number[][]) => void;
 }
 
 interface TestState {
   currentQuestionIndex: number;
   totalPercentageScore: number;
   colorAnim: Animated.Value[];
-  answers: string[];
   selectedAnswers: number[][]; //Contains index of question and index of answers that were selected
 }
 
@@ -32,7 +31,6 @@ export default class Test extends Component<TestProps, TestState> {
   state: Readonly<TestState> = {
     currentQuestionIndex: 0,
     totalPercentageScore: 0,
-    answers: [],
     selectedAnswers: new Array<number[]>(this.props.questions.length).fill(
       [],
       0,
@@ -61,15 +59,13 @@ export default class Test extends Component<TestProps, TestState> {
       useNativeDriver: true,
       duration: 2000,
     }).start();
+
     this.setState({
       totalPercentageScore: this.state.totalPercentageScore + score,
     });
-    this.setState({
+   this.setState({
       currentQuestionIndex: this.state.currentQuestionIndex + 1,
     });
-    if (this.state.currentQuestionIndex === this.props.questions.length - 1) {
-      this.props.onSubmit(this.state.totalPercentageScore, this.state.answers);
-    }
   };
 
   saveAnswer = (questionIndex: number, selectedAnswerIndex: number) => {
@@ -110,10 +106,14 @@ export default class Test extends Component<TestProps, TestState> {
 
   color = this.fillArray();
 
+  handleSubmit = () => {
+      this.props.onSubmit(this.state.totalPercentageScore, this.state.selectedAnswers);
+  }
+
   render() {
     //let question = this.props.questions[this.state.currentQuestionIndex]
     //let index = this.state.currentQuestionIndex;
-    return this.props.questions.map((question, index) => (
+    return ( <View> { this.props.questions.map((question, index) => (
       <View key={index} style={styles.questionItem}>
         <Text>{JSON.stringify(this.state.selectedAnswers)}</Text>
         <Card style={styles.card}>
@@ -151,7 +151,10 @@ export default class Test extends Component<TestProps, TestState> {
           ))}
         </Card>
       </View>
-    ));
+  ))}
+  <Button title='submit' onPress={this.handleSubmit}/>
+  </View>
+    )
   }
 }
 

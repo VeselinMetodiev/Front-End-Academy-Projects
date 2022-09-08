@@ -27,7 +27,7 @@ interface AppState {
   droppedItems: number[];
   activeView: Views;
   score: number;
-  answers: string[];
+  selectedAnswers: number[][];
 }
 
 export enum Views {
@@ -39,7 +39,7 @@ export default class App extends Component<{}, AppState> {
   state: Readonly<AppState> = {
     errors: undefined,
     questions: [],
-    answers: [],
+    selectedAnswers: [],
     editedQuestion: undefined,
     panState: undefined,
     droppedItems: [],
@@ -142,9 +142,9 @@ export default class App extends Component<{}, AppState> {
     }));
   }
 
-  setScore = (result: number, answers: string[]) => {
+  setScore = (result: number, answers: number[][]) => {
     this.setState({score: result})
-    this.setState({answers: answers})
+    this.setState({selectedAnswers: answers})
   }
 
   render() {
@@ -185,7 +185,7 @@ export default class App extends Component<{}, AppState> {
                )
                case Views.CompletedView:
                 return (
-                  <Results answers={this.state.answers} questions={this.state.questions} score={this.state.score}></Results>
+                  <Results selectedAnswers={this.state.selectedAnswers} questions={this.state.questions} score={this.state.score}></Results>
                )
             }
           })()}
