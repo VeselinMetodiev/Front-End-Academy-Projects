@@ -18,7 +18,6 @@ export default class Results extends Component<ResultsProps, ResultsState> {
   render() {
     return (
       <View>
-            <Text>{`Congratulations you completed the quiz with the score: ${this.props.score}`}</Text>
         {this.props.questions.map((question, index) => (
             <View key={index} style={styles.questionItem}>
         <Card style={styles.card}>
@@ -26,11 +25,12 @@ export default class Results extends Component<ResultsProps, ResultsState> {
           <Card.Content>
             <Title>Points Number: {question.pointsNumber}</Title>
             <Paragraph>{question.text}</Paragraph>
-            <Paragraph>{`You selected ${this.props.selectedAnswers[index]}`}</Paragraph>
+            <Paragraph>{`You selected ${question.answers[this.props.selectedAnswers[index][0]].text} which gives you ${question.answers[this.props.selectedAnswers[index][0]].scorePercentage} points`}</Paragraph>
           </Card.Content>
           </Card>
       </View>
   ))}
+  <Text>{`Congratulations you completed the quiz with the score: ${this.props.score}`}</Text>
   </View>
     )
 }
