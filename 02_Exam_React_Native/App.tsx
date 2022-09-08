@@ -17,6 +17,7 @@ import { Question } from "./model/question";
 import { Optional, Point } from "./model/shared-types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Test from "./Components/Test";
+import Results from "./Components/Results";
 
 interface AppState {
   errors: string | undefined;
@@ -25,10 +26,12 @@ interface AppState {
   panState: Point | undefined;
   droppedItems: number[];
   activeView: Views;
+  score: number;
+  answers: string[];
 }
 
 export enum Views {
-  FormView = 1, QuizView,
+  FormView = 1, QuizView, CompletedView
 }
 
 
@@ -36,10 +39,12 @@ export default class App extends Component<{}, AppState> {
   state: Readonly<AppState> = {
     errors: undefined,
     questions: [],
+    answers: [],
     editedQuestion: undefined,
     panState: undefined,
     droppedItems: [],
-    activeView: Views.FormView
+    activeView: Views.FormView,
+    score: 0,
   };
 
   async componentDidMount() {
@@ -133,8 +138,13 @@ export default class App extends Component<{}, AppState> {
 
   handleViewChange = () => {
     this.setState(({ activeView }) => ({
-      activeView: activeView === Views.FormView ? Views.QuizView : Views.FormView
+      activeView: activeView === Views.FormView ? Views.QuizView : Views.CompletedView
     }));
+  }
+
+  setScore = (result: number, answers: string[]) => {
+    this.setState({score: result})
+    this.setState({answers: answers})
   }
 
   render() {
@@ -171,7 +181,11 @@ export default class App extends Component<{}, AppState> {
                 )
               case Views.QuizView:
                 return (
-                  <Test questions={this.state.questions}></Test>
+                  <Test onSubmit={this.setScore} questions={this.state.questions}></Test>
+               )
+               case Views.CompletedView:
+                return (
+                  <Results answers={this.state.answers} questions={this.state.questions} score={this.state.score}></Results>
                )
             }
           })()}

@@ -13,6 +13,7 @@ import { Answer } from "../model/Answer";
 import { Question } from "../model/Question";
 import ImagePickerExample from "./ImagePicker";
 import DynamicForm from "./DynamicAnswerForm";
+import RNPickerSelect from "react-native-picker-select";
 
 interface QuestionsFormProps {
   question: Optional<Question>;
@@ -95,6 +96,10 @@ export default class QuestionForm extends Component<
     this.setState({ answers: this.state.answers.concat(answers) });
   };
 
+  setQuestionType = (selectedType : QuestionTypes) => {
+    this.setState({type : selectedType})
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -105,7 +110,6 @@ export default class QuestionForm extends Component<
               text: this.state.text,
               pointsNumber: this.state.pointsNumber,
               imageURI: this.state.imageURI,
-              type: this.state.type,
               answers: this.state.answers,
             }}
             onSubmit={(values) => console.log(JSON.stringify(values))}
@@ -113,7 +117,6 @@ export default class QuestionForm extends Component<
               text: yup.string().min(2).max(150),
               pointsNumber: yup.number(),
               authorName: yup.string().min(3).max(40),
-              type: yup.string().matches(/Multiple Choice | Drag and Drop | Multiple Response/)
             })}
           >
             {({
@@ -150,18 +153,16 @@ export default class QuestionForm extends Component<
                     {errors.pointsNumber}
                   </Text>
                 )}
-                <TextInput
-                  value={QuestionTypes[values.type]}
-                  style={styles.input}
-                  onChangeText={handleChange("type")}
-                  placeholder="Type"
-                  onBlur={() => setFieldTouched("type")}
-                />
-                {touched.type && errors.type && (
-                  <Text style={{ fontSize: 12, color: "#FF0D10" }}>
-                    {errors.imageURI}
-                  </Text>
-                )}
+                <Text>Select Question Type</Text>
+                <RNPickerSelect
+                 onValueChange={(value) => this.setQuestionType(value)}
+                 items={[ 
+                     { label: "Multiple Choice", value: QuestionTypes.MultipleChoice },
+                     { label: "Multiple Response", value: QuestionTypes.MultipleResponse },
+                     { label: "Drag and Drop", value: QuestionTypes.MultipleResponse },
+                 ]}
+                 style={pickerSelectStyles}
+             />
                 <TextInput
                   value={values.imageURI}
                   style={styles.input}
@@ -249,4 +250,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 20,
   },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+      fontSize: 16,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      borderColor: 'gray',
+      borderRadius: 4,
+      color: 'black',
+      paddingRight: 30 // to ensure the text is never behind the icon
+  },
+  inputAndroid: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      borderWidth: 0.5,
+      borderColor: 'purple',
+      borderRadius: 8,
+      color: 'black',
+      paddingRight: 30 // to ensure the text is never behind the icon
+  }
 });

@@ -24,6 +24,8 @@
     "react-native-multiple-choice-picker": "^1.0.6",
     "react-native-multiple-select": "^0.5.11",
     "react-native-paper": "^4.12.4",
+    "react-native-picker": "^4.3.7",
+    "react-native-picker-select": "^8.0.4",
     "react-native-web": "~0.18.7",
     "yup": "^0.32.11"
   },
@@ -32,6 +34,11 @@
     "@types/react": "~18.0.14",
     "@types/react-native": "~0.69.1",
     "typescript": "~4.3.5"
+  },
+  "resolutions": {
+    "@types/react": "~18.0.14",
+    "@types/react-dom": "17.0.2",
+    "@types/react-native": "~0.69.1"
   },
   "private": true
 }
