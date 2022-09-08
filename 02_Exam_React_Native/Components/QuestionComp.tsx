@@ -35,7 +35,7 @@ export default class QuestionComp extends Component<QuestionProps, QuestionState
           />
           {question.answers.map((answer, indexAnswers) => (
             <View key={indexAnswers}>
-              <AnswerComp answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp>
+              <AnswerComp onChange={() => console.log('on change')} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp>
             </View>
           ))}
         </Card>
