@@ -139,7 +139,7 @@ export default class App extends Component<{}, AppState> {
 
   handleViewChange = () => {
     this.setState(({ activeView }) => ({
-      activeView: activeView === Views.FormView ? Views.QuizView : Views.CompletedView
+      activeView: activeView === Views.FormView ? Views.QuizView : activeView === Views.QuizView? Views.CompletedView : Views.FormView
     }));
   }
 
@@ -158,7 +158,7 @@ export default class App extends Component<{}, AppState> {
         >
           <View>
           <FontAwesome.Button size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
-           {this.state.activeView === Views.FormView ? 'Start the test' : 'Complete test'}
+           {this.state.activeView === Views.FormView ? 'Start the test' : this.state.activeView === Views.QuizView ? 'Complete test' : 'Add a Question'}
           </FontAwesome.Button>
           {(() => {
             switch (this.state.activeView) {

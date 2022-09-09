@@ -3,7 +3,6 @@ import { Animated, Pressable, View, StyleSheet, Text } from 'react-native';
 import { Card, Title } from 'react-native-paper';
 import { Answer } from '../model/Answer';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { boolean } from 'yup';
 
 interface AnswerProps {
   answer: Answer;
@@ -29,6 +28,7 @@ function MyCheckbox({
   checked,
   onChange ,
 } : CheckboxProps) {
+
   function onCheckmarkPress() {
     onChange(!checked);
   }
@@ -69,7 +69,14 @@ export default class AnswerComp extends Component<AnswerProps, AnswerState> {
         <View style={styles.checkboxContainer}>
         <MyCheckbox
           checked={this.state.checked}
-          onChange={this.props.onChange} />
+          onChange={() => {
+            console.log('pressed')
+            this.markAnswer();
+            this.props.adjustScore(
+              parseInt(answer.scorePercentage),
+            );
+            this.props.saveAnswer(index, indexAnswers);
+          }} />
         <Text>{`⬅️ Click!`}</Text>
       </View>
               <Pressable
