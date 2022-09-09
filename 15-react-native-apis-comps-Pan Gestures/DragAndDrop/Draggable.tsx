@@ -10,7 +10,6 @@ import {
     Text,
     SafeAreaView
 } from "react-native";
-import DropZone from "./DropZone";
 
 const CIRCLE_RADIUS = 30;
 const LOG_PANEL_HEIGHT= 30;
@@ -24,6 +23,9 @@ export interface Point {
 
 interface DraggableProps {
   dropZoneHeight: number;
+  dropZoneWidth: number;
+  pageX: number;
+  pageY: number;
   id: number;
   onDrop: (id:number) => void;
 }
@@ -41,8 +43,13 @@ export default class Draggable extends Component<DraggableProps, DraggableState>
         showDraggable: true,
     };
 
+    componentDidMount(){
+        console.log(`Height: ${this.props.dropZoneHeight}, Width: ${this.props.dropZoneWidth}, PageX: ${this.props.pageX}, PageY: ${this.props.pageY}`)
+    }    
+
     isDropArea(gesture:PanResponderGestureState) {
-        return gesture.moveY <= this.props.dropZoneHeight + LOG_PANEL_HEIGHT;
+        return (gesture.moveY < (this.props.pageY + this.props.dropZoneWidth)) &&  (gesture.moveY > this.props.pageY) && 
+        (gesture.moveX < (this.props.pageX + this.props.dropZoneHeight)) &&  (gesture.moveX > this.props.pageX);
       }
 
     // private _val: Point;
