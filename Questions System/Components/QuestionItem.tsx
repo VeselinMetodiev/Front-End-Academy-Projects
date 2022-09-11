@@ -57,7 +57,7 @@ render() {
           size={40}
           color="gray"
           backgroundColor="transparent"
-          onPress={() => this.props.onEdit(this.props.question)}
+          onPress={() => { this.props.onEdit(this.props.question); console.log(this.props.question)}}
         />
          <FontAwesome.Button
               style={styles.button}

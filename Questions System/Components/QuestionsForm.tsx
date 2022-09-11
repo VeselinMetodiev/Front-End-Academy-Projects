@@ -13,7 +13,7 @@ import { Answer } from "../model/Answer";
 import { Question } from "../model/Question";
 import ImagePickerExample from "./ImagePicker";
 import DynamicForm from "./DynamicAnswerForm";
-import RNPickerSelect from "react-native-picker-select";
+import { Picker } from "@react-native-picker/picker";
 
 interface QuestionsFormProps {
   question: Optional<Question>;
@@ -49,7 +49,6 @@ export default class QuestionForm extends Component<
   renderError = (message: string) => {
     return <Text>{message}</Text>;
   };
-  setDate: any;
 
   handleFieldChanged(field: string, text: string) {
     const stateUpdate = { [field]: text } as unknown as QuestionsFormState;
@@ -96,8 +95,8 @@ export default class QuestionForm extends Component<
     this.setState({ answers: this.state.answers.concat(answers) });
   };
 
-  setQuestionType = (selectedType : QuestionTypes) => {
-    this.setState({type : selectedType})
+  setQuestionType = (selectedType: QuestionTypes) => {
+    this.setState({ type: selectedType })
   }
 
   render() {
@@ -107,16 +106,15 @@ export default class QuestionForm extends Component<
           <Text style={styles.titleText}> Add a new question: </Text>
           <Formik
             initialValues={{
-              text: this.state.text,
-              pointsNumber: this.state.pointsNumber,
-              imageURI: this.state.imageURI,
-              answers: this.state.answers,
+              text: this.props.question?.text || '',
+              pointsNumber: this.props.question?.pointsNumber || 0,
+              imageURI: this.props.question?.imageURI || '',
+              answers: this.props.question?.answers || [],
             }}
             onSubmit={(values) => console.log(JSON.stringify(values))}
             validationSchema={yup.object().shape({
               text: yup.string().min(2).max(150),
               pointsNumber: yup.number(),
-              authorName: yup.string().min(3).max(40),
             })}
           >
             {({
@@ -129,20 +127,21 @@ export default class QuestionForm extends Component<
               resetForm,
             }) => (
               <ScrollView contentContainerStyle={styles.registrationForm}>
+                <Text>Question:</Text>
                 <TextInput
                   value={values.text}
                   style={styles.input}
                   onChangeText={handleChange("text")}
                   onBlur={() => setFieldTouched("text")}
-                  placeholder="Question:"
                 />
                 {touched.text && errors.text && (
                   <Text style={{ fontSize: 12, color: "#FF0D10" }}>
                     {errors.text}
                   </Text>
                 )}
+                <Text>Number of Points:</Text>
                 <TextInput
-                  value={values.pointsNumber.toString()}
+                  value={values.pointsNumber?.toString()}
                   style={styles.input}
                   onChangeText={handleChange("pointsNumber")}
                   onBlur={() => setFieldTouched("pointsNumber")}
@@ -154,20 +153,21 @@ export default class QuestionForm extends Component<
                   </Text>
                 )}
                 <Text>Select Question Type</Text>
-                <RNPickerSelect
-                 onValueChange={(value) => this.setQuestionType(value)}
-                 items={[ 
-                     { label: "Multiple Choice", value: QuestionTypes.MultipleChoice },
-                     { label: "Multiple Response", value: QuestionTypes.MultipleResponse },
-                     { label: "Drag and Drop", value: QuestionTypes.MultipleResponse },
-                 ]}
-                 style={pickerSelectStyles}
-             />
+                <Picker
+                  style={styles.inputAndroid}
+                  selectedValue={this.state.type}
+                  onValueChange={(itemValue, itemIndex) =>
+                    this.setQuestionType(itemValue)
+                  }>
+                  <Picker.Item label="Multiple Choice" value={QuestionTypes.MultipleChoice} />
+                  <Picker.Item label="Multiple Response" value={QuestionTypes.MultipleResponse} />
+                  <Picker.Item label="Drag And Drop" value={QuestionTypes.DragAndDrop} />
+                </Picker>
+                <Text>Image URL or upload Image from your device:</Text>
                 <TextInput
                   value={values.imageURI}
                   style={styles.input}
                   onChangeText={handleChange("imageURI")}
-                  placeholder="image URL"
                   onBlur={() => setFieldTouched("imageURI")}
                 />
                 {touched.imageURI && errors.imageURI && (
@@ -175,13 +175,14 @@ export default class QuestionForm extends Component<
                     {errors.imageURI}
                   </Text>
                 )}
+                <Text>Or upload Image from your device:</Text>
                 <ImagePickerExample onSubmit={this.handleSetImage} />
                 <Text style={styles.textAnswers}>Answers</Text>
                 <DynamicForm onEnteredAnswer={this.addAnswer} />
                 <View style={styles.buttons}>
                   <FontAwesome.Button
                     color="#841584"
-                   // disabled={!isValid}
+                    // disabled={!isValid}
                     onPress={() => {
                       this.handleQuestionSubmit(values);
                       resetForm();
@@ -250,27 +251,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 20,
   },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-      fontSize: 16,
-      paddingVertical: 12,
-      paddingHorizontal: 10,
-      borderWidth: 1,
-      borderColor: 'gray',
-      borderRadius: 4,
-      color: 'black',
-      paddingRight: 30 // to ensure the text is never behind the icon
-  },
   inputAndroid: {
-      fontSize: 16,
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderWidth: 0.5,
-      borderColor: 'purple',
-      borderRadius: 8,
-      color: 'black',
-      paddingRight: 30 // to ensure the text is never behind the icon
+    fontSize: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 0.5,
+    borderColor: 'purple',
+    borderRadius: 8,
+    color: 'black',
+    paddingRight: 30 // to ensure the text is never behind the icon
   }
 });

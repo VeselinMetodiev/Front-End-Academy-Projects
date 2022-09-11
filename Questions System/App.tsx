@@ -7,8 +7,6 @@ import {
   SafeAreaView,
   StyleSheet,
   View,
-  Text,
-  ScrollView,
 } from "react-native";
 import QuestionForm from "./Components/QuestionsForm";
 import QuestionsList from "./Components/QuestionsList";
@@ -16,7 +14,6 @@ import { questionsAPI } from "./dao/rest-api-client";
 import { Question } from "./model/question";
 import { Optional, Point } from "./model/shared-types";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Test from "./Components/TestPlayer";
 import Results from "./Components/Results";
 import TestPlayer from "./Components/TestPlayer";
 

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Pressable, Text, Animated, Button } from "react-native";
-import { Card, Paragraph, Title } from "react-native-paper";
-import { Answer } from "../model/Answer";
 import { Question } from "../model/Question";
 import QuestionComp from "./QuestionComp";
 

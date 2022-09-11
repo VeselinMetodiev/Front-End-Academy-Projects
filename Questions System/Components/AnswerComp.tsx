@@ -70,25 +70,13 @@ export default class AnswerComp extends Component<AnswerProps, AnswerState> {
         <MyCheckbox
           checked={this.state.checked}
           onChange={() => {
-            console.log('pressed')
+            this.setState({checked: true})
             this.markAnswer();
             this.props.adjustScore(
               parseInt(answer.scorePercentage),
             );
             this.props.saveAnswer(index, indexAnswers);
           }} />
-        <Text>{`⬅️ Click!`}</Text>
-      </View>
-              <Pressable
-                onPress={() => {
-                  console.log('pressed')
-                  this.markAnswer();
-                  this.props.adjustScore(
-                    parseInt(answer.scorePercentage),
-                  );
-                  this.props.saveAnswer(index, indexAnswers);
-                }}
-              >
                 <Card.Content>
                   <Animated.View
                     style={{
@@ -98,7 +86,7 @@ export default class AnswerComp extends Component<AnswerProps, AnswerState> {
                     <Title>{`Answer ${indexAnswers} : ${answer.text}`}</Title>
                   </Animated.View>
                 </Card.Content>
-              </Pressable>
+              </View>
             </View>
     )
   }

@@ -27,7 +27,7 @@ export default class Results extends Component<ResultsProps, ResultsState> {
             <Paragraph>{question.text}</Paragraph>
             <View>
             {this.props.selectedAnswers[index].map((answerNumber, i) => (
-                 <Paragraph>{`You selected ${question.answers[this.props.selectedAnswers[index][i]].text} which gives you ${question.answers[this.props.selectedAnswers[index][i]].scorePercentage} points`}</Paragraph>
+                 <Paragraph key={i}>{`You selected ${question.answers[this.props.selectedAnswers[index][i]].text} which gives you ${question.answers[this.props.selectedAnswers[index][i]].scorePercentage} points`}</Paragraph>
             ))      
           }
           </View>
