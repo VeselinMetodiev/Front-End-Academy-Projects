@@ -11,6 +11,7 @@ interface AnswerProps {
   adjustScore: (score : number) => void;
   saveAnswer: (indexQuestion: number, indexAnswer: number) => void;
   onChange: (checked : boolean) => void;
+  ticked: boolean;
 
 }
 
@@ -45,7 +46,7 @@ function MyCheckbox({
 export default class AnswerComp extends Component<AnswerProps, AnswerState> {
   state: Readonly<AnswerState> = {
     colorAnim: new Animated.Value(0),
-    checked: false,
+    checked: this.props.ticked || false,
   }
 
   markAnswer = () => {

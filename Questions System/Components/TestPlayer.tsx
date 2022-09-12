@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { Component } from "react";
 import { View, StyleSheet, Pressable, Text, Animated, Button } from "react-native";
 import { Question } from "../model/Question";
@@ -14,6 +15,8 @@ interface TestState {
   selectedAnswers: number[][]; //Contains index of question and index of answers that were selected
 }
 
+let STORAGE_KEY = '@user_input';
+
 export default class TestPlayer extends Component<TestProps, TestState> {
   state: Readonly<TestState> = {
     currentQuestionIndex: 0,
@@ -29,6 +32,48 @@ export default class TestPlayer extends Component<TestProps, TestState> {
     super(props);
   }
 
+  //Methods for async storage
+
+  componentDidMount() {
+    this.readData();
+  }
+
+  saveData = async (answers : string) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, answers)
+      alert('Data successfully saved. Data: ' + answers)
+    } catch (e) {
+      alert('Failed to save the data to the storage')
+    }
+  }
+
+  readData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(STORAGE_KEY);
+      if (value !== null) {
+        this.setState({selectedAnswers: JSON.parse(value)})
+      }
+    } catch (e) {
+      alert('Failed to fetch the input from storage');
+    }
+  };
+
+  clearStorage = async () => {
+    try {
+      await AsyncStorage.clear();
+      alert('Storage successfully cleared!');
+    } catch (e) {
+      alert('Failed to clear the async storage.');
+    }
+  };
+
+  onSubmitEditing = (value: string) => {
+    if (!this.state.selectedAnswers) return;
+    this.saveData(value);
+  };
+
+  
+  //
   adjustScore = (score: number) => {
     this.setState({
       totalPercentageScore: this.state.totalPercentageScore + score,
@@ -39,11 +84,9 @@ export default class TestPlayer extends Component<TestProps, TestState> {
   };
 
   saveAnswer = (questionIndex: number, selectedAnswerIndex: number) => {
-    //this.setState({answers: this.state.answers.concat(`You have answered '${text}' which gives you ${score} points`)})
     this.setState(({ selectedAnswers }) => {
       const result = {
         selectedAnswers: selectedAnswers.map((selectedAnswer, index) => {
-          console.log("index: ", selectedAnswer, index);
           if (!selectedAnswer.includes(selectedAnswerIndex) && index === questionIndex) {
             const selectedAnswerCopy = selectedAnswer.slice();
             selectedAnswerCopy.push(selectedAnswerIndex);
@@ -56,17 +99,19 @@ export default class TestPlayer extends Component<TestProps, TestState> {
       };
       return result;
     });
+    this.onSubmitEditing(JSON.stringify(this.state.selectedAnswers));
   };
 
   handleSubmit = () => {
       this.props.onSubmit(this.state.totalPercentageScore, this.state.selectedAnswers);
+      this.clearStorage();
   }
 
   render() {
     return ( <View> 
       <Text>{JSON.stringify(this.state.selectedAnswers)}</Text>
       { this.props.questions.map((question, index) => (
-     <QuestionComp key={index} question={question} index={index} adjustScore={this.adjustScore} saveAnswer={this.saveAnswer}></QuestionComp>
+     <QuestionComp selectedAnswers={this.state.selectedAnswers} key={index} question={question} index={index} adjustScore={this.adjustScore} saveAnswer={this.saveAnswer}></QuestionComp>
   ))}
   <Button title='submit' onPress={this.handleSubmit}/>
   </View>

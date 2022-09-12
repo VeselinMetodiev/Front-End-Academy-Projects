@@ -9,14 +9,13 @@ interface QuestionProps {
     index: number;
     adjustScore: (score : number) => void;
     saveAnswer: (indexQuestion: number, indexAnswer: number) => void;
+    selectedAnswers: number[][];
 }
 
 interface QuestionState {
-
 }
 
 export default class QuestionComp extends Component<QuestionProps, QuestionState> {
-
   render() {
     const question = this.props.question;
     const index = this.props.index;
@@ -34,7 +33,13 @@ export default class QuestionComp extends Component<QuestionProps, QuestionState
           />
           {question.answers.map((answer, indexAnswers) => (
             <View key={indexAnswers}>
-              <AnswerComp onChange={() => console.log('on change')} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp>
+              <>
+              {console.log(index + " " + indexAnswers + " : " + this.props.selectedAnswers[index][indexAnswers])}
+              </>
+              {this.props.selectedAnswers[index][indexAnswers]?
+              <AnswerComp ticked={true} onChange={() => console.log('on change')} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp> :
+              <AnswerComp ticked={false} onChange={() => console.log('on change')} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp>
+  }
             </View>
           ))}
         </Card>
