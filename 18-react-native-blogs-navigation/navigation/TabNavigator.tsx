@@ -103,16 +103,17 @@ export function TabNavigator({
           ),
         })}
       >
-        {(props) => <PostList onDetails={showDetails} {...rest} />}
+        {(props) => <PostList showAllPosts={true} onDetails={showDetails} {...rest} />}
       </BottomTab.Screen>
       <BottomTab.Screen
         name="TabTwo"
-        component={TabTwoScreen}
         options={{
           title: "Favourite Posts",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
-      />
+      >
+        {(props) => <PostList showAllPosts={false} onDetails={showDetails} {...rest} />}
+        </BottomTab.Screen>
     </BottomTab.Navigator>
   );
 }

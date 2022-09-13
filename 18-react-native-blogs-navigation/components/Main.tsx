@@ -33,7 +33,7 @@ interface BlogsMainState {
 }
 
 export const EMPTY_IMAGE_DATA = { uri: '', width: 0, height: 0 };
-export const EMPTY_POST = new Post('', '', [], EMPTY_IMAGE_DATA, 1);
+export const EMPTY_POST = new Post('', '', [], EMPTY_IMAGE_DATA, 1, false);
 
 class Main extends Component<BlogsMainProps, BlogsMainState> {
   state: BlogsMainState = {
@@ -149,7 +149,8 @@ class Main extends Component<BlogsMainProps, BlogsMainState> {
   }
 
   addToFavourites = (post: Post) => {
-    this.setState({favouritePosts: this.state.favouritePosts.concat(post)})
+    post.isFavourite = true;
+    this.handleSubmitPost(post);
   }
 
 

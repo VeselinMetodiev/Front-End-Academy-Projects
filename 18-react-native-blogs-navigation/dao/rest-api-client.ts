@@ -2,7 +2,7 @@ import { Post } from "../model/posts.model.js";
 import { Identifiable, IdType } from "../model/shared-types.js";
 import { Todo } from "../model/todo.model.js";
 
-const API_BASE_URL = "http://10.16.6.23:4000/api";
+const API_BASE_URL = "http://192.168.10.186:4000/api";
 
 export interface ApiClient<K, V extends Identifiable<K>>{
     findAll(): Promise<V[]>;

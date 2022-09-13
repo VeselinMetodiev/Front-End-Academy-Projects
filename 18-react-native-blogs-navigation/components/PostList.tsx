@@ -15,6 +15,7 @@ interface Props {
     onFavourite: PostListener;
     onDetails: PostListener;
     onLoadMorePosts: () => void;
+    showAllPosts: boolean;
 }
 
 type PostIdToAnimatedValueMap = {
@@ -23,9 +24,12 @@ type PostIdToAnimatedValueMap = {
 
 const PostList = forwardRef<FlatList<Post>, Props>((props, fRef) => {
     const postsAnimatedValues = useRef<PostIdToAnimatedValueMap>([]).current;
-    const { posts, page, filter, scrollIndex, onLoadMorePosts, ...rest }: Props = props;
-    const visiblePosts = (posts: Post[], filter: FilterType) => posts.filter(post => !filter ? true : post.status === filter);
+    const { showAllPosts, posts, page, filter, scrollIndex, onLoadMorePosts, ...rest }: Props = props;
+    const allPosts = showAllPosts ? posts : posts.filter((post) => post.isFavourite === true);
+    const visiblePosts = (posts: Post[], filter: FilterType) => allPosts.filter(post => !filter ? true : post.status === filter);
+    posts.map((post) => console.log(post.title + ' : ' + post.isFavourite))
     const memoizedVisiblePosts = useMemo(() => visiblePosts(posts, filter), [posts, filter]);
+    console.log(memoizedVisiblePosts)
 
     useEffect(() => {
         addAnimatedValues(posts.slice((page - 1) * DEFAULT_PAGE_SIZE, page * DEFAULT_PAGE_SIZE))

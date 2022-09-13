@@ -11,6 +11,7 @@ export class Post {
         public tags: string[],
         public image: ImageData,
         public authorId: IdType,
+        public isFavourite: boolean,
         public status: PostStatus = PostStatus.Published,
         public id: IdType = undefined,
     ) {
