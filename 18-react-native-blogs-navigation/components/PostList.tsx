@@ -3,7 +3,7 @@ import { FlatList, View, Animated, Dimensions } from "react-native";
 import { FilterType, IdType, PostListener } from "../model/shared-types";
 import { Post } from "../model/posts.model";
 import PostItem, { ITEM_HEIGHT, PostItemListener } from "./PostItem";
-import { DEFAULT_PAGE_SIZE } from "./BlogsMain";
+import { DEFAULT_PAGE_SIZE } from "./Main";
 
 interface Props {
     posts: Post[];
@@ -12,6 +12,8 @@ interface Props {
     scrollIndex?: number;
     onDelete: PostListener;
     onEdit: PostListener;
+    onFavourite: PostListener;
+    onDetails: PostListener;
     onLoadMorePosts: () => void;
 }
 

@@ -29,12 +29,13 @@ interface BlogsMainState {
   filter: FilterType;
   editedPost: Post;
   scrollIndex: number;
+  favouritePosts: Post[]
 }
 
 export const EMPTY_IMAGE_DATA = { uri: '', width: 0, height: 0 };
-const EMPTY_POST = new Post('', '', [], EMPTY_IMAGE_DATA, 1);
+export const EMPTY_POST = new Post('', '', [], EMPTY_IMAGE_DATA, 1);
 
-class App extends Component<BlogsMainProps, BlogsMainState> {
+class Main extends Component<BlogsMainProps, BlogsMainState> {
   state: BlogsMainState = {
     activeView: Views.PostListView,
     errors: '',
@@ -43,6 +44,7 @@ class App extends Component<BlogsMainProps, BlogsMainState> {
     filter: undefined,
     editedPost: EMPTY_POST,
     scrollIndex: 0,
+    favouritePosts: []
   }
 
   postsListRef = React.createRef<FlatList<Post>>()
@@ -146,6 +148,11 @@ class App extends Component<BlogsMainProps, BlogsMainState> {
     }));
   }
 
+  addToFavourites = (post: Post) => {
+    this.setState({favouritePosts: this.state.favouritePosts.concat(post)})
+  }
+
+
   render() {
     return (
       <DrawerNavigator colorScheme={this.props.colorScheme}
@@ -160,138 +167,12 @@ class App extends Component<BlogsMainProps, BlogsMainState> {
         initialValue={this.state.editedPost}
         onSubmit={this.handleSubmitPost}
         onCancel={this.handleFormCancel}
+        onFavourite={this.addToFavourites}
     />
     );
   }
-
-  /* <IconButton size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
-          {this.state.activeView === Views.PostListView ? 'Add New Post' : 'Show All Posts'}
-        </IconButton> *
-         {(() => {
-          switch (this.state.activeView) {
-            case Views.PostFormView:
-              return (
-                <Form<Post, PostFormPropToCompKindMapping>
-                  config={postFormConfig}
-                  // initialValue={new Post('Example Post', 'Example content ...', ['example', 'post'], 'https://www.publicdomainpictures.net/pictures/160000/velka/jeune-femme-poste-de-travail.jpg', 1)}
-                  initialValue={this.state.editedPost}
-                  onSubmit={this.handleSubmitPost}
-                  onCancel={this.handleFormCancel} />);
-            case Views.PostListView:
-              return (
-                <PostList ref={this.postsListRef} posts={this.state.posts}
-                  page={this.state.page}
-                  filter={this.state.filter}
-                  onDelete={this.handleDeletePost}
-                  onEdit={this.handleEditTodo}
-                  scrollIndex={this.state.scrollIndex}
-                  onLoadMorePosts={this.loadMorePosts}
-                />);
-          }
-        })()} */
 }
 
-export default App;
+export default Main;
 
 
-type PostFormPropToCompKindMapping = {
-  id: 'FormReadonlyTextComponent';
-  title: 'FormTextComponent';
-  content: 'FormTextComponent';
-  tags: 'FormTextComponent';
-  image: 'FormImageComponent';
-  status: 'FormDropdownComponent';
-  authorId: 'FormTextComponent';
-}
-
-const postFormConfig: FormComponentConfigs<Post, PostFormPropToCompKindMapping> = {
-  id: {
-    componentKind: 'FormReadonlyTextComponent',
-    label: 'ID',
-  },
-  title: {
-    label: 'Blog Title',
-    validators: yup.string().min(3).max(40),
-  },
-  content: {
-    label: 'Blog Content',
-    options: {
-      multiline: true,
-    },
-    validators: yup.string().min(40).max(2048),
-  },
-  tags: {
-    convertor: {
-      fromString: (tags: string) => tags.split(/\W+/),
-      toString: (tagsArray: string[]) => tagsArray.toString()
-    }
-  },
-  image: {
-    componentKind: 'FormImageComponent',
-    label: 'Blog Image URL',
-    validators: yup.object().shape({
-      uri: yup.string().required().test(
-        'is-url',
-        '${path} is not a valid URL',
-        (value: string | undefined) => !!value && (value.startsWith('data') || yup.string().url().isValidSync(value))
-      ),
-      localUri: yup.string(),
-      format: yup.string().oneOf(['jpeg', 'png', 'webp']),
-      width: yup.number().integer().min(0),
-      height: yup.number().integer().min(0)
-    }),
-  },
-  status: {
-    componentKind: 'FormDropdownComponent',
-    label: 'Blog Status',
-    options: {
-      choices: [
-        { label: PostStatus[PostStatus.Published], value: PostStatus.Published },
-        { label: PostStatus[PostStatus.Draft], value: PostStatus.Draft }
-      ]
-    }
-  },
-  authorId: {
-    label: 'Author ID',
-    validators: yup.number().integer().positive(),
-    convertor: {
-      fromString: (value: string) => {
-        const num = +value;
-        return isNaN(num) ? 0 : num;
-      },
-      toString: (num: number) => num + ''
-    }
-  },
-};
-
-const styles = StyleSheet.create({
-  form: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    fontSize: 36,
-    fontWeight: 'bold',
-    padding: 20,
-    alignSelf: 'center',
-  },
-  sectionHeader: {
-    paddingTop: 2,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 2,
-    fontSize: 28,
-    fontWeight: 'bold',
-    backgroundColor: 'rgba(247,247,247,1.0)',
-  },
-  errors: {
-    padding: 5,
-    fontSize: 20,
-    border: 1,
-    borderRadius: 5,
-    backgroundColor: '#eecccc',
-    color: 'red',
-    textAlign: 'center',
-  }
-});

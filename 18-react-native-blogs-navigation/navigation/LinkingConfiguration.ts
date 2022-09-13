@@ -4,31 +4,38 @@
  * https://reactnavigation.org/docs/configuring-links
  */
 
-import { LinkingOptions } from '@react-navigation/native';
+import { DrawerActionHelpers, LinkingOptions } from '@react-navigation/native';
 import * as Linking from 'expo-linking';
 
-import { RootStackParamList } from '../types';
+import { RootDrawerParamList } from './DrawerNavigator';
 
-const linking: LinkingOptions<RootStackParamList> = {
+const linking: LinkingOptions<RootDrawerParamList> = {
   prefixes: [Linking.createURL('/')],
   config: {
     screens: {
-      Root: {
+      Posts: {
         screens: {
-          TabOne: {
+          Tabs: {
             screens: {
-              TabOneScreen: 'one',
-            },
+              TabOne: {
+                screens: {
+                  TabOneScreen: 'one',
+                },
+              },
+              TabTwo: {
+                screens: {
+                  TabTwoScreen: 'two',
+                },
+              },
+            }
           },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
+          PostDetails: 'details/:postId',
+          NotFound: 'notfound',
         },
       },
+      PostsForm: 'form',
+      About: 'about',
       Modal: 'modal',
-      NotFound: '*',
     },
   },
 };

@@ -6,7 +6,8 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import DrawerNavigator from './navigation/DrawerNavigator';
 import { Dimensions, StyleSheet } from 'react-native';
-import BlogsMain from './components/BlogsMain';
+import React from 'react';
+import Main from './components/Main';
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -17,7 +18,7 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider style={styles.container}>
-        <BlogsMain colorScheme={colorScheme} />
+        <Main colorScheme={colorScheme} />
         <StatusBar />
       </SafeAreaProvider>
     );
