@@ -148,8 +148,8 @@ class Main extends Component<BlogsMainProps, BlogsMainState> {
     }));
   }
 
-  addToFavourites = (post: Post) => {
-    post.isFavourite = true;
+  handleFavourites = (post: Post) => {
+    post.isFavourite = post.isFavourite ? false : true;
     this.handleSubmitPost(post);
   }
 
@@ -168,7 +168,7 @@ class Main extends Component<BlogsMainProps, BlogsMainState> {
         initialValue={this.state.editedPost}
         onSubmit={this.handleSubmitPost}
         onCancel={this.handleFormCancel}
-        onFavourite={this.addToFavourites}
+        onFavourite={this.handleFavourites}
     />
     );
   }
