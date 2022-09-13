@@ -71,6 +71,7 @@ export default class AnswerComp extends Component<AnswerProps, AnswerState> {
         <MyCheckbox
           checked={this.state.checked}
           onChange={() => {
+            this.props.onChange(this.state.checked);
             this.setState({checked: true})
             this.markAnswer();
             this.props.adjustScore(

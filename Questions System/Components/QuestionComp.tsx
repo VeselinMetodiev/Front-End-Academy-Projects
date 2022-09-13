@@ -13,9 +13,13 @@ interface QuestionProps {
 }
 
 interface QuestionState {
+  refresh: boolean;
 }
 
 export default class QuestionComp extends Component<QuestionProps, QuestionState> {
+  state: Readonly<QuestionState> = {
+    refresh: false,
+  }
   render() {
     const question = this.props.question;
     const index = this.props.index;
@@ -34,11 +38,11 @@ export default class QuestionComp extends Component<QuestionProps, QuestionState
           {question.answers.map((answer, indexAnswers) => (
             <View key={indexAnswers}>
               <>
-              {console.log(index + " " + indexAnswers + " : " + this.props.selectedAnswers[index][indexAnswers])}
+              {console.log(index + " " + indexAnswers + " : " + this.props.selectedAnswers)}
               </>
-              {this.props.selectedAnswers[index][indexAnswers]?
-              <AnswerComp ticked={true} onChange={() => console.log('on change')} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp> :
-              <AnswerComp ticked={false} onChange={() => console.log('on change')} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp>
+              {!this.props.selectedAnswers[index][indexAnswers] ?
+              <AnswerComp ticked={true} onChange={(checked) => this.setState({refresh: checked})} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp> :
+              <AnswerComp ticked={false} onChange={(checked) => this.setState({refresh: checked})} answer={answer} indexAnswers={indexAnswers} indexQuestion={index} saveAnswer={this.props.saveAnswer} adjustScore={this.props.adjustScore}></AnswerComp>
   }
             </View>
           ))}
