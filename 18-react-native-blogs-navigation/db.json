@@ -41,7 +41,7 @@
       "authorId": 1,
       "status": 1,
       "id": 1,
-      "isFavourite": false
+      "isFavourite": true
     },
     {
       "title": "Classes in ES6+ and TypeScript",
@@ -87,7 +87,7 @@
       "authorId": 1,
       "status": 2,
       "id": 23,
-      "isFavourite": true
+      "isFavourite": false
     },
     {
       "title": "Blogs API Tutorial in TypeScript and Materialize",
@@ -246,7 +246,7 @@
         "height": 2400
       },
       "authorId": 1,
-      "isFavourite": false,
+      "isFavourite": true,
       "status": 1,
       "id": 34
     }

@@ -26,7 +26,7 @@ export function PostDetailsScreen({ route, navigation }: DetailsScreenProps) {
           const post = await BlogsAPI.findById(postId);
           setPost(post)
         } catch (err) {
-          navigation.push('NotFound');
+          navigation.navigate('NotFound');
         }
       }
 

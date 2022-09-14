@@ -55,7 +55,6 @@ import NotFoundScreen from '../screens/NotFoundScreen';
          <Stack.Screen name="PostDetails">
            {(props) => <PostDetailsScreen {...props} {...rest} />}
          </Stack.Screen>
-         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
      </Stack.Navigator>
    );
  }
