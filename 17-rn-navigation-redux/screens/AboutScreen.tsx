@@ -1,20 +1,23 @@
+import { DrawerScreenProps } from '@react-navigation/drawer';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import { RootStackScreenProps } from '../types';
+import { DrawerParamList } from '../Main';
+import { RootTabParamList } from '../navigation/TabNavigator';
 
-export default function NotFoundScreen({ navigation }: RootStackScreenProps<'NotFound'>) {
+export type AboutScreenProps<Screen extends keyof RootTabParamList> = 
+  DrawerScreenProps<DrawerParamList, 'About'>;
+
+export default function AboutScreen({ navigation }: AboutScreenProps<'About'>) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>This screen doesn't exist.</Text>
-      <TouchableOpacity onPress={() => navigation.replace('Root')} style={styles.link}>
+      <Text style={styles.title}>About this App</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Stack')} style={styles.link}>
         <Text style={styles.linkText}>Go to home screen!</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

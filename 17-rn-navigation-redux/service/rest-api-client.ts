@@ -1,8 +1,7 @@
-import { Post } from "../model/posts.model.js";
 import { Identifiable, IdType } from "../model/shared-types.js";
-import { User } from "../model/user.model.js";
+import { User } from "../model/user.js";
 
-const API_BASE_URL = "http://192.168.100.178:4000/api";
+const API_BASE_URL = "http://localhost:9000/api";
 
 export interface ApiClient<K, V extends Identifiable<K>>{
     findAll(): Promise<V[]>;
@@ -17,6 +16,13 @@ export class ApiClientImpl<K, V extends Identifiable<K>> implements ApiClient<K,
 
     async findAll(): Promise<V[]> {
         return this.handleRequest(`${API_BASE_URL}/${this.collectionSuffix}`);
+    }
+
+    async findByPage(page: number, limit: number): Promise<V[]> {
+        return this.handleRequest(`${API_BASE_URL}/${this.collectionSuffix}?${new URLSearchParams({
+            _page: page + 1 + '',
+            _limit: limit + '',
+        }).toString()}`);
     }
 
     async findById(id: K): Promise<V> {
@@ -57,11 +63,10 @@ export class ApiClientImpl<K, V extends Identifiable<K>> implements ApiClient<K,
             }
             return postsResp.json();
         } catch (err) {
-            return Promise.reject(err);
+            return Promise.reject(err?.toString());
         }
     }
 }
 
 export const UsersAPI = new ApiClientImpl<IdType, User>('users');
-//export const TodosAPI = new ApiClientImpl<IdType, Todo>('todos');
-export const SignInAPI = new ApiClientImpl<IdType, User>('auth/login');
+
