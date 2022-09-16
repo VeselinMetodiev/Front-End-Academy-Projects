@@ -14,6 +14,7 @@ interface QuestionProps {
   adjustScore: (score: number) => void;
   saveAnswer: (indexQuestion: number, indexAnswer: number) => void;
   onSelectedAnswers: () => number[][];
+  selectedAnswers: number[][];
 }
 
 interface QuestionState {

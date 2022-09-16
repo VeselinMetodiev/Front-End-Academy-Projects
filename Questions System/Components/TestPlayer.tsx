@@ -130,6 +130,7 @@ export default class TestPlayer extends Component<TestProps, TestState> {
         <Text>{JSON.stringify(this.state.selectedAnswers)}</Text>
         {this.props.questions.map((question, index) => (
           <QuestionComp
+          selectedAnswers={this.state.selectedAnswers}
             onSelectedAnswers={() => this.passSelectedAnswers() }
             key={index}
             question={question}
