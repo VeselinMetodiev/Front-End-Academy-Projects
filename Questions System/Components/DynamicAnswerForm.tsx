@@ -144,8 +144,21 @@ export default class DynamicAnswerForm extends Component<
           }) => (
             <View>
               {this.state.inputs.map((input, i) =>
-                <View key={i} style={{ flexDirection: "row", alignItems: "center", flexWrap: 'wrap' }}>
-                  <Text>{i + 1}.</Text>
+                <View key={i} style={{ flexDirection: "column", justifyContent:'center', flexWrap: 'wrap' }}>
+                 <View style={{margin: 20}}>
+                  <Text style={{alignSelf: 'center'}}>{i + 1}.</Text>
+                  {/* To remove the input */}
+                  <Pressable
+                    onPress={() => this.removeInput(i)}
+                    style={{ marginLeft: 5 }}
+                  >
+                    <Button
+                      onPress={() => this.removeInput(i)}
+                      title={"Remove Answer"}
+                      color="red"
+                    />
+                  </Pressable>
+                  </View>
                   <TextInput
                     style={styles.input}
                     onChangeText={(value) => { this.setInputValue(i, value, "text"); handleChange("text") }}
@@ -182,17 +195,7 @@ export default class DynamicAnswerForm extends Component<
                       {errors.text}
                     </Text>
                   )}
-                  {/* To remove the input */}
-                  <Pressable
-                    onPress={() => this.removeInput(i)}
-                    style={{ marginLeft: 5 }}
-                  >
-                    <Button
-                      onPress={() => this.removeInput(i)}
-                      title={""}
-                      color="red"
-                    />
-                  </Pressable>
+                  
                   {/* { <ImagePickerExample onSubmit={this.handleSetImage} /> } */}
                 </View>
               )}
