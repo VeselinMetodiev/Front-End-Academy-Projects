@@ -1,5 +1,6 @@
-{
-  "expo": {
+require('dotenv').config();
+
+module.exports = {
     "name": "17-rn-navigation",
     "slug": "17-rn-navigation",
     "version": "1.0.0",
@@ -29,6 +30,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "BLOGS_API_URL": process.env.BLOGS_API_URL
     }
   }
-}

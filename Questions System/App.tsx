@@ -1,10 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StyleSheet,
   View,
 } from "react-native";

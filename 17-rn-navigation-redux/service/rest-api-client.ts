@@ -1,7 +1,10 @@
+import Constants from "expo-constants";
 import { Identifiable, IdType } from "../model/shared-types.js";
 import { User } from "../model/user.js";
 
-const API_BASE_URL = "http://localhost:9000/api";
+
+
+const API_BASE_URL = `http://${Constants.manifest?.extra?.BLOGS_API_URL}/api`;
 
 export interface ApiClient<K, V extends Identifiable<K>>{
     findAll(): Promise<V[]>;
@@ -63,7 +66,7 @@ export class ApiClientImpl<K, V extends Identifiable<K>> implements ApiClient<K,
             }
             return postsResp.json();
         } catch (err) {
-            return Promise.reject(err?.toString());
+            return Promise.reject(err + '');
         }
     }
 }

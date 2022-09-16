@@ -45,6 +45,7 @@ class LoginForm extends Component<LoginFormProps, LoginFormState> {
                         color="#542867"
                         accessibilityLabel="SignIn"
                     />
+                    <View style={{width: 10}}/>
                     <Button
                         onPress={this.handleSignUp}
                         title="SignUp"
@@ -59,14 +60,18 @@ class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '80%',
+        padding: 30,
+        borderRadius: 10, 
+        marginTop: 10,
         backgroundColor: "#B2C8DF",
         alignItems: "center",
         justifyContent: "center",
     },
     input: {
+        width: '90%',
         height: 40,
-        width: 200,
+        //width: 300,
         margin: 5,
         borderWidth: 1,
         padding: 10,
@@ -74,11 +79,9 @@ const styles = StyleSheet.create({
     buttons: {
         fontSize: 45,
         marginTop: 20,
-        marginBottom: 30,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        gap: 10,
     },
 });
 

@@ -43,6 +43,7 @@ export function StackNavigator({ navigation, route }: MyDrawerScreenProps<'Stack
               // When logging out, a pop animation feels intuitive
               // You can remove this if you want the default 'push' animation
               animationTypeForReplace: loggedUser ? 'push' : 'pop',
+              headerShown: false,
             }}
           />
           :
@@ -58,7 +59,7 @@ export function StackNavigator({ navigation, route }: MyDrawerScreenProps<'Stack
           />
       ) : (
         <>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: `Home: Welcome ${loggedUser.auth ? loggedUser.user.firstName + "!" : ''}` }}/>
           <Stack.Screen name="Details" component={DetailsScreen} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Group screenOptions={{ presentation: 'modal' }}>

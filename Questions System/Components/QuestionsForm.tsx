@@ -193,6 +193,7 @@ export default class QuestionForm extends Component<
                   >
                     Submit
                   </FontAwesome.Button>
+                  <View style={{marginLeft: 20}}></View>
                   <FontAwesome.Button
                     onPress={() => {
                       this.handleQuestionReset;

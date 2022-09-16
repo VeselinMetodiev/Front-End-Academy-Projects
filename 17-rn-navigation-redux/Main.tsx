@@ -20,8 +20,6 @@ import { StackNavigator, StackParamList } from './navigation/StackNavigator';
 import * as SecureStore from 'expo-secure-store';
 import { User } from './model/user';
 import { AuthAPI } from './service/rest-api-auth-client';
-import { UsersAPI } from './service/rest-api-client';
-import { SignInAPI } from './service/rest-api-client-signin';
 
 
 /* Redux types */
@@ -174,7 +172,7 @@ export default function Main({ colorScheme }: MainProps) {
         dispatch({ type: 'SIGN_IN_START', loggedUser: null })
       },
       signInComplete: async (credentials: Credentials) => {
-        const loggedUser = await SignInAPI.signIn(credentials);
+        const loggedUser = await AuthAPI.signIn(credentials);
         console.log(loggedUser);
         dispatch({ type: 'SIGN_IN_SUCCESS', loggedUser });
       },
@@ -183,7 +181,7 @@ export default function Main({ colorScheme }: MainProps) {
       },
       signUpComplete: async (user: User) => {
         await AuthAPI.signUp(user);
-        const loggedUser = await SignInAPI.signIn({username: user.username, password: user.password});
+        const loggedUser = await AuthAPI.signIn({username: user.username, password: user.password});
         dispatch({ type: 'SIGN_IN_SUCCESS', loggedUser })
       },
       signOut: () => dispatch({ type: 'SIGN_OUT', loggedUser: null }),
@@ -208,7 +206,7 @@ export default function Main({ colorScheme }: MainProps) {
               },
             }}
           >
-            <Drawer.Screen name="Stack" component={StackNavigator} />
+            <Drawer.Screen name="Stack" component={StackNavigator} options={{ title: `My Blogs: ${state?.loggedUser?.auth ? "Welcome" + state?.loggedUser.user.firstName + "!" : ''}` }}/>
             <Drawer.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
             <Drawer.Group>
               <Drawer.Screen name="Modal" component={ModalScreen} />
