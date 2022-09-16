@@ -120,13 +120,17 @@ export default class TestPlayer extends Component<TestProps, TestState> {
     this.clearStorage();
   };
 
+  passSelectedAnswers = () => {
+    return this.state.selectedAnswers;
+  }
+
   render() {
     return (
       <ScrollView>
         <Text>{JSON.stringify(this.state.selectedAnswers)}</Text>
         {this.props.questions.map((question, index) => (
           <QuestionComp
-            selectedAnswers={this.state.selectedAnswers}
+            onSelectedAnswers={() => this.passSelectedAnswers() }
             key={index}
             question={question}
             index={index}
@@ -169,3 +173,5 @@ const styles = StyleSheet.create({
     height: 200,
   },
 });
+
+

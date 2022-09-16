@@ -13,7 +13,7 @@ interface QuestionProps {
   index: number;
   adjustScore: (score: number) => void;
   saveAnswer: (indexQuestion: number, indexAnswer: number) => void;
-  selectedAnswers: number[][];
+  onSelectedAnswers: () => number[][];
 }
 
 interface QuestionState {
@@ -27,6 +27,11 @@ export default class QuestionComp extends Component<
   state: Readonly<QuestionState> = {
     refresh: false,
   };
+
+componentDidMount() {
+  this.props.onSelectedAnswers();
+}
+
   render() {
     const question = this.props.question;
     const index = this.props.index;
@@ -50,10 +55,10 @@ export default class QuestionComp extends Component<
                     " " +
                     indexAnswers +
                     " : " +
-                    this.props.selectedAnswers
+                    this.props.onSelectedAnswers
                 )}
               </>
-              {!this.props.selectedAnswers[index][indexAnswers] ? (
+              {this.props.onSelectedAnswers()[index][indexAnswers] ? (
                 <AnswerComp
                   ticked={true}
                   onChange={(checked) => this.setState({ refresh: checked })}
