@@ -5,6 +5,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   StyleSheet,
   View,
 } from "react-native";
@@ -153,7 +154,7 @@ export default class App extends Component<{}, AppState> {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboarAvoidingView}
         >
-          <View>
+          <ScrollView>
           <FontAwesome.Button size={30} backgroundColor="green" color="white" onPress={this.handleViewChange} name='check-circle' >
            {this.state.activeView === Views.FormView ? 'Start the test' : this.state.activeView === Views.QuizView ? 'Complete test' : 'Add a Question'}
           </FontAwesome.Button>
@@ -188,7 +189,7 @@ export default class App extends Component<{}, AppState> {
             }
           })()}
             
-          </View>
+          </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
     );

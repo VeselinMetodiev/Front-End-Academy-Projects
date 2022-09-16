@@ -144,7 +144,7 @@ export default class DynamicAnswerForm extends Component<
           }) => (
             <View>
               {this.state.inputs.map((input, i) =>
-                <View key={i} style={{ flexDirection: "row", alignItems: "center" }}>
+                <View key={i} style={{ flexDirection: "row", alignItems: "center", flexWrap: 'wrap' }}>
                   <Text>{i + 1}.</Text>
                   <TextInput
                     style={styles.input}

@@ -101,7 +101,7 @@ export default class QuestionForm extends Component<
 
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.registrationForm}>
           <Text style={styles.titleText}> Add a new question: </Text>
           <Formik
@@ -211,7 +211,7 @@ export default class QuestionForm extends Component<
             )}
           </Formik>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
