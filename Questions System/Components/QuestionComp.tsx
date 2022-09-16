@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { Question } from "../model/Question";
@@ -83,7 +84,7 @@ export default class QuestionComp extends Component<
 
 const styles = StyleSheet.create({
   questionItem: {
-    flex: 1,
+
     gap: 15,
     padding: 15,
     border: 10,

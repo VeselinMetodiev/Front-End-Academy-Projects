@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { Component } from "react";
-import { View, StyleSheet, Pressable, Text, Animated, Button } from "react-native";
+import { View, StyleSheet, Pressable, Text, Animated, Button, ScrollView } from "react-native";
 import { Question } from "../model/Question";
 import QuestionComp from "./QuestionComp";
 
@@ -108,13 +108,13 @@ export default class TestPlayer extends Component<TestProps, TestState> {
   }
 
   render() {
-    return ( <View> 
+    return ( <ScrollView> 
       <Text>{JSON.stringify(this.state.selectedAnswers)}</Text>
       { this.props.questions.map((question, index) => (
      <QuestionComp selectedAnswers={this.state.selectedAnswers} key={index} question={question} index={index} adjustScore={this.adjustScore} saveAnswer={this.saveAnswer}></QuestionComp>
   ))}
   <Button title='submit' onPress={this.handleSubmit}/>
-  </View>
+  </ScrollView>
     )
   }
 }
