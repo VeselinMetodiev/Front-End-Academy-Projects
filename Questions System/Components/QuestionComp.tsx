@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  Button,
 } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { Question } from "../model/Question";
@@ -13,12 +14,12 @@ interface QuestionProps {
   index: number;
   adjustScore: (score: number) => void;
   saveAnswer: (indexQuestion: number, indexAnswer: number) => void;
-  onSelectedAnswers: () => number[][];
   selectedAnswers: number[][];
 }
 
 interface QuestionState {
   refresh: boolean;
+  updatedAnswers: boolean;
 }
 
 export default class QuestionComp extends Component<
@@ -27,10 +28,10 @@ export default class QuestionComp extends Component<
 > {
   state: Readonly<QuestionState> = {
     refresh: false,
+    updatedAnswers: false,
   };
-
-componentDidMount() {
-  this.props.onSelectedAnswers();
+updateAnswers = () => {
+  this.setState({updatedAnswers: true})
 }
 
   render() {
@@ -38,6 +39,7 @@ componentDidMount() {
     const index = this.props.index;
     return (
       <View key={index} style={styles.questionItem}>
+        <Button title={'Get Answers'} onPress={() => this.updateAnswers}></Button>
         <Card style={styles.card}>
           <Card.Title title={`Question ${index + 1}`} left={undefined} />
           <Card.Content>
@@ -50,17 +52,10 @@ componentDidMount() {
           />
           {question.answers.map((answer, indexAnswers) => (
             <View key={indexAnswers}>
-              <>
-                {console.log(
-                  index +
-                    " " +
-                    indexAnswers +
-                    " : " +
-                    this.props.onSelectedAnswers
-                )}
-              </>
-              {this.props.onSelectedAnswers()[index][indexAnswers] ? (
-                <AnswerComp
+              {this.props.selectedAnswers[index][indexAnswers] ? (
+                <><>
+                  {console.log(this.props.selectedAnswers[index][indexAnswers])}
+                </><AnswerComp
                   ticked={true}
                   onChange={(checked) => this.setState({ refresh: checked })}
                   answer={answer}
@@ -68,7 +63,7 @@ componentDidMount() {
                   indexQuestion={index}
                   saveAnswer={this.props.saveAnswer}
                   adjustScore={this.props.adjustScore}
-                ></AnswerComp>
+                ></AnswerComp></>
               ) : (
                 <AnswerComp
                   ticked={false}

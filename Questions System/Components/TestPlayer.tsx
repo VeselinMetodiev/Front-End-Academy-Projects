@@ -120,18 +120,13 @@ export default class TestPlayer extends Component<TestProps, TestState> {
     this.clearStorage();
   };
 
-  passSelectedAnswers = () => {
-    return this.state.selectedAnswers;
-  }
-
   render() {
     return (
       <ScrollView>
         <Text>{JSON.stringify(this.state.selectedAnswers)}</Text>
         {this.props.questions.map((question, index) => (
           <QuestionComp
-          selectedAnswers={this.state.selectedAnswers}
-            onSelectedAnswers={() => this.passSelectedAnswers() }
+            selectedAnswers={this.state.selectedAnswers}
             key={index}
             question={question}
             index={index}
